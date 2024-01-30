@@ -1,4 +1,4 @@
-# Practical data science for Multi-class Classification for Sentiment analysis of Product reviews:
+# Multi-class Classification for Sentiment analysis of Product reviews using Practical data science:
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
