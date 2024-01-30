@@ -66,7 +66,47 @@ __Data science and machine learning toolbox:__
 - You can use the review text as the input feature for the model training and the sentiment as a label for model training. The sentiment class is usually expressed as an integer value for model training such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
 ### Data ingestion and Exploration:
+- Imagine your e-commerce company is collecting all the customer feedback across all online channels. You need to capture, suddenly, customer feedback streaming from social media channels, feedback captured and transcribed through support center calls, incoming emails, mobile apps, and website data, and much more.
+- To do that, you need a flexible and elastic repository that can store, not only the different file formats, such as dealing with structured data, CSV files, as well as unstructured data, such as support center call audio files. It also needs to elastically scale the storage capacity as new data arrives.
+- Cloud-based data lakes address this problem. __Data lake__ is a centralized and secure repository that can store, discover, and share virtually any amount and any type of your data.
+- You can ingest data in its raw format without any prior data transformation. Whether it's structured relational data in the form of CSV or TSV files, semi-structured data such as JSON or XML files, or unstructured data such as images, audio, and media files.
+- You can also ingest streaming data, such as an application delivering a continuous feed of log files, or feeds from social media channels, into your data lake.
+- A data lake needs to be governed. With new data arriving at any point in time you need to implement ways to discover and catalog the new data. A data lake needs to be governed. With new data arriving at any point in time you need to implement ways to discover and catalog the new data.
+- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier. Object storage is particularly helpful for storing and retrieving growing amounts of data of any type.
+- __Amazon S3__ gives you access to durable and high-available object storage in the cloud. You can ingest virtually anything, from just a few dataset files, to exabytes of data. AWS also provides additional tools and services to assist you in building a secure, compliant, and auditable data lake on top of S3. with this you can now use this centralized data repository to enable data warehousing analytics and also machine learning.
+- __AWS Data wrangler__ is an open-source Python library. The library connects Pandas DataFrame with AWS data-related services. AWS Data Wrangler offers abstracted functions to load or unload data from data lakes, data warehouses, or databases on AWS. You can install the library through the PIP install AWS wrangler command. To read csv data from S3 data lake run below commands:
+```ruby
+!pip install awswrangler
 
+import awswrangler as wr
+import pandas as pd
 
+df = wr.s3.read_csv(path='s3://bucket/prefix/')
+```
+- __AWS Glue Data catalog__ is used to register or catalog the data stored in S3. It's like inventory to know what data you have stored in S3 date lake or bucket. Using the Data Catalog Service, you create a reference to the data, basically S3 to table mapping. The AWS Glue table, which is created inside an AWS Glue database, only contains the metadata information such as the data schema. Catalog is used to simplify where to find the data and which schema should be used, to query the data.
+- Instead of manually registering the data, you can also use __AWS Glue Crawler__. A Crawler can be used and set up to run on a schedule or to automatically find new data, which includes inferring the data schema and also to update the data catalog.
+- To register the data you can use AWS Data Wrangler tool. Follow the below steps:
+> Create a database in the AWS Glue data catalog database using below command:
+```ruby
+import awswrangler as wr
 
+wr.catalog.create_database(name=name_for_the_database)
+```
+> Create CSV table (metadataonly) in the AWS glue data catalog using below command:
+```ruby
+wr.catalog.create_csv_table(table=name_of_the_database, column_types=..., )
+```
+- __Amazon Athena__ is used to query the data stored in S3. Athena is an interactive query service that lets you run standard SQL queries to explore your data. Athena is serverless, which means you don't need to set up any infrastructure to run those queries. No matter how large the data is that you want to query, you can simply type your SQL query, referencing the dataset schema you provided in the AWS Glue Data Catalog.
+- To run the query follow below steps from the python environment you are using:
+> Create amazon athena S3 bucket using below commands/query:
+```ruby
+import awswrangler as wr
 
+wr.athena.create_athena_bucket()
+```
+> Execute SQL query on amazon athena
+```ruby
+df = wr.athena.read_sql_query(sql='sql_query', database= name_of_the_database)
+```
+- Athena then runs the query on the specified dataset and stores the results in S3, and it also returns the results in a Pandas DataFrame.
+- Athena will automatically scale out and split the query into simpler queries to run in parallel against your data when building highly complex analytical queries to run against not just gigabytes, or terabytes, or petabytes of data. Because athena is based on Presto, an open source distributed SQL engine, developed for this exact use case.
