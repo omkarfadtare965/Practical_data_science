@@ -1,4 +1,4 @@
-# Multi-class Classification for Sentiment analysis of Product reviews using Practical data science:
+# Practical data science Specialization:
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
@@ -24,7 +24,7 @@ __Prerequisites for this Specialization:__
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
 - Understanding the concept of building, training, and evaluating machine learning models.
 
-## Brief introduction:
+__Brief introduction:__
 - Artificial intelligence/AI, is generally described as a technique that lets machines mimic human behavior.
 - Machine learning/ML, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
 - Deep learning is yet another subset of machine learning, that uses artificial neural networks to learn from data.
@@ -32,6 +32,15 @@ __Prerequisites for this Specialization:__
 - Practical data science helps you to improve your data science and machine learning skills, work with almost any amount of data, and implement their use cases in the most efficient way.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
+
+- Popular machine learning tasks are classification and regression problems, which are examples of supervised learning.
+- In supervised learning, you learn by providing the algorithm with labeled data. - In classification, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
+- In contrast, regression applies statistical methods to predict a continuous value, such as a house price, given a set of related and non-related input variables.
+- Another popular task is clustering, it is an example of unsupervised learning where the data is not labelled. The clustering algorithm tries to find patterns in the data and starts grouping the data points into distinct clusters. 
+- Image processing is a major task of computer vision where you need to classify images into pictures of dogs and cats, distinguish between speed signs and trees.
+- The field of Natural Language Processing (NLP), or Natural Language Understanding (NLU) includes machine translations, sentiment analysis, question answering, etc.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7ae4c166-5944-4539-aeac-ba763619bf55)
 
 __Benifits of performing data science on cloud:__
 - Practical data science is geared towards handling massive datasets, that could originate from social media channels, mobile and web applications, public or company internal data sources, and much more, depending on the use case you're working on. This data is often messy, potentially error-ridden, or even poorly documented.
@@ -46,10 +55,18 @@ __Benifits of performing data science on cloud:__
 - CLoud allows you to store and process almost any amount of data.
 - Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
 
-### Data science and machine learning toolbox:
+__Data science and machine learning toolbox:__
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/8a5def2a-5426-4587-a335-0f453dfc15de)
 
- 
+## Use case: Multi-class Classification for Sentiment analysis of Product reviews
+- Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
+- Your task is to build an NLP model that will take those product reviews as input. You will then use the model to classify the sentiment of the reviews into the three classes of positive, neutral, and negative.
+- Multi-class classification is a supervised learning task, hence you need to provide your tax classifier model with examples how to correctly learn to classify the products and the product reviews into the right sentiment classes. 
+- You can use the review text as the input feature for the model training and the sentiment as a label for model training. The sentiment class is usually expressed as an integer value for model training such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
+
+### Data ingestion and Exploration:
+
+
 
 
