@@ -34,6 +34,7 @@ __Benifits of performing data science on cloud:__
 - Artificial intelligence/AI, is generally described as a technique that lets machines mimic human behavior.
 - Machine learning/ML, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
 - Deep learning is yet another subset of machine learning, that uses artificial neural networks to learn from data.
+- Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
