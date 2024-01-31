@@ -123,7 +123,48 @@ df = wr.athena.read_sql_query(sql = 'sql_query', database = name_of_the_database
 ### Statistical bias and Feature importance:
 - Statistical bias and Feature importance allow you to gain a better understanding of your data and a better understanding of the quality of your data.
 - These concepts also allow you to explore how the individual features of your datasets contribute to the final model.
-- 
+- A data set is considered to be biased if it cannot completely and accurately represent the underlying problem space. Statistical bias is a tendency of a statistic to either overestimate or underestimate a parameter.
+- For example, a dataset where fraudulent credit card transactions are rare, can lead to ineffective fraud detection models as they are unlikely to recognize fraudulent transactions due to lack of exposure to them.
+- Another example is, let's say, we have products review data set in which one product category A has large number of reviews and fewer number of reviews for other product category B and C.
+- When you build a product sentiment prediction model with this biased data set, the resulting model could very well detect sentiment of new products that belong to product category A. But for newer products that belong to other product category B and C, your sentiment model is not going to be really accurate.
+- One way to address this problem is to add more examples of fraud transactions to your training dataset.
+
+__Types of Bias:__
+> 1) Activity bias:
+- Activity bias occurs when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity.
+- In an online shopping dataset, frequent users may have more data recorded about their preferences and behaviors compared to occasional users, leading to biased predictions.
+> 2) Societal bias:
+- Societal bias reflects existing societal inequalities and prejudices that are reflected in the data, leading to unfair treatment of certain groups.
+- Historical biases against certain demographics (e.g., race, gender) may be perpetuated in datasets, resulting in biased decisions in areas like hiring or lending.
+> 3) Selection bias:
+- Selection bias occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset.
+- A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
+
+__Types of drift in Machine learning operations:__
+> 1) Data drift:
+- When the data used by a model changes over time, it's called data drift. This can make the model less accurate because it's not used to the new data.
+> 2) Concept drift:
+- If the relationship between things the model looks at and what it's trying to predict, changes, that's concept drift.
+- For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
+> 3) Covariate drift:
+- When the characteristics the model uses to make predictions change, it's covariate drift.
+- Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
+> 4) Prior probability drift:
+- The shift in how often each outcome happens is called prior probability drift.
+- Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
+> 5) Model drift: 
+- Model drift is when a model that used to work well starts to become less accurate over time.
+- This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect. 
+> 6) Population drift:
+- Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
+- It's like the group of people you're trying to predict for has changed, making your model less accurate because it's not used to the new population.
+> 7) Label drift:
+- Label drift is when the answers or labels you have for your data change over time.
+- It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
+
+
+
+
 
 
 
