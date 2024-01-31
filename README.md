@@ -8,6 +8,8 @@ __Course [1]:__
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
 - You will perform exploratory data analysis and detect statistical data biases.
 - Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
+- you will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
+- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
 
 __Course [2]:__
 - In course2, you will dive deeper into building custom NLP models.
@@ -118,7 +120,10 @@ df = wr.athena.read_sql_query(sql = 'sql_query', database = name_of_the_database
 - Matplotlib helps to create static animated and interactive visualizations.
 - Seaborn is based on matplotlib, and adds statistical data visualizations.
 
-
+### Statistical bias and Feature importance:
+- Statistical bias and Feature importance allow you to gain a better understanding of your data and a better understanding of the quality of your data.
+- These concepts also allow you to explore how the individual features of your datasets contribute to the final model.
+- 
 
 
 
