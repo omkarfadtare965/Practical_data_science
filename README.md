@@ -162,7 +162,7 @@ __Types of drift in Machine learning operations:__
 - Label drift is when the answers or labels you have for your data change over time.
 - It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
 
-
+right answers
 
 
 
