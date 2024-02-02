@@ -162,11 +162,25 @@ __Types of drift in Machine learning operations:__
 - Label drift is when the answers or labels you have for your data change over time.
 - It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
 
-right answers
+__Measuring statistical bias:__
+- Class imbalance, or CI, measures the imbalance in the number of examples that are provided, for different facet values in your dataset.
+- A facet is a sensitive feature in your dataset, that you want to analyze for these imbalances.
+- When you apply this to the product review dataset, it answers this particular question, does a particular product category, such as product Category A, have disproportionately large number of total reviews than any other category in the dataset?
+- Difference in Proportions of Labels(DPL) metric measures the imbalance of positive outcomes between the different facet values. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product Category A, has disproportionately higher ratings than other categories.
+- CI, the metric that we just saw as measuring if a particular category has a total number of reviews higher than any other categories, DPL is actually looking for higher ratings than any other product categories.
 
+__AWS tools to detect statistical bias in dataset:__
+- The two tools are SageMaker Data Wrangler and SageMaker Clarify.
+- Data Wrangler provides you with capabilities to connect to various different sources for your data, visualize the data, and transform the data, by applying any number of transformations in the Data Wrangler environment, and, detect statistical bias in your data sets, and generate reports about the bias detected in those data sets. It also provides capabilities to provide feature importance calculations on your training data set.
+- Amazon SageMaker Clarify can perform statistical bias detection and generate bias reports on your training datasets. Additionally, it can also perform bias detection in trained and deployed models. It further provides capabilities for machine learning explainability, as well as detecting drift in data and models.
+- To start using Clarify APIs, start by importing the Clarify library from the SageMaker SDK
+```ruby
+from sagemaker import clarify
 
+clarify_processor = clarify.SageMakerClarifyProcessor(role=role, instance_count=1, instance_type="ml.c5.2xlarge", sagemaker_session=sess)
 
-
-
-
-
+bias_report_output_path = << Define S3 Path >>
+```
+- instance_count=1 >>Distributed cluster size,
+- instance_type="ml.c5.2xlarge" >> type of each instance
+- bias_report_output_path = << Define S3 Path >> >> S3 location to store bias report
