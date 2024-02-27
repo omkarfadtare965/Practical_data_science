@@ -1,14 +1,14 @@
-# Practical data science Specialization:
+# Practical data science on AWS cloud:
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6)
 
-__Course [1]:__
+> Course [1]:
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
 - You will perform exploratory data analysis and detect statistical data biases.
 - Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
-- you will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
+- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
 - You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
 
 __Course [2]:__
@@ -21,7 +21,7 @@ __Course [3]:__
 - You will explore advanced model deployment and monitoring options.
 - You will discover how to handle large-scale data labeling and build human-in-the-loop pipelines to enhance model accuracy and performance by combining machine intelligence with human intelligence.
 
-__Prerequisites for this Specialization:__
+__Prerequisites for this course:__
 - Proficiency in Python and SQL programming.
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
 - Understanding the concept of building, training, and evaluating machine learning models.
@@ -166,14 +166,23 @@ __Measuring statistical bias:__
 - Class imbalance, or CI, measures the imbalance in the number of examples that are provided, for different facet values in your dataset.
 - A facet is a sensitive feature in your dataset, that you want to analyze for these imbalances.
 - When you apply this to the product review dataset, it answers this particular question, does a particular product category, such as product Category A, have disproportionately large number of total reviews than any other category in the dataset?
-- Difference in Proportions of Labels(DPL) metric measures the imbalance of positive outcomes between the different facet values. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product Category A, has disproportionately higher ratings than other categories.
+- Difference in Proportions of Labels (DPL) metric measures the imbalance of positive outcomes between the different facet values. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product Category A, has disproportionately higher ratings than other categories.
 - CI, the metric that we just saw as measuring if a particular category has a total number of reviews higher than any other categories, DPL is actually looking for higher ratings than any other product categories.
 
+
+
+
+
+
 __AWS tools to detect statistical bias in dataset:__
-- The two tools are SageMaker Data Wrangler and SageMaker Clarify.
-- Data Wrangler provides you with capabilities to connect to various different sources for your data, visualize the data, and transform the data, by applying any number of transformations in the Data Wrangler environment, and, detect statistical bias in your data sets, and generate reports about the bias detected in those data sets. It also provides capabilities to provide feature importance calculations on your training data set.
+- The two AWS tools that are used to detect statistical bias in dataset are SageMaker Data Wrangler and SageMaker Clarify.
+- Data Wrangler provides you with capabilities to connect to different sources for your data, visualize the data, and transform the data, by applying any number of transformations and detect statistical bias in your data sets, and generate reports about the bias detected in those data sets.
+- It also provides capabilities to provide feature importance calculations on your training data set.
 - Amazon SageMaker Clarify can perform statistical bias detection and generate bias reports on your training datasets. Additionally, it can also perform bias detection in trained and deployed models. It further provides capabilities for machine learning explainability, as well as detecting drift in data and models.
-- To start using Clarify APIs, start by importing the Clarify library from the SageMaker SDK
+
+__Statistical bias generation and report generation using AWS Sagemaker Clarify:__
+- To use Clarify APIs, start by importing the Clarify library from the SageMaker SDK and then construct the object SageMakerClarifyProcessor using the clarify library.
+- SageMakerClarifyProcessor constructor allows you to scale the bias detection process into a distributed cluster
 ```ruby
 from sagemaker import clarify
 
@@ -181,6 +190,75 @@ clarify_processor = clarify.SageMakerClarifyProcessor(role=role, instance_count=
 
 bias_report_output_path = << Define S3 Path >>
 ```
-- instance_count=1 >>Distributed cluster size,
-- instance_type="ml.c5.2xlarge" >> type of each instance
-- bias_report_output_path = << Define S3 Path >> >> S3 location to store bias report
+- instance_count represents the number of nodes that are included in the cluster 
+- instance_type represents the processing capacity of each individual node in the cluster
+- The processing capacity is measured by the node's compute capacity, memory and the network
+- In the next step you configure the data config object on the clarify library, Data config object represents the details about your data
+```ruby
+bias_data_config = clarify.DataConfig(s3_data_input_path = ..., s3_output_path = ..., label = 'sentiment', headers = df_balanced.columns.to_list(), dataset_type = 'text/csv')
+```
+label that we are going to predict
+- In the next step, you configure the bias config object on clarify library. The bias config object captures the facet or the featured name that you are trying to evaluate for bias or imbalance. In this below case you are trying to find out the imbalances in the product category feature. SO if the sentiment feature is your label what is the desired value for that label. That value goes into the parameter label or threshold.
+- The parameter label_values_or_threshold defines the desired values for the labels.
+```ruby
+bias_config = Clarify.BiasConfig(label_values_or_threshold=[...], face_name = 'product_category')
+- In the next step you run the pre training bias method on the clarify processor.
+```ruby
+clarify_processor.run_pre_training_bias(data_config = ..., data_bias_config = ..., methods = ["CI","DPL",..], wait = <<False/True>>, logs = <<False/True>>)
+```
+- In addition to specifying the data config and the data bias you already configured, You can also specify the methods that you want to evaluate for bias. These are nothing but the metrics that you already learned about to detetct bias.
+- Wait parameter specifies whether this bias detection job should block your rest of the code or should it be executed in the background.
+- Similarly logs parameter specify that whether you want to capture the logs or not.
+- Once the configuration of the pre-training bias method is done, you launch this job. In the background, SageMaker Clarify is using a construct called SageMaker Processing Job to execute the bias detection at scale. SageMaker Processing Jobs is a construct that allows you to perform any data-related tasks at scale.
+- These tasks could be executing pre-processing, or post-processing tasks, or even using data to evaluate your model.
+- As you can see in the figure here, the SageMaker Processing Job expects the data to be in an S3 bucket.  The data is collected from the S3 bucket and processed on this processing cluster which contains a variety of containers in the cluster.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/94a703d1-c887-48ba-914e-24689a8f8525)
+
+ Once the processing cluster has processed the data, the transformed data or the processed data is put back in the S3 bucket.  What do you think happens when you execute this run pre-training bias?
+- The result will actually be a very detailed report on the bias on your dataset that has persisted in S3 bucket. You can download the report and review in detail to understand the behavior of your data.  you should see a few familiar metrics, like CI and DPL, and also a few other metrics that you might not know about.
+
+
+
+__Which one of these tools should you use, in which situation?__
+- Data Wrangler, provides you with more of a UI-based visual experience. 
+- So, if you would like to connect to multiple data sources and explore your data in more visual format, and configure what goes into your bias reports by making selections from drop-down boxes and option buttons, and finally, launch the bias detection job using a button click, Data Wrangler is the tool for you.
+- Keep in mind that Data Wrangler is only using a subset of your data to detect bias in that data set.
+-  SageMaker Clarify provides you with more of an API-based approach. Additionally, Clarify also provides you with the ability to scale out the bias detection process.
+-  SageMaker Clarify uses a construct called processing jobs that allow you to configure a distributed cluster to execute your bias detection job at scale. So, if you're thinking of large volumes of data, for example, millions of millions of rows of product reviews, and you want to explore that data set for bias, then SageMaker Clarify is the tool for you, so that you can take advantage of the scale and capacity offered by Cloud.
+
+
+
+
+__Feature importance (SHAP):__
+- Feature importance is the idea of explaining the individual features that make up your training data set, using a score called important score.
+- Some features from your data set could be more relevant, or more important, to your final model than others. Using feature importance, you can rank the individual features in the order of their importance and contribution to the final model.
+- Feature importance allows you to evaluate how useful or valuable a feature is, in relation to the other features that exist in the same data set.
+- In case of product review dataset, It consists of multiple different features, and you are trying to build a product sentiment prediction model out of that data set.
+- Feature importance is based on a very popular for open source framework called SHAP; SHAP stands for Shapley Additive Explanations.
+- The framework itself is based on Shapley values, which in turn is based on game theory. consider a play, or a game, in which multiple players are involved and there is a very specific outcome to the play that could be either a win or a loss. Shapley values allow you to attribute the outcome of the game to the individual players involved in the game. you can use the same concept to explain the predictions made by the machine learning model.
+- In this case, the individual players would be the individual features that make up the data set, and the outcome of the play would be the machine learning model prediction.
+- Using the SHAP framework, you can provide both local and global explanations. While the local explanation focuses on indicating how an individual feature contributes to the final model, the global explanation takes a much more comprehensive view in trying to understand how the data in its entirety contributes to the final outcome from the machine learning model.
+- SHAP framework it considers all possible combinations of feature values along with all possible outcomes for your machine learning model.
+
+__How to use Data Wrangler to calculate feature importance on your data set__
+- Amazon sagemaker studio >> New data flow >> S3/Athena >> navigate to the right bucket >> navigate to right data that you want to calculate the feature importance on >>  After selecting right csv you will see the preview of the columns in that csv file >> import dataset (THis action will bring the data from s3 bucket to data wrangler environment) >> Once the data is imported click of + sign >> Add analysis >> select type of analysis (quick model) >> name analysis >> select the label that you want to ndicate in your data set >> preview >> Create analysis
+
+combine positive feedback count + recommender indicator + new feature
+
+Week2 
+- Detecting statistical bias in the training dataset can help you gain insight into how imbalanced the dataset could be. I demonstrated using Data Wrangler, to detect statistical bias in your training data and generate bias reports. I also introduced SageMaker Clarify API, that'll help you perform the bias detection at scale. In the lab exercise this week, you will use the Clarify APIs to generate the bias reports and explore the report in a bit more detail. I further introduced feature importance and demonstrated using Data Wrangler how to generate the feature importance report on your training dataset. The generated report give you an insight into how the individual features of the training dataset are contributing to the final model. I hope you enjoyed the Week 2 content, and you're ready and excited to explore the lab assignment.
+
+
+
+
+
+
+
+
+
+
+### Week3:
+- Discuss some of the challenges, or repetitive tasks, that you can often run into when building machine learning models. learn about some of the benefits of using AutoML
+- After this week's course, you'll be able to describe the concept of AutoML as well as be able to describe how you can train a text classifier using AutoML.
+- you will learn about how Amazon Sagemaker uniquely implements AutoML capabilities through Sagemaker autopilot. For this, I'll walk you through the steps on how you can use Sagemaker autopilot to train a text classifier. So let's get started and dive deeper into AutoML.
