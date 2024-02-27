@@ -11,12 +11,12 @@
 - You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
 - You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
 
-__Course [2]:__
+> Course [2]:
 - In course2, you will dive deeper into building custom NLP models.
 - You will construct a machine learning pipeline, perform feature engineering, and share your features with the organization using a scalable feature store.
 - You will train, tune, and deploy your model, orchestrate the model workflow using ML pipelines and MLOps strategies.
 
-__Course [3]:__
+> Course [3]:
 - In course3, you will optimize machine learning models and learn best practices for tuning hyperparameters and performing distributed model training.
 - You will explore advanced model deployment and monitoring options.
 - You will discover how to handle large-scale data labeling and build human-in-the-loop pipelines to enhance model accuracy and performance by combining machine intelligence with human intelligence.
@@ -31,7 +31,7 @@ __Brief introduction:__
 - Machine learning/ML, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
 - Deep learning is yet another subset of machine learning, that uses artificial neural networks to learn from data.
 - Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
-- Practical data science helps you to improve your data science and machine learning skills, work with almost any amount of data, and implement their use cases in the most efficient way.
+- This course helps you to improve your data science and machine learning skills, work with almost any amount of data, and implement their use cases in the most efficient way.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
