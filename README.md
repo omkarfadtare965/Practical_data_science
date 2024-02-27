@@ -2,14 +2,7 @@
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
-<div style="text-align:center;">
-    <img src="https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6" alt="Image Description">
-</div>
-
-
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6)
-
-
 
 > Course [1]:
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
@@ -43,9 +36,10 @@ __Brief introduction:__
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
 - Popular machine learning tasks are classification and regression problems, which are examples of supervised learning.
-- In supervised learning, you learn by providing the algorithm with labeled data. - In classification, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
+- In supervised learning, you learn by providing the algorithm with labeled data.
+- In classification, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
 - In contrast, regression applies statistical methods to predict a continuous value, such as a house price, given a set of related and non-related input variables.
-- Another popular task is clustering, it is an example of unsupervised learning where the data is not labelled. The clustering algorithm tries to find patterns in the data and starts grouping the data points into distinct clusters. 
+- Another popular task is clustering, it is an example of unsupervised learning where the data is not labelled. The clustering algorithm tries to find patterns in the data and starts grouping the data points into distinct clusters.
 - Image processing is a major task of computer vision where you need to classify images into pictures of dogs and cats, distinguish between speed signs and trees.
 - The field of Natural Language Processing (NLP), or Natural Language Understanding (NLU) includes machine translations, sentiment analysis, question answering, etc.
 
