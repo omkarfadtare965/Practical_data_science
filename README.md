@@ -6,6 +6,8 @@
     <img src= ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6) alt="Image Description">
 </div>
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6)
+
 
 
 > Course [1]:
