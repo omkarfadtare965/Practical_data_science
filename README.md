@@ -54,22 +54,30 @@ __Benifits of performing data science on cloud:__
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/5d4e0e9a-c2b5-4570-a99f-92ab3355dbec)
 
-## Use case for this course: **Multi-class Classification for Sentiment analysis of Product reviews**
-- Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
+## Use case for this course: Multi-class Classification for Sentiment analysis of Product reviews
+- __Problem statement:__ Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
 - Your task is to build an NLP model that will take those product reviews as input. You will then use the model to classify the sentiment of the reviews into the three classes of positive, neutral, and negative.
-- Multi-class classification is a supervised learning task, hence you need to provide your tax classifier model with examples how to correctly learn to classify the products and the product reviews into the right sentiment classes. 
-- You can use the review text as the input feature for the model training and the sentiment as a label for model training. The sentiment class is usually expressed as an integer value for model training such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
+- Multi-class classification is a supervised learning task, hence, you must furnish your classifier model with examples to correctly learn how to classify products and product reviews into the respective sentiment classes. 
+- You can use the review text as the input feature for model training and assign sentiment labels to train the model. Sentiment classes are typically represented as integer values during model training, such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
-### Data ingestion and Exploration:
-- Imagine your e-commerce company is collecting all the customer feedback across all online channels. You need to capture, suddenly, customer feedback streaming from social media channels, feedback captured and transcribed through support center calls, incoming emails, mobile apps, and website data, and much more.
-- To do that, you need a flexible and elastic repository that can store, not only the different file formats, such as dealing with structured data, CSV files, as well as unstructured data, such as support center call audio files. It also needs to elastically scale the storage capacity as new data arrives.
-- Cloud-based data lakes address this problem. __Data lake__ is a centralized and secure repository that can store, discover, and share virtually any amount and any type of your data.
+## Data ingestion and Exploration:
+- Imagine your e-commerce company collecting customer feedback from various online channels, including social media, support center calls, emails, mobile apps, and website data, among others.
+- To achieve this, you require a flexible and scalable repository capable of storing different file formats, including structured data like CSV files and unstructured data like support center call audio files. Additionally, it should dynamically scale storage capacity as new data streams in.
+- Cloud-based data lakes address this problem. __Data lake__ is a centralized and secure repository that can store, discover, and share virtually any amount and any type of data.
 - You can ingest data in its raw format without any prior data transformation. Whether it's structured relational data in the form of CSV or TSV files, semi-structured data such as JSON or XML files, or unstructured data such as images, audio, and media files.
-- You can also ingest streaming data, such as an application delivering a continuous feed of log files, or feeds from social media channels, into your data lake.
-- A data lake needs to be governed. With new data arriving at any point in time you need to implement ways to discover and catalog the new data. A data lake needs to be governed. With new data arriving at any point in time you need to implement ways to discover and catalog the new data.
-- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier. Object storage is particularly helpful for storing and retrieving growing amounts of data of any type.
-- __Amazon S3__ gives you access to durable and high-available object storage in the cloud. You can ingest virtually anything, from just a few dataset files, to exabytes of data. AWS also provides additional tools and services to assist you in building a secure, compliant, and auditable data lake on top of S3. with this you can now use this centralized data repository to enable data warehousing analytics and also machine learning.
-- __AWS Data wrangler__ is an open-source Python library. The library connects Pandas DataFrame with AWS data-related services. AWS Data Wrangler offers abstracted functions to load or unload data from data lakes, data warehouses, or databases on AWS. You can install the library through the PIP install AWS wrangler command.
+- you can also ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
+- Effective governance is crucial for a data lake. With new data arriving continuously, it's essential to implement mechanisms for discovering and cataloging the incoming data.
+- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier, making it ideal for storing and retrieving large and diverse data sets.
+- __Amazon S3__ provides access to durable and highly-available object storage in the cloud. It allows you to ingest virtually any amount of data, from a few dataset files to exabytes of data. AWS also offers additional tools and services to help you build a secure, compliant, and auditable data lake on top of S3. With this centralized data repository, you can enable data warehousing analytics and machine learning.
+- __AWS Data wrangler__ is an open-source Python library, that connects Pandas DataFrame with AWS data-related services. It offers abstracted functions for loading or unloading data from data lakes, data warehouses, or databases on AWS.
+> Run below command to install AWS Data Wrangler library:
+```ruby
+!pip install awswrangler
+```
+
+
+
+
 > To read csv data from S3 data lake run below commands:
 ```ruby
 !pip install awswrangler
