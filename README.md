@@ -67,35 +67,32 @@ __Benifits of performing data science on cloud:__
 - Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast, __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier, making it ideal for storing and retrieving large and diverse data sets.
 - __Amazon S3__ provides access to durable and highly-available object storage in the cloud. It allows you to ingest virtually any amount of data, from a few dataset files to exabytes of data. AWS also offers additional tools and services to help you build a secure, compliant, and auditable data lake on top of S3. With this centralized data repository, you can enable data warehousing analytics and machine learning.
 - __AWS Data wrangler__ is an open-source Python library, that connects Pandas DataFrame with AWS data-related services. It offers abstracted functions for loading or unloading data from data lakes, data warehouses, or databases on AWS.
-> Run below command to install AWS Data Wrangler library:
+> To install AWS Data Wrangler library execute the following command:
 ```ruby
 !pip install awswrangler
 ```
-
-
-
-
-> To read csv data from S3 data lake run below commands:
+> To read CSV data from an S3 data lake, execute the following commands:
 ```ruby
-!pip install awswrangler
-
 import awswrangler as wr
 import pandas as pd
 
-df = wr.s3.read_csv(path = 's3://bucket/prefix/')
+df = wr.s3.read_csv(path='s3://bucket/prefix/')
 ```
-- __AWS Glue Data catalog__ is used to register or catalog the data stored in S3. It's like inventory to know what data you have stored in S3 date lake or bucket. Using the Data Catalog Service, you create a reference to the data, basically S3 to table mapping. The AWS Glue table, which is created inside an AWS Glue database, only contains the metadata information such as the data schema. Catalog is used to simplify where to find the data and which schema should be used, to query the data.
-- Instead of manually registering the data, you can also use __AWS Glue Crawler__. A Crawler can be used and set up to run on a schedule or to automatically find new data, which includes inferring the data schema and also to update the data catalog.
-- To register the data you can use AWS Data Wrangler tool. Follow the below steps:
-> 1) Create a database in the AWS Glue data catalog database using below command:
+- __AWS Data catalog services__ are used to register or catalog the data stored in S3. It is like a list/inventory that keeps track of all the data stored in S3. It helps you to know what data you have in your S3 storage. 
+- When you use the data catalog services, it's like establishing a reference between a file you have stored in Amazon S3 and a table. This table is managed by __AWS Glue__, and it lives in a special database created by AWS Glue. However, this table doesn't contain the actual data, it just holds metadata information such as the data schema.
+- Instead of registering data manually, you can use __AWS Glue Crawler__. It's a tool that can automatically scan your data to find out what's there.
+- It figures out how the data is structured and keeps your data catalog updated without you having to do it yourself.
+- To register data you can use AWS Data Wrangler tool following below steps:
+> Start by creating a database in the AWS Glue Data Catalog database using the command below:
 ```ruby
 import awswrangler as wr
 
-wr.catalog.create_database(name = name_for_the_database)
+wr.catalog.create_database(name=name_for_the_database)
 ```
-> 2) Create CSV table (metadataonly) in the AWS glue data catalog using below command:
+> Next, create a CSV table (metadata only) in the AWS Glue Data Catalog using the command below:
 ```ruby
-wr.catalog.create_csv_table(table = name_of_the_database, column_types = ..., )
+wr.catalog.create_csv_table(database=name_of_the_database, table=name_of_the_table, column_types=...)
+
 ```
 - __Amazon Athena__ is used to query the data stored in S3. Athena is an interactive query service that lets you run standard SQL queries to explore your data. Athena is serverless, which means you don't need to set up any infrastructure to run those queries. No matter how large the data is that you want to query, you can simply type your SQL query, referencing the dataset schema you provided in the AWS Glue Data Catalog.
 - To run the query follow below steps from the python environment you are using:
