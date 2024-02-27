@@ -3,7 +3,7 @@
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
 <div style="text-align:center;">
-    <img src="![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6)" alt="Image Description">
+    <img src= ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6) alt="Image Description">
 </div>
 
 
