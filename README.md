@@ -1,19 +1,16 @@
 # Practical data science on AWS cloud:
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
-
 > Course [1]:
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
 - You will perform exploratory data analysis and detect statistical data biases.
 - Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
 - You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
 - You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
-
 > Course [2]:
 - In course2, you will dive deeper into building custom NLP models.
 - You will construct a machine learning pipeline, perform feature engineering, and share your features with the organization using a scalable feature store.
 - You will train, tune, and deploy your model, orchestrate the model workflow using ML pipelines and MLOps strategies.
-
 > Course [3]:
 - In course3, you will optimize machine learning models and learn best practices for tuning hyperparameters and performing distributed model training.
 - You will explore advanced model deployment and monitoring options.
@@ -67,7 +64,7 @@ __Benifits of performing data science on cloud:__
 - You can ingest data in its raw format without any prior data transformation. Whether it's structured relational data in the form of CSV or TSV files, semi-structured data such as JSON or XML files, or unstructured data such as images, audio, and media files.
 - you can also ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
 - Effective governance is crucial for a data lake. With new data arriving continuously, it's essential to implement mechanisms for discovering and cataloging the incoming data.
-- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier, making it ideal for storing and retrieving large and diverse data sets.
+- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast, __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier, making it ideal for storing and retrieving large and diverse data sets.
 - __Amazon S3__ provides access to durable and highly-available object storage in the cloud. It allows you to ingest virtually any amount of data, from a few dataset files to exabytes of data. AWS also offers additional tools and services to help you build a secure, compliant, and auditable data lake on top of S3. With this centralized data repository, you can enable data warehousing analytics and machine learning.
 - __AWS Data wrangler__ is an open-source Python library, that connects Pandas DataFrame with AWS data-related services. It offers abstracted functions for loading or unloading data from data lakes, data warehouses, or databases on AWS.
 > Run below command to install AWS Data Wrangler library:
