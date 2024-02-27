@@ -92,22 +92,22 @@ wr.catalog.create_database(name=name_for_the_database)
 > Next, create a CSV table (metadata only) in the AWS Glue Data Catalog using the command below:
 ```ruby
 wr.catalog.create_csv_table(database=name_of_the_database, table=name_of_the_table, column_types=...)
-
 ```
-- __Amazon Athena__ is used to query the data stored in S3. Athena is an interactive query service that lets you run standard SQL queries to explore your data. Athena is serverless, which means you don't need to set up any infrastructure to run those queries. No matter how large the data is that you want to query, you can simply type your SQL query, referencing the dataset schema you provided in the AWS Glue Data Catalog.
-- To run the query follow below steps from the python environment you are using:
-> 1) Create amazon athena S3 bucket using below commands/query:
+- __AWS Athena__ is a tool used to query the data stored in S3. It allows you to use standard SQL queries to explore your data interactively.
+- Athena is serverless, meaning you don't have to set up any infrastructure to run your queries. Regardless of the data's size, you can simply write your SQL query, referencing the dataset schema provided in the AWS Glue Data Catalog.
+- To execute a query, follow these steps from your Python environment:
+> Begin by setting up Amazon Athena to access your data stored in S3.
 ```ruby
 import awswrangler as wr
 
 wr.athena.create_athena_bucket()
 ```
-> 2) Execute SQL query on amazon athena
+> Next, execute your SQL query on Amazon Athena:
 ```ruby
-df = wr.athena.read_sql_query(sql = 'sql_query', database = name_of_the_database)
+df = wr.athena.read_sql_query(sql='sql_query', database=name_of_the_database)
 ```
-- Athena then runs the query on the specified dataset and stores the results in S3, and it also returns the results in a Pandas DataFrame.
-- Athena will automatically scale out and split the query into simpler queries to run in parallel against your data when building highly complex analytical queries to run against not just gigabytes, or terabytes, or petabytes of data. Because athena is based on Presto, an open source distributed SQL engine, developed for this exact use case.
+- Athena processes the query on the specified dataset, stores the results in S3, and returns them as a Pandas DataFrame.
+- When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
 ### Data Visualization:
 - Depending on what kind of data you are exploring and what kind of relationships in the data you're looking for, the type of visualizations you use might be different.
