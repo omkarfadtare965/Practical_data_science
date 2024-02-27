@@ -50,8 +50,7 @@ __Benifits of performing data science on cloud:__
 - Using practical data science, you can switch to a compute instance that has more CPU resources, or even switch up to a GPU-based compute instance.
 - Cloud allows training your model on single CPU instance __(scaling up)__, performing distributed model training in parallel across various compute instances __(scaling out)__.
 - On cloud when the model training is completed, the instances are terminated as well. This means you only pay for what you actually use.
-- CLoud allows you to store and process almost any amount of data.
-- Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
+- CLoud allows you to store and process almost any amount of data. Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
 
 __Data science and machine learning toolbox:__
 
