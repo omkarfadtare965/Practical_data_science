@@ -2,8 +2,6 @@
 - In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cc5d2bf9-5e51-4d90-928d-6da501560da6)
-
 > Course [1]:
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
 - You will perform exploratory data analysis and detect statistical data biases.
@@ -51,9 +49,6 @@ __Benifits of performing data science on cloud:__
 - Developing and running data science projects in the cloud is the agility and elasticity that the cloud offers. If you develop data science projects in a local notebook or IDE environment, for example, hosted on your laptop or company-owned server pool, you are limited by the existing hardware resources. You have to carefully watch how much data you process, how much CPU processing power you have available to train and tune your model. And if you need more, you need to buy additional computer resources. This process doesn't allow you to move and develop quickly. Maybe your model training takes too long because it consumes all of the CPU resources of the compute instance you have chosen.
 - Using practical data science, you can switch to a compute instance that has more CPU resources, or even switch up to a GPU-based compute instance.
 - Cloud allows training your model on single CPU instance __(scaling up)__, performing distributed model training in parallel across various compute instances __(scaling out)__.
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/16fcd327-e77f-4b16-9de1-4b9356a53b41)
-
 - On cloud when the model training is completed, the instances are terminated as well. This means you only pay for what you actually use.
 - CLoud allows you to store and process almost any amount of data.
 - Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
