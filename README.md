@@ -109,20 +109,20 @@ df = wr.athena.read_sql_query(sql='sql_query', database=name_of_the_database)
 - Athena processes the query on the specified dataset, stores the results in S3, and returns them as a Pandas DataFrame.
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
-### Data Visualization:
-- Depending on what kind of data you are exploring and what kind of relationships in the data you're looking for, the type of visualizations you use might be different.
-- Pandas an open source library, is used for data analysis and data manipulation. - NumPy an open source library, is used to perform scientific computing in Python.
-- Matplotlib helps to create static animated and interactive visualizations.
-- Seaborn is based on matplotlib, and adds statistical data visualizations.
+## Data visualization:
+- The type of visualizations you use may vary depending on the type of data you're exploring and the relationships you're examining within the data.
+- Pandas, an open-source library, is utilized for data analysis and manipulation.
+- NumPy, another open-source library, facilitates scientific computing in Python.
+- Matplotlib aids in creating static, animated, and interactive visualizations.
+- Seaborn, built on top of matplotlib, enhances visualizations with statistical data analysis.
 
-### Statistical bias and Feature importance:
-- Statistical bias and Feature importance allow you to gain a better understanding of your data and a better understanding of the quality of your data.
+## Statistical bias and Feature importance:
+- Statistical bias and feature importance help you gain a better understanding of your data quality and how individual features contribute to your model.
 - These concepts also allow you to explore how the individual features of your datasets contribute to the final model.
-- A data set is considered to be biased if it cannot completely and accurately represent the underlying problem space. Statistical bias is a tendency of a statistic to either overestimate or underestimate a parameter.
-- For example, a dataset where fraudulent credit card transactions are rare, can lead to ineffective fraud detection models as they are unlikely to recognize fraudulent transactions due to lack of exposure to them.
-- Another example is, let's say, we have products review data set in which one product category A has large number of reviews and fewer number of reviews for other product category B and C.
-- When you build a product sentiment prediction model with this biased data set, the resulting model could very well detect sentiment of new products that belong to product category A. But for newer products that belong to other product category B and C, your sentiment model is not going to be really accurate.
-- One way to address this problem is to add more examples of fraud transactions to your training dataset.
+- A dataset is biased if it fails to accurately represent the underlying problem space. Statistical bias refers to a statistic's tendency to either overestimate or underestimate a parameter.
+- For instance, in a dataset where fraudulent credit card transactions are rare, fraud detection models may struggle to identify fraudulent transactions due to lack of exposure.
+- Similarly, consider a product review dataset where one product category (A) has a large number of reviews compared to categories B and C. When building a sentiment prediction model using this biased dataset, the model may accurately predict sentiments for category A products but perform poorly for categories B and C.
+- One solution to this issue is to augment the training dataset with more examples of fraudulent transactions.
 
 __Types of Bias:__
 > 1) Activity bias:
@@ -137,32 +137,49 @@ __Types of Bias:__
 
 __Types of drift in Machine learning operations:__
 > 1) Data drift:
-- When the data used by a model changes over time, it's called data drift. This can make the model less accurate because it's not used to the new data.
+- Data drift happens when the data used by a model changes over time, making the model less accurate
 > 2) Concept drift:
-- If the relationship between things the model looks at and what it's trying to predict, changes, that's concept drift.
+- Concept drift occurs when the relationship between the model's input and output changes over time.
 - For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
 > 3) Covariate drift:
-- When the characteristics the model uses to make predictions change, it's covariate drift.
+- Covariate drift happens when the characteristics used by the model to make predictions change over time.
 - Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
 > 4) Prior probability drift:
-- The shift in how often each outcome happens is called prior probability drift.
+- Prior probability drift is the shift in the frequency of each outcome over time.
 - Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
 > 5) Model drift: 
-- Model drift is when a model that used to work well starts to become less accurate over time.
+- Model drift is when a model that used to perform well becomes less accurate over time.
 - This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect. 
 > 6) Population drift:
+- Population drift occurs when the population the model is applied to changes over time, making the model less accurate.
 - Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
-- It's like the group of people you're trying to predict for has changed, making your model less accurate because it's not used to the new population.
 > 7) Label drift:
 - Label drift is when the answers or labels you have for your data change over time.
 - It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
 
 __Measuring statistical bias:__
-- Class imbalance, or CI, measures the imbalance in the number of examples that are provided, for different facet values in your dataset.
+- Class imbalance, or CI, shows if there are more examples of one thing than another in your dataset.
 - A facet is a sensitive feature in your dataset, that you want to analyze for these imbalances.
-- When you apply this to the product review dataset, it answers this particular question, does a particular product category, such as product Category A, have disproportionately large number of total reviews than any other category in the dataset?
-- Difference in Proportions of Labels (DPL) metric measures the imbalance of positive outcomes between the different facet values. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product Category A, has disproportionately higher ratings than other categories.
-- CI, the metric that we just saw as measuring if a particular category has a total number of reviews higher than any other categories, DPL is actually looking for higher ratings than any other product categories.
+- For example, CI can tell us if one product category has a lot more reviews than others.
+- The Difference in Proportions of Labels (DPL) metric checks if one group has more positive outcomes than others. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product category A, has disproportionately higher ratings than other categories.
+- So, while CI looks at overall reviews, DPL looks at whether some categories get higher ratings than others.
+- For example, consider we have a dataset of customer reviews for an e-commerce platform. Each review is labeled as either "positive" or "negative" sentiment based on the customer's feedback.
+- Class imbalance occurs if there are significantly more positive reviews than negative reviews, or vice versa.
+- DPL would assess whether certain product categories receive a disproportionately higher proportion of positive reviews compared to others.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
