@@ -52,9 +52,7 @@ __Benifits of performing data science on cloud:__
 - On cloud when the model training is completed, the instances are terminated as well. This means you only pay for what you actually use.
 - CLoud allows you to store and process almost any amount of data. Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
 
-__Data science and machine learning toolbox:__
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/8a5def2a-5426-4587-a335-0f453dfc15de)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/5d4e0e9a-c2b5-4570-a99f-92ab3355dbec)
 
 ## Use case: Multi-class Classification for Sentiment analysis of Product reviews
 - Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
