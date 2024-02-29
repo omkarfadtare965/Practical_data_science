@@ -167,34 +167,13 @@ __Measuring statistical bias:__
 - Class imbalance occurs if there are significantly more positive reviews than negative reviews, or vice versa.
 - DPL would assess whether certain product categories receive a disproportionately higher proportion of positive reviews compared to others.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 __AWS tools to detect statistical bias in dataset:__
-- The two AWS tools that are used to detect statistical bias in dataset are SageMaker Data Wrangler and SageMaker Clarify.
-- Data Wrangler provides you with capabilities to connect to different sources for your data, visualize the data, and transform the data, by applying any number of transformations and detect statistical bias in your data sets, and generate reports about the bias detected in those data sets.
-- It also provides capabilities to provide feature importance calculations on your training data set.
-- Amazon SageMaker Clarify can perform statistical bias detection and generate bias reports on your training datasets. Additionally, it can also perform bias detection in trained and deployed models. It further provides capabilities for machine learning explainability, as well as detecting drift in data and models.
+- The two AWS tools used to detect statistical bias in datasets are SageMaker Data Wrangler and SageMaker Clarify.
+- ata Wrangler allows you to connect to various data sources, visualize, and transform data, detect statistical bias, and generate reports on the detected bias in datasets. It also provides feature importance calculations for your training dataset.
+- Amazon SageMaker Clarify can detect statistical bias and generate bias reports on training datasets. Additionally, it can detect bias in trained and deployed models. Moreover, it offers capabilities for machine learning explainability and detects data and model drift.
 
-__Statistical bias generation and report generation using AWS Sagemaker Clarify:__
-- To use Clarify APIs, start by importing the Clarify library from the SageMaker SDK and then construct the object SageMakerClarifyProcessor using the clarify library.
-- SageMakerClarifyProcessor constructor allows you to scale the bias detection process into a distributed cluster
+__Detecting Bias in Datasets Using Amazon SageMaker Clarify:__
+- To use Clarify APIs, start by importing the SageMaker Clarify module from the SageMaker SDK and then construct the SageMakerClarifyProcessor object using the SageMakerClarifyProcessor constructor.
 ```ruby
 from sagemaker import clarify
 
