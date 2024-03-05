@@ -174,34 +174,51 @@ __AWS tools to detect statistical bias in dataset:__
 
 __Detecting Bias in Datasets Using Amazon SageMaker Clarify:__
 - To use Clarify APIs, start by importing the SageMaker Clarify module from the SageMaker SDK and then construct the SageMakerClarifyProcessor object using the SageMakerClarifyProcessor constructor.
+> 1) Constructing SageMakerClarifyProcessor object
 ```ruby
 from sagemaker import clarify
 
 clarify_processor = clarify.SageMakerClarifyProcessor(role=role, instance_count=1, instance_type="ml.c5.2xlarge", sagemaker_session=sess)
+```
 
-bias_report_output_path = << Define S3 Path >>
+> 2) Define S3 path for bias report output
+```ruby
+bias_report_output_path = "s3://your-bucket-name/path/to/save/bias/report"
 ```
 - instance_count represents the number of nodes that are included in the cluster 
 - instance_type represents the processing capacity of each individual node in the cluster
 - The processing capacity is measured by the node's compute capacity, memory and the network
 - In the next step you configure the data config object on the clarify library, Data config object represents the details about your data
+
+> 3) Configuring data config object
 ```ruby
-bias_data_config = clarify.DataConfig(s3_data_input_path = ..., s3_output_path = ..., label = 'sentiment', headers = df_balanced.columns.to_list(), dataset_type = 'text/csv')
+bias_data_config = clarify.DataConfig(s3_data_input_path = "s3://your-bucket-name/path/to/input/data", s3_output_path = bias_report_output_path, label = 'sentiment', headers = df_balanced.columns.to_list(), dataset_type = 'text/csv')
 ```
 label that we are going to predict
 - In the next step, you configure the bias config object on clarify library. The bias config object captures the facet or the featured name that you are trying to evaluate for bias or imbalance. In this below case you are trying to find out the imbalances in the product category feature. SO if the sentiment feature is your label what is the desired value for that label. That value goes into the parameter label or threshold.
 - The parameter label_values_or_threshold defines the desired values for the labels.
+
+> 4) Configuring bias config object
 ```ruby
-bias_config = Clarify.BiasConfig(label_values_or_threshold=[...], face_name = 'product_category')
+bias_config = clarify.BiasConfig(label_values_or_threshold=[...], 
+                                 facet_name='product_category')
+```
 - In the next step you run the pre training bias method on the clarify processor.
+>  Running pre-training bias method
 ```ruby
-clarify_processor.run_pre_training_bias(data_config = ..., data_bias_config = ..., methods = ["CI","DPL",..], wait = <<False/True>>, logs = <<False/True>>)
+clarify_processor.run_pre_training_bias(data_config=bias_data_config, 
+                                        data_bias_config=bias_config, 
+                                        methods=["CI", "DPL", ...], 
+                                        wait=False, 
+                                        logs=False)
 ```
 - In addition to specifying the data config and the data bias you already configured, You can also specify the methods that you want to evaluate for bias. These are nothing but the metrics that you already learned about to detetct bias.
 - Wait parameter specifies whether this bias detection job should block your rest of the code or should it be executed in the background.
 - Similarly logs parameter specify that whether you want to capture the logs or not.
 - Once the configuration of the pre-training bias method is done, you launch this job. In the background, SageMaker Clarify is using a construct called SageMaker Processing Job to execute the bias detection at scale. SageMaker Processing Jobs is a construct that allows you to perform any data-related tasks at scale.
 - These tasks could be executing pre-processing, or post-processing tasks, or even using data to evaluate your model.
+
+- 
 - As you can see in the figure here, the SageMaker Processing Job expects the data to be in an S3 bucket.  The data is collected from the S3 bucket and processed on this processing cluster which contains a variety of containers in the cluster.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/94a703d1-c887-48ba-914e-24689a8f8525)
