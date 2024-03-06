@@ -35,28 +35,69 @@ __Benifits of performing data science project on cloud:__
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/5d4e0e9a-c2b5-4570-a99f-92ab3355dbec)
 
-## **Project use case: Multi-class Classification for Sentiment analysis of Product reviews**
-- __Problem statement:__ Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
+## Project use case: Multi-class classification for Sentiment analysis of Product reviews
+- Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
 - Your task is to build an NLP model that will take those product reviews as input. You will then use the model to classify the sentiment of the reviews into the three classes of positive, neutral, and negative.
 - Multi-class classification is a supervised learning task, hence, you must furnish your classifier model with examples to correctly learn how to classify products and product reviews into the respective sentiment classes. 
 - You can use the review text as the input feature for model training and assign sentiment labels to train the model. Sentiment classes are typically represented as integer values during model training, such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
+> Section A
+- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
+- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
+- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
+- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
+- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
+
+
+
+
+
+
+
+
+
+
 ## Data ingestion and Exploration:
-- Imagine your e-commerce company collecting customer feedback from various online channels, including social media, support center calls, emails, mobile apps, and website data, among others.
-- To achieve this, you require a flexible and scalable repository capable of storing different file formats, including structured data like CSV files and unstructured data like support center call audio files. Additionally, it should dynamically scale storage capacity as new data streams in.
-- Cloud-based data lakes address this problem. __Data lake__ is a centralized and secure repository that can store, discover, and share virtually any amount and any type of data.
-- You can ingest data in its raw format without any prior data transformation. Whether it's structured relational data in the form of CSV or TSV files, semi-structured data such as JSON or XML files, or unstructured data such as images, audio, and media files.
-- you can also ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
-- Effective governance is crucial for a data lake. With new data arriving continuously, it's essential to implement mechanisms for discovering and cataloging the incoming data.
-- Data lakes are often built on top of object storage, such as Amazon S3. __File storage__ stores and manages data as individual files organized in hierarchical file folder structures. In contrast, __Block storage__ stores and manages data as individual chunks called the blocks. Each block receives a unique identifier, but no additional metadata is stored with that block. __Object storage__ stores data with its metadata  such as when the object was last modified, and a unique identifier, making it ideal for storing and retrieving large and diverse data sets.
-- __Amazon S3__ provides access to durable and highly-available object storage in the cloud. It allows you to ingest virtually any amount of data, from a few dataset files to exabytes of data. AWS also offers additional tools and services to help you build a secure, compliant, and auditable data lake on top of S3. With this centralized data repository, you can enable data warehousing analytics and machine learning.
-- __AWS Data wrangler__ is an open-source Python library, that connects Pandas DataFrame with AWS data-related services. It offers abstracted functions for loading or unloading data from data lakes, data warehouses, or databases on AWS.
-> To install AWS Data Wrangler library execute the following command:
-```ruby
+-  ___`Data ingestion`___ is the process of bringing data from various sources, such as databases, files, or websites, into a system where it can be used. Think of it like gathering ingredients into your kitchen before cooking a meal.
+- Imagine your e-commerce company collecting customer feedback from multiple online channels, including social media, support center calls, emails, mobile apps, and website data.
+- To accomplish this, you need a flexible and scalable repository capable of storing different file formats, including structured data like CSV files and unstructured data like support center call audio files. Additionally, it should dynamically scale storage capacity as new data streams in.
+- Cloud-based data lakes provide a solution to this problem. A ___`Data lake`___ is a centralized and secure repository that can store, discover, and share virtually any amount and type of data.
+- Data can be ingested into a data lake in its raw format without prior transformation. Whether it's structured relational data in CSV or TSV files, semi-structured data like JSON or XML files, or unstructured data such as images, audio, and media files. Additionally, you can ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
+- Effective governance is crucial for managing a data lake. With new data continuously arriving, it's essential to implement mechanisms for discovering and cataloging incoming data.
+- There are three types of storage technologies used in computer systems and data storage solutions.
+  > ___`File storage`___ organizes data as individual files stored in a hierarchical directory structure. It is similar to how files are organized on personal computers or file servers. File storage is well-suited for storing structured and semi-structured data, such as documents, spreadsheets, multimedia files, and application data.
+  > ___`Block storage`___ manages data as individual blocks or chunks, typically at the disk level. Each block is a fixed-size unit of data and is accessed using block-level protocols like SCSI (Small Computer System Interface) or Fibre Channel. Block storage is commonly used in storage area networks and provides high-performance, low-latency access to data.
+  > ___`Object storage`___ is a storage architecture that manages data as objects. Each object consists of data, metadata (information that describes data, such as when the object was last modified), and a unique identifier.
+- Data lakes, such as Amazon S3 are often built on top of object storage. Amazon S3 provides access to durable and highly-available object storage in the cloud, allowing you to ingest virtually any amount of data, from a few dataset files to exabytes of data.
+- AWS provides various tools and services that help ensure your data lake, which is built on Amazon S3, is secure, compliant with regulations, and allows for auditing. These tools and services include features like access control, encryption, data governance, and compliance certifications, which help protect your data and ensure it meets legal requirements.
+- By using Amazon S3 as a centralized repository for your data lake, you can easily access and analyze your data for data warehousing analytics. Data warehousing analytics involves analyzing large volumes of structured data to gain insights and make informed decisions. Additionally, you can leverage machine learning tools and algorithms to extract valuable insights from your data, identify patterns, and make predictions or recommendations based on your business needs.
+- Data lakes and data warehouses are both technologies used for storing and analyzing data, but they have different architectures and purposes
+  > ___`Data lake`___ are repositories that store vast amounts of raw, unstructured, and structured data in its native format. They are designed to ingest and store data from various sources, such as databases, sensors, logs, social media, and more, without prior transformation. Data lakes are ideal for exploratory data analysis, data science, and big data processing, as they enable organizations to retain and analyze raw data for future use. ex: ___`AWS S3 Bucket`___
+  > ___`Data warehouse`___ are structured repositories that store processed and organized data in a structured format. Data warehouses undergo a process of extraction, transformation, and loading (ETL) to clean, transform, and integrate data from different sources before loading it into the warehouse. Data warehouses provide a consolidated view of business data and are optimized for high-performance analytics, reporting, and business intelligence (BI) applications. They are used for historical analysis, generating reports, and supporting decision-making processes. ex: ___`AWS Redshift`___
+- ___`AWS Data wrangler`___ is an open-source Python library, that helps you interact with data stored in AWS environments and provides easy-to-use functions to load data from AWS services like S3, Glue, Athena, Redshift, and more into Python environments (such as Jupyter notebooks), and to push processed data back into AWS services.
+- For example, if you have a bunch of data stored in an Amazon S3 bucket and you want to use it in your Python code (perhaps for analysis, visualization, or machine learning), AWS Data Wrangler makes it simple to load that data into a Pandas DataFrame. Similarly, if you've processed some data in your Python code and want to store it back into an AWS service like S3 or Redshift, AWS Data Wrangler provides functions to easily accomplish that task too.
+
+
+Amazon Sagemaker -> Studio -> Open studio -> Launch -> Studio -> Open launcher -> Open System terminal -> 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/95159905-3c7e-4d11-96b4-4f90f811b654)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/da4f2c5a-ce50-4ed2-87d4-7ed0d0e19d88)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e7320ed0-29a2-4b32-9e7c-f4fbd8efcccb)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/d61a5335-bb75-48a4-8915-b8ac4fb9aab2)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1f4b4a96-6320-46fa-bc68-6ba0a8ea41ac)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a7d622ba-fbf1-4c4a-876d-2c3cbd583b97)
+
+
+
+
+
+
+
+
+
+
+
 !pip install awswrangler
-```
-> To read CSV data from an S3 data lake, execute the following commands:
-```ruby
+
 import awswrangler as wr
 import pandas as pd
 
@@ -92,6 +133,20 @@ df = wr.athena.read_sql_query(sql='sql_query', database=name_of_the_database)
 ```
 - Athena processes the query on the specified dataset, stores the results in S3, and returns them as a Pandas DataFrame.
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
+
+https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews
+
+https://github.com/aws/aws-sdk-pandas
+https://aws.amazon.com/glue/
+https://aws.amazon.com/athena/
+
+https://matplotlib.org/
+https://seaborn.pydata.org/
+https://pandas.pydata.org/
+https://numpy.org/
+https://aws-sdk-pandas.readthedocs.io/en/stable/
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/09a430f3-3175-4630-a5ce-f3bd4e31eb37)
 
 ## Data visualization:
 - The type of visualizations you use may vary depending on the type of data you're exploring and the relationships you're examining within the data.
