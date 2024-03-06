@@ -6,26 +6,11 @@ __Prerequisites for this project:__
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
 - Understanding of the concept of building, training, and evaluating machine learning models.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-__Brief introduction:__
-- Artificial intelligence/AI, is generally described as a technique that lets machines mimic human behavior.
-- Machine learning/ML, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
-- Deep learning is yet another subset of machine learning, that uses artificial neural networks to learn from data.
+__Brief introduction to Artificial intelligence and Machine learning:__
+- Artificial intelligence, is generally described as a technique that lets machines mimic human behavior.
+- Machine learning, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
+- Deep learning is yet another subset of ML, that uses artificial neural networks to learn from data.
 - Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
-- This course helps you to improve your data science and machine learning skills, work with almost any amount of data, and implement their use cases in the most efficient way.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
