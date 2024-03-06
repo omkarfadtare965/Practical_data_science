@@ -63,66 +63,14 @@ __Benifits of performing data science project on cloud:__
   > ___`Data warehouse`___ are structured repositories that store processed and organized data in a structured format. Data warehouses undergo a process of extraction, transformation, and loading (ETL) to clean, transform, and integrate data from different sources before loading it into the warehouse. Data warehouses provide a consolidated view of business data and are optimized for high-performance analytics, reporting, and business intelligence (BI) applications. They are used for historical analysis, generating reports, and supporting decision-making processes. ex: ___`AWS Redshift`___
 - ___`AWS Data wrangler`___ is an open-source Python library, that helps you interact with data stored in AWS environments and provides easy-to-use functions to load data from AWS services like S3, Glue, Athena, Redshift, and more into Python environments (such as Jupyter notebooks), and to push processed data back into AWS services.
 - For example, if you have a bunch of data stored in an Amazon S3 bucket and you want to use it in your Python code (perhaps for analysis, visualization, or machine learning), AWS Data Wrangler makes it simple to load that data into a Pandas DataFrame. Similarly, if you've processed some data in your Python code and want to store it back into an AWS service like S3 or Redshift, AWS Data Wrangler provides functions to easily accomplish that task too.
-
-
-
-
-Amazon Sagemaker -> Studio -> Open studio -> Launch -> Studio -> Open launcher -> Open System terminal -> 
-
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/95159905-3c7e-4d11-96b4-4f90f811b654)
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/da4f2c5a-ce50-4ed2-87d4-7ed0d0e19d88)
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e7320ed0-29a2-4b32-9e7c-f4fbd8efcccb)
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/d61a5335-bb75-48a4-8915-b8ac4fb9aab2)
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1f4b4a96-6320-46fa-bc68-6ba0a8ea41ac)
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a7d622ba-fbf1-4c4a-876d-2c3cbd583b97)
-
-
-
-
-
-
-
-
-
-
-
-!pip install awswrangler
-
-import awswrangler as wr
-import pandas as pd
-
-df = wr.s3.read_csv(path='s3://bucket/prefix/')
-```
-- __AWS Data catalog services__ are used to register or catalog the data stored in S3. It is like a list/inventory that keeps track of all the data stored in S3. It helps you to know what data you have in your S3 storage. 
-- When you use the data catalog services, it's like establishing a reference between a file you have stored in Amazon S3 and a table. This table is managed by __AWS Glue__, and it lives in a special database created by AWS Glue. However, this table doesn't contain the actual data, it just holds metadata information such as the data schema.
-- Instead of registering data manually, you can use __AWS Glue Crawler__. It's a tool that can automatically scan your data to find out what's there.
-- It figures out how the data is structured and keeps your data catalog updated without you having to do it yourself.
-- To register data you can use AWS Data Wrangler tool following below steps:
-> Start by creating a database in the AWS Glue Data Catalog database using the command below:
-```ruby
-import awswrangler as wr
-
-wr.catalog.create_database(name=name_for_the_database)
-```
-> Next, create a CSV table (metadata only) in the AWS Glue Data Catalog using the command below:
-```ruby
-wr.catalog.create_csv_table(database=name_of_the_database, table=name_of_the_table, column_types=...)
-```
-- __AWS Athena__ is a tool used to query the data stored in S3. It allows you to use standard SQL queries to explore your data interactively.
-- Athena is serverless, meaning you don't have to set up any infrastructure to run your queries. Regardless of the data's size, you can simply write your SQL query, referencing the dataset schema provided in the AWS Glue Data Catalog.
-- To execute a query, follow these steps from your Python environment:
-> Begin by setting up Amazon Athena to access your data stored in S3.
-```ruby
-import awswrangler as wr
-
-wr.athena.create_athena_bucket()
-```
-> Next, execute your SQL query on Amazon Athena:
-```ruby
-df = wr.athena.read_sql_query(sql='sql_query', database=name_of_the_database)
-```
-- Athena processes the query on the specified dataset, stores the results in S3, and returns them as a Pandas DataFrame.
+- ___`AWS Glue`___ is a fully managed metadata repository catalog service. This metadata includes details about data schemas, column names, data types, file formats, and locations.
+- The Data Catalog integrates seamlessly with other AWS services, such as AWS Glue ETL (Extract, Transform, Load), Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR (Elastic MapReduce).
+- ___`AWS Glue Crawler`___ is a service provided by AWS as part of the AWS Glue suite. Its primary purpose is to automatically discover and catalog metadata from various data sources, making it easier to analyze and query the data using other AWS services.
+- Instead of registering data manually on AWS Glue; AWS Glue Crawler automatically scans and analyzes data stored in different data sources such as Amazon S3 buckets, relational databases (Amazon RDS, Amazon Redshift), data lakes, and other accessible repositories. It detects the structure, format, and schema of the data without requiring manual intervention.
+- ___`AWS Athena`___ is an interactive query service that enables you to analyze data stored in Amazon S3 using standard SQL queries. It allows you to query data directly from your S3 buckets without the need to set up or manage any infrastructure.
+- It is a serverless service, which means you don't need to provision or manage any infrastructure. You simply define your queries, and Athena automatically scales resources to execute them quickly and efficiently.
+- Athena integrates seamlessly with the AWS Glue Data Catalog, allowing you to define tables and schemas for your S3 data
+- Athena is compatible with popular business intelligence (BI) tools like Tableau, Power BI, and Amazon QuickSight.
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
 
