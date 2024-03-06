@@ -1,5 +1,14 @@
 # Practical data science on AWS cloud:
-- In this course, you will learn how to take your data science project from idea to production. You'll discover how to build, deploy, and scale data science projects, serving thousands of models to millions of end-users. You will learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects. You will also learn to tackle complex data science challenges with sophisticated tools.
+In this project, you'll learn how to turn your data science project ideas into real-world solutions. Then, you'll learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects, serving thousands of models to millions of end-users using AutoML. Following that, you'll learn to create and deploy ML pipelines that manage the flow of data and models, especially using a powerful tool called BERT. Additionally, you'll learn how to deploy human-in-the-loop pipelines, processes that involve humans in decision-making, to make your models work even better.
+
+
+
+
+
+
+
+
+
 - One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
 > Course [1]:
 - In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
