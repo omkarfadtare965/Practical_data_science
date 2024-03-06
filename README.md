@@ -7,14 +7,14 @@ __Prerequisites for this project:__
 - Understanding of the concept of building, training, and evaluating machine learning models.
 
 __Brief introduction to Artificial intelligence and Machine learning:__
-- Artificial intelligence, is generally described as a technique that lets machines mimic human behavior.
+- __`Artificial intelligence`__, is generally described as a technique that lets machines mimic human behavior.
 - Machine learning, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
 - Deep learning is yet another subset of ML, that uses artificial neural networks to learn from data.
 - Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
-- Popular machine learning tasks are classification and regression problems, which are examples of supervised learning.
+- Popular ML tasks are classification and regression problems, which are examples of supervised learning.
 - In supervised learning, you learn by providing the algorithm with labeled data.
 - In classification, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
 - In contrast, regression applies statistical methods to predict a continuous value, such as a house price, given a set of related and non-related input variables.
