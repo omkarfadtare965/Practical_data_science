@@ -8,19 +8,19 @@ __Prerequisites for this project:__
 
 __Brief introduction to Artificial intelligence and Machine learning:__
 - ___`Artificial intelligence`___, is generally described as a technique that lets machines mimic human behavior.
-- Machine learning, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
-- Deep learning is yet another subset of ML, that uses artificial neural networks to learn from data.
-- Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
+- ___`Machine learning`___, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
+- ___`Deep learning`___ is yet another subset of ML, that uses artificial neural networks to learn from data.
+- ___`Data science`___ is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/54ea4e85-d127-4fc2-9f1c-4eadd5c6b69b)
 
 - Popular ML tasks are classification and regression problems, which are examples of supervised learning.
-- In supervised learning, you learn by providing the algorithm with labeled data.
-- In classification, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
-- In contrast, regression applies statistical methods to predict a continuous value, such as a house price, given a set of related and non-related input variables.
-- Another popular task is clustering, it is an example of unsupervised learning where the data is not labelled. The clustering algorithm tries to find patterns in the data and starts grouping the data points into distinct clusters.
-- Image processing is a major task of computer vision where you need to classify images into pictures of dogs and cats, distinguish between speed signs and trees.
-- The field of Natural Language Processing (NLP), or Natural Language Understanding (NLU) includes machine translations, sentiment analysis, question answering, etc.
+- In ___`Supervised learning`___, you learn by providing the algorithm with labeled data.
+- In ___`Classification`___, the goal is to assign the input sample a defined class. For example, is this email I received spam or not spam?
+- In contrast, ___`Regression`___ applies statistical methods to predict a continuous value, such as a house price, given a set of related and non-related input variables.
+- Another popular task is clustering, it is an example of ___`Unsupervised learning`___ where the data is not labelled. The ___`Clustering`___ algorithm tries to find patterns in the data and starts grouping the data points into distinct clusters.
+- Image processing is a major task of ___`Computer vision`___ where you need to classify images into pictures of dogs and cats, distinguish between speed signs and trees.
+- The field of ___`Natural Language Processing`___ (NLP), or ___`Natural Language Understanding`___ (NLU) includes machine translations, sentiment analysis, question answering, etc.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7ae4c166-5944-4539-aeac-ba763619bf55)
 
