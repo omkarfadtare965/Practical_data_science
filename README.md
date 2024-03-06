@@ -1,34 +1,24 @@
 # Practical data science on AWS cloud:
 In this project, you'll learn how to turn your data science project ideas into real-world solutions. Then, you'll learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects, serving thousands of models to millions of end-users using AutoML. Following that, you'll learn to create and deploy ML pipelines that manage the flow of data and models, especially using a powerful tool called BERT. Additionally, you'll learn how to deploy human-in-the-loop pipelines, processes that involve humans in decision-making, to make your models work even better.
 
-
-
-
-
-
-
-
-
-- One of the biggest benefits of running data science projects in the cloud is the agility and elasticity it offers, allowing you to scale and process virtually any amount of data.
-> Course [1]:
-- In course1, you will learn how to ingest the data into a central repository and explore the data using various tools, explore and analyze the dataset using interactive queries and learn how to visualize the results.
-- You will perform exploratory data analysis and detect statistical data biases.
-- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
-- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
-- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
-> Course [2]:
-- In course2, you will dive deeper into building custom NLP models.
-- You will construct a machine learning pipeline, perform feature engineering, and share your features with the organization using a scalable feature store.
-- You will train, tune, and deploy your model, orchestrate the model workflow using ML pipelines and MLOps strategies.
-> Course [3]:
-- In course3, you will optimize machine learning models and learn best practices for tuning hyperparameters and performing distributed model training.
-- You will explore advanced model deployment and monitoring options.
-- You will discover how to handle large-scale data labeling and build human-in-the-loop pipelines to enhance model accuracy and performance by combining machine intelligence with human intelligence.
-
-__Prerequisites for this course:__
+__Prerequisites for this project:__
 - Proficiency in Python and SQL programming.
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
-- Understanding the concept of building, training, and evaluating machine learning models.
+- Understanding of the concept of building, training, and evaluating machine learning models.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 __Brief introduction:__
 - Artificial intelligence/AI, is generally described as a technique that lets machines mimic human behavior.
