@@ -41,22 +41,6 @@ __Benifits of performing data science project on cloud:__
 - Multi-class classification is a supervised learning task, hence, you must furnish your classifier model with examples to correctly learn how to classify products and product reviews into the respective sentiment classes. 
 - You can use the review text as the input feature for model training and assign sentiment labels to train the model. Sentiment classes are typically represented as integer values during model training, such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
-> Section A
-- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
-- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
-- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
-- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
-- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
-
-
-
-
-
-
-
-
-
-
 ## Data ingestion and Exploration:
 -  ___`Data ingestion`___ is the process of bringing data from various sources, such as databases, files, or websites, into a system where it can be used. Think of it like gathering ingredients into your kitchen before cooking a meal.
 - Imagine your e-commerce company collecting customer feedback from multiple online channels, including social media, support center calls, emails, mobile apps, and website data.
@@ -78,7 +62,11 @@ __Benifits of performing data science project on cloud:__
 - For example, if you have a bunch of data stored in an Amazon S3 bucket and you want to use it in your Python code (perhaps for analysis, visualization, or machine learning), AWS Data Wrangler makes it simple to load that data into a Pandas DataFrame. Similarly, if you've processed some data in your Python code and want to store it back into an AWS service like S3 or Redshift, AWS Data Wrangler provides functions to easily accomplish that task too.
 
 
+
+
 Amazon Sagemaker -> Studio -> Open studio -> Launch -> Studio -> Open launcher -> Open System terminal -> 
+
+
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/95159905-3c7e-4d11-96b4-4f90f811b654)
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/da4f2c5a-ce50-4ed2-87d4-7ed0d0e19d88)
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e7320ed0-29a2-4b32-9e7c-f4fbd8efcccb)
@@ -134,26 +122,36 @@ df = wr.athena.read_sql_query(sql='sql_query', database=name_of_the_database)
 - Athena processes the query on the specified dataset, stores the results in S3, and returns them as a Pandas DataFrame.
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
-https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews
 
-https://github.com/aws/aws-sdk-pandas
-https://aws.amazon.com/glue/
-https://aws.amazon.com/athena/
-
-https://matplotlib.org/
-https://seaborn.pydata.org/
-https://pandas.pydata.org/
-https://numpy.org/
-https://aws-sdk-pandas.readthedocs.io/en/stable/
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/09a430f3-3175-4630-a5ce-f3bd4e31eb37)
 
-## Data visualization:
+### Data visualization:
 - The type of visualizations you use may vary depending on the type of data you're exploring and the relationships you're examining within the data.
 - Pandas, an open-source library, is utilized for data analysis and manipulation.
 - NumPy, another open-source library, facilitates scientific computing in Python.
 - Matplotlib aids in creating static, animated, and interactive visualizations.
 - Seaborn, built on top of matplotlib, enhances visualizations with statistical data analysis.
+
+> Section A
+- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
+- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
+- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
+- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
+- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
+
+### Important links:
+[Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
+[AWS SDK](https://github.com/aws/aws-sdk-pandas)
+[AWS Glue](https://aws.amazon.com/glue/)
+[AWS Athena](https://aws.amazon.com/athena/)
+[matplotlib](https://matplotlib.org/)
+[Seaborn](https://seaborn.pydata.org/)
+[Pandas](https://pandas.pydata.org/)
+[NumPy](https://numpy.org/)
+[AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
+
+
 
 ## Statistical bias and Feature importance:
 - Statistical bias and feature importance help you gain a better understanding of your data quality and how individual features contribute to your model.
