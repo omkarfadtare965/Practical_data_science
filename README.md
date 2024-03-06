@@ -24,14 +24,14 @@ __Brief introduction to Artificial intelligence and Machine learning:__
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7ae4c166-5944-4539-aeac-ba763619bf55)
 
-__Benifits of performing data science on cloud:__
-- Practical data science is geared towards handling massive datasets, that could originate from social media channels, mobile and web applications, public or company internal data sources, and much more, depending on the use case you're working on. This data is often messy, potentially error-ridden, or even poorly documented.
-- Practical data science tackles these issues by providing tools to analyze and clean the data and to extract relevant features and leads to knowledge distillation and gaining insight from those large datasets.
-- Developing and running data science projects in the cloud is the agility and elasticity that the cloud offers. If you develop data science projects in a local notebook or IDE environment, for example, hosted on your laptop or company-owned server pool, you are limited by the existing hardware resources. You have to carefully watch how much data you process, how much CPU processing power you have available to train and tune your model. And if you need more, you need to buy additional computer resources. This process doesn't allow you to move and develop quickly. Maybe your model training takes too long because it consumes all of the CPU resources of the compute instance you have chosen.
-- Using practical data science, you can switch to a compute instance that has more CPU resources, or even switch up to a GPU-based compute instance.
-- Cloud allows training your model on single CPU instance __(scaling up)__, performing distributed model training in parallel across various compute instances __(scaling out)__.
-- On cloud when the model training is completed, the instances are terminated as well. This means you only pay for what you actually use.
-- CLoud allows you to store and process almost any amount of data. Cloud also comes with a large data science and machine learning toolbox you can choose from, to perform your tasks as fast and efficiently as possible.
+__Benifits of performing data science project on cloud:__
+- Data science project on cloud is geared towards handling massive datasets, that could originate from social media channels, mobile and web applications, public or company internal data sources, and much more, depending on the use case you're working on. This data is often messy, potentially error-ridden, or even poorly documented.
+- Data science project on cloud tackles these issues by providing tools to analyze and clean the data and to extract relevant features and leads to knowledge distillation and gaining insight from those large datasets.
+- Developing and running data science projects on cloud offers the agility and elasticity. If you develop data science projects in a local notebook or IDE environment, for example, hosted on your laptop or a company-owned server pool, you are limited by the existing hardware resources.You have to carefully monitor how much data you process and how much CPU processing power you have available to train and tune your model. If you need more resources, you must purchase additional computing resources. This process doesn't allow for quick development and movement. Perhaps your model training takes too long because it consumes all of the CPU resources of the compute instance you have chosen.
+- Using the cloud, you can switch to a compute instance that has more CPU resources, or even switch to a GPU-based compute instance.
+- The cloud allows you to train your model on a single CPU instance i.e. ___`Scaling up`___ or perform distributed model training in parallel across various compute instances ___`Scaling out`___
+- In the cloud, when the model training is completed, the instances are terminated as well. This means you only pay for what you actually use.
+- The cloud allows you to store and process almost any amount of data. It also comes with a large data science and machine learning toolbox from which you can choose, to perform your tasks as fast and efficiently as possible.
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/5d4e0e9a-c2b5-4570-a99f-92ab3355dbec)
 
