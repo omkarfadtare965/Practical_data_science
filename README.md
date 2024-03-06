@@ -7,7 +7,7 @@ __Prerequisites for this project:__
 - Understanding of the concept of building, training, and evaluating machine learning models.
 
 __Brief introduction to Artificial intelligence and Machine learning:__
-- _`Artificial intelligence`_, is generally described as a technique that lets machines mimic human behavior.
+- ___`Artificial intelligence`___, is generally described as a technique that lets machines mimic human behavior.
 - Machine learning, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
 - Deep learning is yet another subset of ML, that uses artificial neural networks to learn from data.
 - Data science is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
