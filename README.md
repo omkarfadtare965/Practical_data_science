@@ -48,7 +48,7 @@ __Benifits of performing data science project on cloud:__
 - Cloud-based data lakes provide a solution to this problem. A ___`Data lake`___ is a centralized and secure repository that can store, discover, and share virtually any amount and type of data.
 - Data can be ingested into a data lake in its raw format without prior transformation. Whether it's structured relational data in CSV or TSV files, semi-structured data like JSON or XML files, or unstructured data such as images, audio, and media files. Additionally, you can ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
 - Effective governance is crucial for managing a data lake. With new data continuously arriving, it's essential to implement mechanisms for discovering and cataloging incoming data.
-- There are three types of storage technologies used in computer systems and data storage solutions.
+- There are three types of storage technologies used in computer systems and data storage solutions:
   > ___`File storage`___ organizes data as individual files stored in a hierarchical directory structure. It is similar to how files are organized on personal computers or file servers. File storage is well-suited for storing structured and semi-structured data, such as documents, spreadsheets, multimedia files, and application data.
   
   > ___`Block storage`___ manages data as individual blocks or chunks, typically at the disk level. Each block is a fixed-size unit of data and is accessed using block-level protocols like SCSI (Small Computer System Interface) or Fibre Channel. Block storage is commonly used in storage area networks and provides high-performance, low-latency access to data.
@@ -73,138 +73,44 @@ __Benifits of performing data science project on cloud:__
 - Athena is compatible with popular business intelligence (BI) tools like Tableau, Power BI, and Amazon QuickSight.
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
-
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/09a430f3-3175-4630-a5ce-f3bd4e31eb37)
-
-### Data visualization:
-- The type of visualizations you use may vary depending on the type of data you're exploring and the relationships you're examining within the data.
+## Data visualization:
 - Pandas, an open-source library, is utilized for data analysis and manipulation.
 - NumPy, another open-source library, facilitates scientific computing in Python.
 - Matplotlib aids in creating static, animated, and interactive visualizations.
 - Seaborn, built on top of matplotlib, enhances visualizations with statistical data analysis.
 
-> Section A
-- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
-- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
-- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
-- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
-- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
-
-### Important links:
-[Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
-[AWS SDK](https://github.com/aws/aws-sdk-pandas)
-[AWS Glue](https://aws.amazon.com/glue/)
-[AWS Athena](https://aws.amazon.com/athena/)
-[matplotlib](https://matplotlib.org/)
-[Seaborn](https://seaborn.pydata.org/)
-[Pandas](https://pandas.pydata.org/)
-[NumPy](https://numpy.org/)
-[AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
-
-
-
 ## Statistical bias and Feature importance:
-- Statistical bias and feature importance help you gain a better understanding of your data quality and how individual features contribute to your model.
-- These concepts also allow you to explore how the individual features of your datasets contribute to the final model.
-- A dataset is biased if it fails to accurately represent the underlying problem space. Statistical bias refers to a statistic's tendency to either overestimate or underestimate a parameter.
-- For instance, in a dataset where fraudulent credit card transactions are rare, fraud detection models may struggle to identify fraudulent transactions due to lack of exposure.
+- Statistical bias and Feature importance help you gain a better understanding of your data quality and allows you to explore how the individual feature of your datasets contribute to the final model.
+- A dataset is biased if it fails to accurately represent the underlying problem space. Statistical bias refers to a tendency to either overestimate or underestimate a parameter.
+- For instance, in a dataset where fraudulent credit card transactions are rare, fraud detection models may struggle to identify fraudulent transactions due to lack of exposure. One solution to this issue is to augment the training dataset with more examples of fraudulent transactions.
 - Similarly, consider a product review dataset where one product category (A) has a large number of reviews compared to categories B and C. When building a sentiment prediction model using this biased dataset, the model may accurately predict sentiments for category A products but perform poorly for categories B and C.
-- One solution to this issue is to augment the training dataset with more examples of fraudulent transactions.
-
-__Types of Bias:__
-> 1) Activity bias:
-- Activity bias occurs when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity.
-- In an online shopping dataset, frequent users may have more data recorded about their preferences and behaviors compared to occasional users, leading to biased predictions.
-> 2) Societal bias:
-- Societal bias reflects existing societal inequalities and prejudices that are reflected in the data, leading to unfair treatment of certain groups.
-- Historical biases against certain demographics (e.g., race, gender) may be perpetuated in datasets, resulting in biased decisions in areas like hiring or lending.
-> 3) Selection bias:
-- Selection bias occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset.
-- A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
-
-__Types of drift in Machine learning operations:__
-> 1) Data drift:
-- Data drift happens when the data used by a model changes over time, making the model less accurate
-> 2) Concept drift:
-- Concept drift occurs when the relationship between the model's input and output changes over time.
-- For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
-> 3) Covariate drift:
-- Covariate drift happens when the characteristics used by the model to make predictions change over time.
-- Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
-> 4) Prior probability drift:
-- Prior probability drift is the shift in the frequency of each outcome over time.
-- Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
-> 5) Model drift: 
-- Model drift is when a model that used to perform well becomes less accurate over time.
-- This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect. 
-> 6) Population drift:
-- Population drift occurs when the population the model is applied to changes over time, making the model less accurate.
-- Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
-> 7) Label drift:
-- Label drift is when the answers or labels you have for your data change over time.
-- It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
-
-__Measuring statistical bias:__
-- Class imbalance, or CI, shows if there are more examples of one thing than another in your dataset.
-- A facet is a sensitive feature in your dataset, that you want to analyze for these imbalances.
-- For example, CI can tell us if one product category has a lot more reviews than others.
-- The Difference in Proportions of Labels (DPL) metric checks if one group has more positive outcomes than others. When applied to the product review dataset, what this metric is measuring is if a particular product category, say product category A, has disproportionately higher ratings than other categories.
+- There are various ways with which bias can be introduced in the dataset:
+  > ___`Activity bias`___ Activity bias occurs when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity. In an online shopping dataset, frequent users may have more data recorded about their preferences and behaviors compared to occasional users, leading to biased predictions.
+  
+  > ___`Societal bias`___ reflects existing societal inequalities and prejudices that are reflected in the data, leading to unfair treatment of certain groups. Historical biases against certain demographics (e.g., race, gender) may be perpetuated in datasets, resulting in biased decisions in areas like hiring or lending.
+  
+  > ___`Selection bias`___ occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset. A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
+- ___`Drift`___ refers to a change or deviation in the statistical properties or distribution of data over time. It can occur in various forms:
+  > ___`Data drift`___ happens when the data used by a model changes over time, making the model less accurate
+  > ___`Concept drift`___ occurs when the relationship between the model's input and output changes over time. For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
+  > ___`Covariate drift`___ happens when the characteristics used by the model to make predictions change over time. Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
+  > ___`Prior probability drift`___ is the shift in the frequency of each outcome over time. Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
+  > ___`Model drift`___ is when a model that used to perform well becomes less accurate over time. This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect. 
+  > ___`Population drift`___ occurs when the population the model is applied to changes over time, making the model less accurate. Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
+  > ___`Label drift`___ is when the answers or labels you have for your data change over time. It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
+- ___`Class imbalance`___ refers to the situation where one class (or category) of data is significantly more or less prevalent than another class.  
+- The ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of a particular outcomes between different groups or categories within a dataset.
+- It helps to understand whether there are imbalances in outcomes across different groups or categories. Identifying such differences is essential for understanding biases, making decisions, and designing strategies to address disparities.
+- In context of product reviews dataset. understanding the DPL between different product categories is crucial for identifying which categories tend to receive more positive reviews than others. This insight can inform marketing strategies, product development priorities, and resource allocation decisions within a company.
 - So, while CI looks at overall reviews, DPL looks at whether some categories get higher ratings than others.
 - For example, consider we have a dataset of customer reviews for an e-commerce platform. Each review is labeled as either "positive" or "negative" sentiment based on the customer's feedback.
-- Class imbalance occurs if there are significantly more positive reviews than negative reviews, or vice versa.
-- DPL would assess whether certain product categories receive a disproportionately higher proportion of positive reviews compared to others.
+- ___`Sagemaker Clarify`___ offers functionality for detecting biases in both datasets and machine learning models. It analyzes training and testing datasets to identify biases based on facet/sensitive features (such as gender or race) and generate detailed bias reports. These reports include metrics, visualizations, and insights to help users understand and mitigate biases in their datasets.
+- SageMaker Clarify seamlessly integrates with other components of Amazon SageMaker, allowing users to incorporate bias detection and model explainability into their ML workflows. 
+- ___`Sagemaker Wrangler`___ focuses on data preparation tasks such as connecting to various data sources, visualizing, transforming data, and generating reports on the data.can help with preparing the data for bias analysis by cleaning and preprocessing it, it does not include built-in features for detecting biases or generating bias reports.
 
-__AWS tools to detect statistical bias in dataset:__
-- The two AWS tools used to detect statistical bias in datasets are SageMaker Data Wrangler and SageMaker Clarify.
-- ata Wrangler allows you to connect to various data sources, visualize, and transform data, detect statistical bias, and generate reports on the detected bias in datasets. It also provides feature importance calculations for your training dataset.
-- Amazon SageMaker Clarify can detect statistical bias and generate bias reports on training datasets. Additionally, it can detect bias in trained and deployed models. Moreover, it offers capabilities for machine learning explainability and detects data and model drift.
 
-__Detecting Bias in Datasets Using Amazon SageMaker Clarify:__
-- To use Clarify APIs, start by importing the SageMaker Clarify module from the SageMaker SDK and then construct the SageMakerClarifyProcessor object using the SageMakerClarifyProcessor constructor.
-> 1) Constructing SageMakerClarifyProcessor object
-```ruby
-from sagemaker import clarify
 
-clarify_processor = clarify.SageMakerClarifyProcessor(role=role, instance_count=1, instance_type="ml.c5.2xlarge", sagemaker_session=sess)
-```
 
-> 2) Define S3 path for bias report output
-```ruby
-bias_report_output_path = "s3://your-bucket-name/path/to/save/bias/report"
-```
-- instance_count represents the number of nodes that are included in the cluster 
-- instance_type represents the processing capacity of each individual node in the cluster
-- The processing capacity is measured by the node's compute capacity, memory and the network
-- In the next step you configure the data config object on the clarify library, Data config object represents the details about your data
-
-> 3) Configuring data config object
-```ruby
-bias_data_config = clarify.DataConfig(s3_data_input_path = "s3://your-bucket-name/path/to/input/data", s3_output_path = bias_report_output_path, label = 'sentiment', headers = df_balanced.columns.to_list(), dataset_type = 'text/csv')
-```
-label that we are going to predict
-- In the next step, you configure the bias config object on clarify library. The bias config object captures the facet or the featured name that you are trying to evaluate for bias or imbalance. In this below case you are trying to find out the imbalances in the product category feature. SO if the sentiment feature is your label what is the desired value for that label. That value goes into the parameter label or threshold.
-- The parameter label_values_or_threshold defines the desired values for the labels.
-
-> 4) Configuring bias config object
-```ruby
-bias_config = clarify.BiasConfig(label_values_or_threshold=[...], 
-                                 facet_name='product_category')
-```
-- In the next step you run the pre training bias method on the clarify processor.
->  Running pre-training bias method
-```ruby
-clarify_processor.run_pre_training_bias(data_config=bias_data_config, 
-                                        data_bias_config=bias_config, 
-                                        methods=["CI", "DPL", ...], 
-                                        wait=False, 
-                                        logs=False)
-```
-- In addition to specifying the data config and the data bias you already configured, You can also specify the methods that you want to evaluate for bias. These are nothing but the metrics that you already learned about to detetct bias.
-- Wait parameter specifies whether this bias detection job should block your rest of the code or should it be executed in the background.
-- Similarly logs parameter specify that whether you want to capture the logs or not.
-- Once the configuration of the pre-training bias method is done, you launch this job. In the background, SageMaker Clarify is using a construct called SageMaker Processing Job to execute the bias detection at scale. SageMaker Processing Jobs is a construct that allows you to perform any data-related tasks at scale.
-- These tasks could be executing pre-processing, or post-processing tasks, or even using data to evaluate your model.
 
 - 
 - As you can see in the figure here, the SageMaker Processing Job expects the data to be in an S3 bucket.  The data is collected from the S3 bucket and processed on this processing cluster which contains a variety of containers in the cluster.
@@ -248,7 +154,23 @@ Week2
 
 
 
+> Section A
+- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
+- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
+- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
+- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
+- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
 
+### Important links:
+[Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
+[AWS SDK](https://github.com/aws/aws-sdk-pandas)
+[AWS Glue](https://aws.amazon.com/glue/)
+[AWS Athena](https://aws.amazon.com/athena/)
+[matplotlib](https://matplotlib.org/)
+[Seaborn](https://seaborn.pydata.org/)
+[Pandas](https://pandas.pydata.org/)
+[NumPy](https://numpy.org/)
+[AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
 
 
 
