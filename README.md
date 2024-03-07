@@ -91,12 +91,18 @@ __Benifits of performing data science project on cloud:__
   
   > ___`Selection bias`___ occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset. A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
 - ___`Drift`___ refers to a change or deviation in the statistical properties or distribution of data over time. It can occur in various forms:
-  > ___`Data drift`___ happens when the data used by a model changes over time, making the model less accurate
+  > ___`Data drift`___ happens when the data used by a model changes over time, making the model less accurate.
+  
   > ___`Concept drift`___ occurs when the relationship between the model's input and output changes over time. For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
+  
   > ___`Covariate drift`___ happens when the characteristics used by the model to make predictions change over time. Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
+  
   > ___`Prior probability drift`___ is the shift in the frequency of each outcome over time. Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
-  > ___`Model drift`___ is when a model that used to perform well becomes less accurate over time. This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect. 
+  
+  > ___`Model drift`___ is when a model that used to perform well becomes less accurate over time. This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect.
+  
   > ___`Population drift`___ occurs when the population the model is applied to changes over time, making the model less accurate. Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
+  
   > ___`Label drift`___ is when the answers or labels you have for your data change over time. It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
 - ___`Class imbalance`___ refers to the situation where one class (or category) of data is significantly more or less prevalent than another class.  
 - The ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of a particular outcomes between different groups or categories within a dataset.
