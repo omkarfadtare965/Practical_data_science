@@ -37,7 +37,7 @@ __Benifits of performing data science project on cloud:__
 
 ## Project use case: Multi-class classification for Sentiment analysis of Product reviews
 - Assume you work at an e-commerce company, selling many different products online. Your customers are leaving product feedback across all the online channels. Whether it is through sending email, writing chat FAQ messages on your website, maybe calling into your support center, or posting messages on your company's mobile app, popular social networks, or partner websites. And as a business, you want to be able to capture this customer feedback as quickly as possible to spot any change in market trends or customer behavior and then be alerted about potential product issues.
-- Your task is to build an NLP model that will take those product reviews as input. You will then use the model to classify the sentiment of the reviews into the three classes of positive, neutral, and negative.
+- Your task is to build an NLP model that will take those product reviews as input. You will then use the model to classify the sentiment of the reviews into the three classes of positive, neutral, and negative to spot any changes in market trends or customer behavior, as well as be alerted on any potential product issues.
 - Multi-class classification is a supervised learning task, hence, you must furnish your classifier model with examples to correctly learn how to classify products and product reviews into the respective sentiment classes. 
 - You can use the review text as the input feature for model training and assign sentiment labels to train the model. Sentiment classes are typically represented as integer values during model training, such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
@@ -113,59 +113,12 @@ __Benifits of performing data science project on cloud:__
 - ___`Sagemaker Clarify`___ offers functionality for detecting biases in both datasets and machine learning models. It analyzes training and testing datasets to identify biases based on facet/sensitive features (such as gender or race) and generate detailed bias reports. These reports include metrics, visualizations, and insights to help users understand and mitigate biases in their datasets.
 - SageMaker Clarify seamlessly integrates with other components of Amazon SageMaker, allowing users to incorporate bias detection and model explainability into their ML workflows. 
 - ___`Sagemaker Wrangler`___ focuses on data preparation tasks such as connecting to various data sources, visualizing, transforming data, and generating reports on the data.can help with preparing the data for bias analysis by cleaning and preprocessing it, it does not include built-in features for detecting biases or generating bias reports.
-
-
-
-
-
+- ___`Feature importance`___ refers to the measure of the impact or significance of each feature in a dataset on the prediction made by a machine learning model. It provides a ranking of features based on their contribution to the model's performance.
+- It provides a high-level overview of feature importance across the entire dataset.
+- ___`SHapley Additive exPlanations (SHAP)`___ is a method for explaining individual predictions made by machine learning models. It provides a unified framework for understanding the contribution of each feature to the prediction for a specific instance. SHAP values represent the impact of each feature on the difference between the actual prediction and the average prediction across all instances in the dataset.
+- SHAP values offer a more detailed and instance-specific explanation of feature contributions, allowing for a deeper understanding of model behavior and individual predictions.
 - 
-- As you can see in the figure here, the SageMaker Processing Job expects the data to be in an S3 bucket.  The data is collected from the S3 bucket and processed on this processing cluster which contains a variety of containers in the cluster.
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/94a703d1-c887-48ba-914e-24689a8f8525)
-
- Once the processing cluster has processed the data, the transformed data or the processed data is put back in the S3 bucket.  What do you think happens when you execute this run pre-training bias?
-- The result will actually be a very detailed report on the bias on your dataset that has persisted in S3 bucket. You can download the report and review in detail to understand the behavior of your data.  you should see a few familiar metrics, like CI and DPL, and also a few other metrics that you might not know about.
-
-
-
-__Which one of these tools should you use, in which situation?__
-- Data Wrangler, provides you with more of a UI-based visual experience. 
-- So, if you would like to connect to multiple data sources and explore your data in more visual format, and configure what goes into your bias reports by making selections from drop-down boxes and option buttons, and finally, launch the bias detection job using a button click, Data Wrangler is the tool for you.
-- Keep in mind that Data Wrangler is only using a subset of your data to detect bias in that data set.
--  SageMaker Clarify provides you with more of an API-based approach. Additionally, Clarify also provides you with the ability to scale out the bias detection process.
--  SageMaker Clarify uses a construct called processing jobs that allow you to configure a distributed cluster to execute your bias detection job at scale. So, if you're thinking of large volumes of data, for example, millions of millions of rows of product reviews, and you want to explore that data set for bias, then SageMaker Clarify is the tool for you, so that you can take advantage of the scale and capacity offered by Cloud.
-
-
-
-
-__Feature importance (SHAP):__
-- Feature importance is the idea of explaining the individual features that make up your training data set, using a score called important score.
-- Some features from your data set could be more relevant, or more important, to your final model than others. Using feature importance, you can rank the individual features in the order of their importance and contribution to the final model.
-- Feature importance allows you to evaluate how useful or valuable a feature is, in relation to the other features that exist in the same data set.
-- In case of product review dataset, It consists of multiple different features, and you are trying to build a product sentiment prediction model out of that data set.
-- Feature importance is based on a very popular for open source framework called SHAP; SHAP stands for Shapley Additive Explanations.
-- The framework itself is based on Shapley values, which in turn is based on game theory. consider a play, or a game, in which multiple players are involved and there is a very specific outcome to the play that could be either a win or a loss. Shapley values allow you to attribute the outcome of the game to the individual players involved in the game. you can use the same concept to explain the predictions made by the machine learning model.
-- In this case, the individual players would be the individual features that make up the data set, and the outcome of the play would be the machine learning model prediction.
-- Using the SHAP framework, you can provide both local and global explanations. While the local explanation focuses on indicating how an individual feature contributes to the final model, the global explanation takes a much more comprehensive view in trying to understand how the data in its entirety contributes to the final outcome from the machine learning model.
-- SHAP framework it considers all possible combinations of feature values along with all possible outcomes for your machine learning model.
-
-__How to use Data Wrangler to calculate feature importance on your data set__
-- Amazon sagemaker studio >> New data flow >> S3/Athena >> navigate to the right bucket >> navigate to right data that you want to calculate the feature importance on >>  After selecting right csv you will see the preview of the columns in that csv file >> import dataset (THis action will bring the data from s3 bucket to data wrangler environment) >> Once the data is imported click of + sign >> Add analysis >> select type of analysis (quick model) >> name analysis >> select the label that you want to ndicate in your data set >> preview >> Create analysis
-
-combine positive feedback count + recommender indicator + new feature
-
-Week2 
-- Detecting statistical bias in the training dataset can help you gain insight into how imbalanced the dataset could be. I demonstrated using Data Wrangler, to detect statistical bias in your training data and generate bias reports. I also introduced SageMaker Clarify API, that'll help you perform the bias detection at scale. In the lab exercise this week, you will use the Clarify APIs to generate the bias reports and explore the report in a bit more detail. I further introduced feature importance and demonstrated using Data Wrangler how to generate the feature importance report on your training dataset. The generated report give you an insight into how the individual features of the training dataset are contributing to the final model. I hope you enjoyed the Week 2 content, and you're ready and excited to explore the lab assignment.
-
-
-
-
-> Section A
-- In this section, you will learn how to ingest the data into a central repository, explore the data using various tools, and analyze the dataset using interactive queries and learn how to visualize the results.
-- You will perform exploratory data analysis to detect statistical data biases and class imbalance.
-- Next, you will learn to train machine learning models using automated machine learning techniques and build a multi-class text classification model using state-of-the-art algorithms.
-- You will understand how to describe the concept of statistical bias, and use metrics to measure imbalances in data sets.
-- You will understand how to detect statistical bias in your data and generate bias reports. You will further explore how to generate feature importance reports.
+# This is till week2 everything is up to date you just have to walk through the coding part and include importatnt images
 
 ### Important links:
 [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
@@ -177,12 +130,13 @@ Week2
 [Pandas](https://pandas.pydata.org/)
 [NumPy](https://numpy.org/)
 [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
+[use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
 
+# Week3
+AutoML 
+- ___`Automated Machine Learning (AutoMl)`___,
 
-
-
-
-### Week3:
-- Discuss some of the challenges, or repetitive tasks, that you can often run into when building machine learning models. learn about some of the benefits of using AutoML
-- After this week's course, you'll be able to describe the concept of AutoML as well as be able to describe how you can train a text classifier using AutoML.
-- you will learn about how Amazon Sagemaker uniquely implements AutoML capabilities through Sagemaker autopilot. For this, I'll walk you through the steps on how you can use Sagemaker autopilot to train a text classifier. So let's get started and dive deeper into AutoML.
+# Week4
+This week you will learn how to quickly train and deploy models using build-in algorithms.
+The big advantage of build-in algorithms is that they require no coding. To start running experiments, you can just provide the algorithms with your input data, set any model hyper parameters, and define the compute resources such as the number and type of compute instances to use.
+Another benefit of build-in algorithms is that many of them support GPU's and parallelization across multiple, compute instances without any additional configuration.
