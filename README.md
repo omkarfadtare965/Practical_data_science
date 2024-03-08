@@ -132,11 +132,16 @@ __Benifits of performing data science project on cloud:__
 [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
 [use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
 
-# Week3
-AutoML 
-- ___`Automated Machine Learning (AutoMl)`___,
 
-# Week4
-This week you will learn how to quickly train and deploy models using build-in algorithms.
-The big advantage of build-in algorithms is that they require no coding. To start running experiments, you can just provide the algorithms with your input data, set any model hyper parameters, and define the compute resources such as the number and type of compute instances to use.
-Another benefit of build-in algorithms is that many of them support GPU's and parallelization across multiple, compute instances without any additional configuration.
+- ___`Automated Machine Learning (AutoMl)`___,
+# Week3
+- This week, we will discuss the challenges often encountered when building machine learning models and explore the benefits of using AutoML
+- We'll also deep dive into the steps comprising the machine learning workflow and identify those that can be automated through AutoML.
+- By the end of this course, you will be able to explain the concept of AutoML and demonstrate how to train a text classifier.
+- Furthermore, you will learn how to implement AutoML using AWS SageMaker Autopilot.
+
+__What is AutoML and Benifits of using AUtoML:__
+__Steps in machine learning workflow and where automl can be used__
+__Implementation of AUtoML using AWS sagemaker Autopilot__
+__Model Hosting/Deployement__
+- To take model and make it available for consumption so applications can use it for predictions
