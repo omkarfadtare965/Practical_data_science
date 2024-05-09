@@ -84,13 +84,13 @@ __Benifits of performing data science project on cloud:__
 - A dataset is biased if it fails to accurately represent the underlying problem space. Statistical bias refers to a tendency to either overestimate or underestimate a parameter.
 - For instance, in a dataset where fraudulent credit card transactions are rare, fraud detection models may struggle to identify fraudulent transactions due to lack of exposure. One solution to this issue is to augment the training dataset with more examples of fraudulent transactions.
 - Similarly, consider a product review dataset where one product category (A) has a large number of reviews compared to categories B and C. When building a sentiment prediction model using this biased dataset, the model may accurately predict sentiments for category A products but perform poorly for categories B and C.
-- There are various ways with which bias can be introduced in the dataset:
+- ___Bias___ can be introduced in the dataset in various ways:
   > ___`Activity bias`___ Activity bias occurs when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity. In an online shopping dataset, frequent users may have more data recorded about their preferences and behaviors compared to occasional users, leading to biased predictions.
   
   > ___`Societal bias`___ reflects existing societal inequalities and prejudices that are reflected in the data, leading to unfair treatment of certain groups. Historical biases against certain demographics (e.g., race, gender) may be perpetuated in datasets, resulting in biased decisions in areas like hiring or lending.
   
   > ___`Selection bias`___ occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset. A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
-- ___`Drift`___ refers to a change or deviation in the statistical properties or distribution of data over time. It can occur in various forms:
+- ___Drift___ refers to a change or deviation in the statistical properties or distribution of data over time. It can occur in various forms:
   > ___`Data drift`___ happens when the data used by a model changes over time, making the model less accurate.
   
   > ___`Concept drift`___ occurs when the relationship between the model's input and output changes over time. For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
