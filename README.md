@@ -74,10 +74,10 @@ __Benifits of performing data science project on cloud:__
 - When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
 
 ## Data visualization:
-- Pandas, an open-source library, is utilized for data analysis and manipulation.
-- NumPy, another open-source library, facilitates scientific computing in Python.
-- Matplotlib aids in creating static, animated, and interactive visualizations.
-- Seaborn, built on top of matplotlib, enhances visualizations with statistical data analysis.
+- ___`Pandas`___, an open-source library, is utilized for data analysis and manipulation.
+- ___`NumPy`___, another open-source library, facilitates scientific computing in Python.
+- ___`Matplotlib`___ aids in creating static, animated, and interactive visualizations.
+- ___`Seaborn`___, built on top of matplotlib, enhances visualizations with statistical data analysis.
 
 ## Statistical bias and Feature importance:
 - Statistical bias and Feature importance help you gain a better understanding of your data quality and allows you to explore how the individual feature of your datasets contribute to the final model.
