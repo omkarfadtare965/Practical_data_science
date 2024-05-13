@@ -145,3 +145,61 @@ __Steps in machine learning workflow and where automl can be used__
 __Implementation of AUtoML using AWS sagemaker Autopilot__
 __Model Hosting/Deployement__
 - To take model and make it available for consumption so applications can use it for predictions
+
+
+# Week3 
+
+## What is Automl, Concept of Automated machine learning, Benifits of using Automl, How Automl fits into the overall machine learning workflow, Implementation of AutoMl using Sagemaker Autopilot, Model hosting (once having optimised model how do you then take that model and make it available for consumption so applications can then use it for predictions):
+- In this case once our text classifier is trained to predict the sentiment for a specific product review how do you then deploy that model so it can actually be used to detect sentiment on new product reviews as they come in.
+- Why are we going to use automl for this use case? When you are trying to build a machine learning models to solve everyday problms its common to eun into the model building challenges for a number of different reasons.
+  - first step: involved in creating machine learning model typically involve multiple iterations that can often result in increased time to market.
+  - Machine learning can also requires specialised skills sets that can be very challenging to find satff from your existing teams.
+  - Also machine learnig iterations typically take much longer than traditional developement life cycles. This is due to time it takes to get model performance feedback and the time it takes to run through the numerous experiments using different combinations of data transformations algorithms and hyperparameters untill you find out the model that is meeting at least your minimum objective matrics
+  - The nature of machine learning developemnt can also make it difficult to iterate quickly not only from workflow perspective but also from compute resource preferances
+- To work out all these challenges this is where automl comes into the picture
+- 
+- conceptually Automl uses machine learning to automate many tasks in the machine learning workflow
+- It reduces time to market by automating resource intensive task like data transformation feature engineering and model tunning.
+- Automl can enable your non data scintist to build machine learning models without requiring deep data science skillset
+- AutoMl lets you iterate quickly by using machine learning and automation to perform the majority of the tasks in your model building workflows.
+- using Automl in combination with cloud computing also addresses potential compute resource challeges
+- Automl lets data scientist focus on those really hard to solve machine learning problems.
+
+
+## Automl workflow:
+___TElls you how automl fits into endto-end machine learning workflow___
+- __Typical machine learning workflow:__
+  - Ingest and analyze your data which includes defining ml problem and exploring and understanding the data, and selecting the right algorirthm or algorithms to use for your experiments
+  - Next you prepare and transform your data by performing feature engineering and trasforming data into a format required by the algo 
+  - FInaly you typically train multiple models across a number of experiments untill you have a well performing model thats created using a specific combination of algo, data transformation and hyper parameter
+
+- GO through the data, understand the problem, once you identify the potential algo that you want to try as part of your your training experiemets
+- After you have done some analysis on your data and detrmine the type of machie learning problem that you are trynig to solve for you can then look at which algo or algo that are best suited for your data and the problem that you are tring to solve.
+- When you perform data analysis. You want to understand the data. so getting insight into things like data distribution, attribution correlation or do you have potential quality issues in your data like missing data.
+- Then based on your machine learning problem combined with your data analysisyou are able to identify the algorithm that you would like to try for your experiments.
+- slecting a right algorithm or algorithms is only the part of the process. for each algorithms there are also a number of hyper parameteres tha t you need to consider as you tuune the model for optimal performance.
+- Each algorithms have different expections in terms of the forma of the data that expects on input for traiingsuch as claeaning or text transformation
+- in this project we are gonna use TF IDF. Data banacing resampling tech niques
+- Once you have done your data transformation then you can use your processed data set to create your training and validation sets.
+- For this you reserve the largest portion of your data for traiining yur model. This is the data that your model learns from and you can use it to calculate model matrics such as training accuracy and training loss.
+- Validation dataset is the second dataset or holdout dataset created from your fully processed training dataset and you will use it to evaluate your model performance usually after each epoch or full pass though the training set.
+- The purpose of this evaluation is to fine tune model hyper parameters and determine how well your model is able to generalise on unseen data.
+- Here you can calculate the vvalidation accuracy and validation loss.
+- After you have your datasets ready you can move on to model training and tuning.
+- MOdel training and validation is highly iterative and typically happens over many experients during this your goal is to determine which combination of the data algo and hyper parameter results in the best performing model.
+- FOr each combination that you choose you need to train the model and evaluate it against that holdout data set.
+- You repeat these steps until you have a model that is performing well according to your objective metrics whether thats accuracy or something like an f1 score depending on what you are optimizing for.
+- All of these iterations can take a lot of compute and you typically want to be able to rapidly iterate without running into bottlenecks so this where training at scale comes in.
+- Cloud gives you access to on demand resources that allow you to train and experiement at scale without wait time or schduling training time on on premises resources that are often constrained or limited by GPU CPU or storage.
+- WIthout resource limitation you can also further optimize your trainig tie using capabilities like
+- Automl allows you to reduce the need for data scientist to build machine learning models
+- It uses machine learning to automate machine learning workflow tasks such as (ingest and analyze dataset, prepare and transform and train and tune models)
+-  You first provide your labeled dataset which includes the target that you are trying to predict. Then automl is going to automatically do some analysis of that data and determine the type of machine learning problem
+-  Then automl will typically explore a number of algorithms and automatically select the algo that besy suits your ml problrm and your data.
+-  oce utoml selects algorithm, it will automatically explore various data transformations that are likely to have an impact on the overall performance of your model
+-  - Then it will automate the creation of those scripts that will be neccesary to perofm those data transformations across your tuning experiments.
+   - Finally automl will select a number of hyper parameter configurations to explore over those trading iterations to determine which combinations of hyper parameters and feature transformation codes results in the best performing model
+   - Automl capabilities reduces a lot of repetitive work in terms of building and tuning your models  through numerous iterations
+   - Automl is all about the automation even if the automatuon doesnt get all the way there you can still use automl to reduce a lot of the repetitave work but still uses experts to focus on high value task like taking that automl output and applying their domain knowledge or doing additional feature engineering or using data scientist to evaluate and analyze the reults of that automl
+   - considerations when selecting an implementation of automl
+     - Depending on the implementation of AutoML that you choose or you're deciding to use, there may be a balance, in terms of iterating faster but still maintaining the transparency and control that you may be looking for. Some implementations of AutoML provide limited visibility into the background experiments, which may produce a really performant model, but that model is often hard to understand, explain, or reproduce manually. Alternatively, there are implementations of AutoML, that not only provide the best model, but they also provide all of the candidates and the full source code that was used to create that model. This is valuable for being able to understand and explain your model, but it also allows you to take that model and potentially further optimize it for extra performance by doing things like applying some of that additional domain knowledge or doing some additional feature engineering on top of the recommended feature engineering code. In this section, I walked through the task, or the steps, in the machine learning workflow that are often requiring a lot of resources, not only in terms of human time to perform these tasks, but also in terms of compute cycles or resource costs. Using solutions that take advantage of automated machine learning helps you avoid those challenges by using machine learning to automate either all or part of your model building activities.
