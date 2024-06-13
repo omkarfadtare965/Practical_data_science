@@ -1,6 +1,4 @@
-# Practical data science on AWS cloud:
-In this project, you'll learn how to turn your data science project ideas into real-world solutions. Then, you'll learn to analyze and clean datasets, extract relevant features, train models, and construct automated pipelines to orchestrate and scale your data science projects, serving thousands of models to millions of end-users using AutoML. Following that, you'll learn to create and deploy ML pipelines that manage the flow of data and models, especially using a powerful tool called BERT. Additionally, you'll learn how to deploy human-in-the-loop pipelines, processes that involve humans in decision-making, to make your models work even better.
-
+# Turning data science project ideas into real-world solutions using AWS cloud:
 __Prerequisites for this project:__
 - Proficiency in Python and SQL programming.
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
