@@ -54,7 +54,7 @@ __Benifits of performing data science project on cloud:__
   > ___`Block storage`___ manages data as individual blocks or chunks, typically at the disk level. Each block is a fixed-size unit of data and is accessed using block-level protocols like SCSI (Small Computer System Interface) or Fibre Channel. Block storage is commonly used in storage area networks and provides high-performance, low-latency access to data.
   
   > ___`Object storage`___ is a storage architecture that manages data as objects. Each object consists of data, metadata (information that describes data, such as when the object was last modified), and a unique identifier.
-- Data lakes, such as Amazon S3 are often built on top of object storage. Amazon S3 provides access to durable and highly-available object storage in the cloud, allowing you to ingest virtually any amount of data, from a few dataset files to exabytes of data.
+- Data lakes, such as Amazon S3 are often built on top of object storage. Amazon S3 provides access to durable and highly available object storage in the cloud, allowing you to ingest virtually any amount of data, from a few dataset files to exabytes of data.
 - AWS provides various tools and services that help ensure your data lake, which is built on Amazon S3, is secure, compliant with regulations, and allows for auditing. These tools and services include features like access control, encryption, data governance, and compliance certifications, which help protect your data and ensure it meets legal requirements.
 - By using Amazon S3 as a centralized repository for your data lake, you can easily access and analyze your data for data warehousing analytics. Data warehousing analytics involves analyzing large volumes of structured data to gain insights and make informed decisions. Additionally, you can leverage machine learning tools and algorithms to extract valuable insights from your data, identify patterns, and make predictions or recommendations based on your business needs.
 - Data lakes and data warehouses are both technologies used for storing and analyzing data, but they have different architectures and purposes
@@ -104,7 +104,7 @@ __Benifits of performing data science project on cloud:__
   
   > ___`Concept drift`___ occurs when the relationship between the model's input and output changes over time. For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
   
-  > ___`Covariate drift`___ happens when the characteristics used by the model to make predictions change over time. Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
+  > ___Covariate drift`___ happens when the characteristics used by the model to make predictions change over time. Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
   
   > ___`Prior probability drift`___ is the shift in the frequency of each outcome over time. Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
   
@@ -212,3 +212,16 @@ ___TElls you how automl fits into endto-end machine learning workflow___
    - Automl is all about the automation even if the automatuon doesnt get all the way there you can still use automl to reduce a lot of the repetitave work but still uses experts to focus on high value task like taking that automl output and applying their domain knowledge or doing additional feature engineering or using data scientist to evaluate and analyze the reults of that automl
    - considerations when selecting an implementation of automl
      - Depending on the implementation of AutoML that you choose or you're deciding to use, there may be a balance, in terms of iterating faster but still maintaining the transparency and control that you may be looking for. Some implementations of AutoML provide limited visibility into the background experiments, which may produce a really performant model, but that model is often hard to understand, explain, or reproduce manually. Alternatively, there are implementations of AutoML, that not only provide the best model, but they also provide all of the candidates and the full source code that was used to create that model. This is valuable for being able to understand and explain your model, but it also allows you to take that model and potentially further optimize it for extra performance by doing things like applying some of that additional domain knowledge or doing some additional feature engineering on top of the recommended feature engineering code. In this section, I walked through the task, or the steps, in the machine learning workflow that are often requiring a lot of resources, not only in terms of human time to perform these tasks, but also in terms of compute cycles or resource costs. Using solutions that take advantage of automated machine learning helps you avoid those challenges by using machine learning to automate either all or part of your model building activities.
+    
+
+
+
+### B] Build, train and deploy Ml pipeline using BERT:
+In this section, you will build a custom model using BERT algorithm and build an end-to-end ml pipeline for a text review classifier. 
+> Part A]: In this part, you will learn how to generate machine learning features from raw data and share those features with other teams using a scalable feature store. 
+> Part B]: In this week you will learn how to use these features to train our model at scale in the cloud. Deep dive into Bert model architecture and learn how to build and train a custom BERT model which is usually a two-step pre-training model in an unsupervised learning and fine-tune model for a specific language task. 
+> Part C]: 
+
+
+### C] Optimize Ml models and deploy human-in-the-loop pipelines:
+-
