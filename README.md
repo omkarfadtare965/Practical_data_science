@@ -2,11 +2,11 @@
 __Prerequisites for this project:__
 - Proficiency in Python and SQL programming.
 - Familiarity with building neural networks using deep learning Python frameworks like TensorFlow or PyTorch.
-- Understanding of the concept of building, training, and evaluating machine learning models.
+- Basic understanding of building, training, and evaluating machine learning models.
 
 __Brief introduction to Artificial intelligence and Machine learning:__
-- ___`Artificial intelligence`___, is generally described as a technique that lets machines mimic human behavior.
-- ___`Machine learning`___, is a subset of AI, that uses statistical methods and algorithms that are able to learn from data, without being explicitly programmed.
+- ___`Artificial intelligence`___, is generally described as a technique that lets machines mimic human behaviour.
+- ___`Machine learning`___, is a subset of AI, that uses statistical methods and algorithms that can learn from data, without being explicitly programmed.
 - ___`Deep learning`___ is yet another subset of ML, that uses artificial neural networks to learn from data.
 - ___`Data science`___ is an interdisciplinary field that combines business and domain knowledge with mathematics, statistics, data visualization, and programming skills.
 
