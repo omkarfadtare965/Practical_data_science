@@ -53,8 +53,6 @@ __Benifits of performing data science projects on the cloud:__
 | - Ideal for exploratory data analysis, data science, and big data processing, allowing organizations to retain raw data for future analysis and insights. | - Optimized for high-performance analytics, reporting, and business intelligence (BI) applications, supporting historical analysis and decision-making.          |
 | - ___`AWS S3 Bucket`___ serves as a common example of a data lake storage solution.                                                                       | - ___`AWS Redshift`___ is an example of a data warehouse service optimized for querying and analyzing structured data.                                           |
 
-
-
 - ___`AWS Data wrangler`___ is an open-source Python library focused on simplifying data preparation and exploration for analytics and machine learning tasks. It provides easy-to-use functions and abstractions for working with data in Pandas DataFrames, simplifying common data engineering tasks. It seamlessly integrates with AWS services like Amazon S3, Amazon Redshift, Amazon Athena, and Amazon Glue for smooth data integration and processing.
 -
 - is an open-source Python library, that helps you interact with data stored in AWS environments and provides easy-to-use functions to load data from AWS services like Amazon S3, Amazon Redshift, Amazon Athena, and Amazon Glue for smooth data integration and processing into Python environments (such as Jupyter notebooks), and to push processed data back into AWS environments.
