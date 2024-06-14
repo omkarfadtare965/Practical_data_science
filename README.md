@@ -64,7 +64,6 @@ import boto3
 import pandas as pd
 
 # Replace with your actual AWS credentials
-
 aws_access_key_id = 'your_access_key_id'
 aws_secret_access_key = 'your_secret_access_key'
 region = 'your_aws_region'
