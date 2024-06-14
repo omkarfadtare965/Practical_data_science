@@ -123,7 +123,7 @@ wr.athena.create_athena_bucket(boto3_session=wrangler_boto3_session)
 sql_query = "SELECT * FROM your_database.your_table LIMIT 10"
 
 # Specify the database
-database = "your_database"
+database = "your_database" 
 
 # Execute the query and read results into a DataFrame
 df = wr.athena.read_sql_query(
