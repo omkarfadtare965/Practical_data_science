@@ -53,32 +53,42 @@ __Benifits of performing data science projects on the cloud:__
 | - Ideal for exploratory data analysis, data science, and big data processing, allowing organizations to retain raw data for future analysis and insights. | - Optimized for high-performance analytics, reporting, and business intelligence (BI) applications, supporting historical analysis and decision-making.          |
 | - ___`AWS S3 Bucket`___ serves as a common example of a data lake storage solution.                                                                       | - ___`AWS Redshift`___ is an example of a data warehouse service optimized for querying and analyzing structured data.                                           |
 
-- ___`AWS Data wrangler`___ is an open-source Python library focused on simplifying data preparation and exploration for analytics and machine learning tasks. It provides easy-to-use functions and abstractions for working with data in Pandas DataFrames, simplifying common data engineering tasks. It seamlessly integrates with AWS services like Amazon S3, Amazon Redshift, Amazon Athena, and Amazon Glue for smooth data integration and processing.
--
-- is an open-source Python library, that helps you interact with data stored in AWS environments and provides easy-to-use functions to load data from AWS services like Amazon S3, Amazon Redshift, Amazon Athena, and Amazon Glue for smooth data integration and processing into Python environments (such as Jupyter notebooks), and to push processed data back into AWS environments.
-- For example, if you have data in an S3 bucket and want to use it in Python for analysis or machine learning, AWS Data Wrangler makes it simple to load that data into a Pandas DataFrame. Similarly, if you've processed data in Python and need to store it back into AWS services like S3 or Redshift, AWS Data Wrangler provides functions for easy completion of these tasks.
-
-- 
-- ___`AWS Glue`___ is indeed a fully managed ETL service provided by Amazon Web Services. It is like a toolbox for working with data, offering various tools for different tasks related to data management and processing. It primarily focuses on Extract, Transform, and Load (ETL) tasks. It automates many steps involved in ETL processes, including discovering data sources, mapping schemas, and generating ETL code. Users can create, schedule, and monitor ETL jobs to move and transform data using AWS Glue. AWS Glue integrates seamlessly with various AWS services, such as Amazon S3, Amazon RDS, Amazon Redshift, and others, enabling smooth data integration and processing workflows.
-- ___`AWS Glue Data catalog`___ 
--
--
-- is like a toolbox that helps you work with data. It has different tools inside to help you do different things.
-- It helps in organising, managing and querying data stored in various data repositories.
-- The Data Catalog services integrates seamlessly with other AWS services, such as AWS Glue ETL (Extract, Transform, Load), Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR (Elastic MapReduce).
-- ___`AWS Glue Crawler`___ is a service provided by AWS as part of the AWS Glue suite. Its primary purpose is to automatically discover and catalog metadata from various data sources, making it easier to analyze and query the data using other AWS services.
-- Instead of registering data manually on AWS Glue; AWS Glue Crawler automatically scans and analyzes data stored in different data sources such as Amazon S3 buckets, relational databases (Amazon RDS, Amazon Redshift), data lakes, and other accessible repositories. It detects the structure, format, and schema of the data without requiring manual intervention.
-- ___`AWS Athena`___ is an interactive query service that enables you to analyze data stored in Amazon S3 using standard SQL queries. It allows you to query data directly from your S3 buckets without the need to set up or manage any infrastructure.
-- It is a serverless service, which means you don't need to provision or manage any infrastructure. You simply define your queries, and Athena automatically scales resources to execute them quickly and efficiently.
-- Athena integrates seamlessly with the AWS Glue Data Catalog, allowing you to define tables and schemas for your S3 data
-- Athena is compatible with popular business intelligence (BI) tools like Tableau, Power BI, and Amazon QuickSight.
-- When running highly complex analytical queries against large volumes of data, Athena automatically scales out and divides the query into simpler ones to run in parallel. This capability is possible because Athena is built on Presto, an open-source distributed SQL engine designed for this purpose.
+- ___`AWS Data wrangler`___ is an open-source Python library focused on simplifying data preparation and exploration for analytics and machine learning tasks. It provides easy-to-use functions and abstractions for working with data in Pandas DataFrames, facilitating common data engineering tasks. AWS Data Wrangler seamlessly integrates with AWS services such as Amazon S3, Amazon Redshift, Amazon Athena, and Amazon Glue, enabling smooth data integration, processing, and interaction between Python environments (such as Jupyter notebooks) and AWS data services. For instance, it simplifies loading data from S3 into Pandas DataFrames for analysis or machine learning and allows pushing processed data back into AWS services like S3 or Redshift.
+- ___`AWS Glue`___ is a fully managed service from AWS designed for extract, transform, and load (ETL) tasks, automating processes such as data discovery, cataloguing, cleaning, and transformation. It simplifies ETL job creation and management through a graphical interface, allowing users to schedule and monitor jobs easily. AWS Glue seamlessly integrates with various AWS services like Amazon S3, Amazon RDS, and Amazon Redshift, facilitating efficient data integration and processing workflows across diverse data sources and formats.
+- ___`AWS Glue Crawler`___ AWS Glue Crawler is a tool provided within AWS Glue that automates the process of discovering and cataloguing data stored in different sources such as Amazon S3, databases, and data warehouses. It scans these data sources, infers the schema of the data (i.e., its structure and format), and then creates metadata tables in the AWS Glue Data Catalog. This allows AWS users to easily access and query the data using AWS Glue ETL jobs or other AWS analytics services like Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR. The AWS Glue Crawler simplifies the management of data cataloguing and ensures that metadata remains updated as new data is added or existing data changes, thereby supporting efficient data integration and processing workflows within AWS environments.
+- ___`AWS Glue Data Catalogue`___ serves as a central metadata repository within AWS, storing comprehensive metadata information about databases and tables across your AWS environment. It operates independently as a persistent metadata store, managing both structural and operational metadata for all data assets. This includes storing definitions for tables, partitions, and other relevant metadata components, providing a consolidated and unified view of your data assets. The AWS Glue Data catalogue integrates seamlessly with AWS Glue itself, leveraging its metadata for tasks such as Extract, Transform, and Load (ETL) jobs. Furthermore, other AWS services like Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR utilize the AWS Glue Data catalogue for efficient querying and processing of data, ensuring consistent and reliable access to metadata across different AWS services and environments.
+- While AWS Glue uses the Data Catalog to store metadata, they serve different primary functions: AWS Glue executes ETL tasks, while the Data Catalog manages and stores metadata about those tasks and data assets.
+- ___`AWS Athena`___ is an interactive query service provided by Amazon Web Services (AWS) that allows you to analyze and query data stored in Amazon S3 using standard SQL. It enables you to run ad-hoc queries on large amounts of data without needing to set up or manage any infrastructure. Athena is serverless, meaning there is no need for provisioning or scaling of resources, and you pay only for the queries you run. It supports a wide range of data formats, including CSV, JSON, Parquet, and ORC, making it versatile for analyzing different types of data stored in S3.
+- An ad-hoc query is a query that you write on-the-fly whenever you need to quickly get specific information from a database or data source. It's like asking a question directly to the data to get immediate answers, without needing to plan or save the query for future use.
 
 ## Data visualization:
-- ___`Pandas`___, an open-source library, is utilized for data analysis and manipulation.
-- ___`NumPy`___, another open-source library, facilitates scientific computing in Python.
-- ___`Matplotlib`___ aids in creating static, animated, and interactive visualizations.
-- ___`Seaborn`___, built on top of matplotlib, enhances visualizations with statistical data analysis.
+- ___`Pandas`___ is indeed an open-source library used for data analysis and manipulation in Python. It provides powerful data structures like DataFrame and Series, along with tools for reading and writing data between in-memory data structures and various file formats.
+- ___`NumPy`___ is another open-source library that supports scientific computing in Python. It provides powerful numerical arrays and functions for operations on these arrays, which are essential for numerical computations and data analysis.
+- ___`Matplotlib`___ is a widely used library for creating static, animated, and interactive visualizations in Python. It provides a variety of plotting functions to visualize data in different formats, ranging from simple line plots to complex 3D plots. 
+- ___`Seaborn`___ is built on top of matplotlib and enhances data visualizations with statistical data analysis capabilities. It provides a high-level interface for drawing attractive and informative statistical graphics, making it easier to create complex visualizations with fewer lines of code.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Statistical bias and Feature importance:
 - Statistical bias and Feature importance help you gain a better understanding of your data quality and allows you to explore how the individual feature of your datasets contribute to the final model.
