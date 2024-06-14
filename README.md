@@ -5,8 +5,8 @@ __Prerequisites for this project:__
 - Basic understanding of building, training, and evaluating machine learning models.
 
 __Brief introduction to Artificial intelligence and Machine learning:__
-- ___`Artificial intelligence`___, is generally described as a technique that lets machines mimic human behaviour.
-- ___`Machine learning`___, is a subset of AI, that uses statistical methods and algorithms that can learn from data, without being explicitly programmed.
+- ___`Artificial intelligence`___ is generally described as a technique that lets machines mimic human behaviour.
+- ___`Machine learning`___ is a subset of AI, that uses statistical methods and algorithms that can learn from data, without being explicitly programmed.
 - ___`Deep learning`___ is yet another subset of ML, that uses artificial neural networks to learn from data.
 - ___`Natural language processing (NLP)`___ or ___`Natural language understanding (NLU)`___ is yet another subset of ML focused on the interaction between computers and humans through natural language, which includes machine translations, sentiment analysis, question answering system, etc.
 - ___`Computer vision`___ is a subset of ML that enables computers to interpret and make decisions based on visual data from the world, where you need to classify images into pictures of dogs and cats, distinguish between speed signs and trees.
@@ -30,17 +30,17 @@ __Benifits of performing data science projects on the cloud:__
 - Multi-class classification is a supervised learning task, so you must provide your classifier model with examples to correctly learn how to classify product reviews into the respective sentiment classes. You can use the review text as the input feature for model training and assign sentiment labels to train the model. Sentiment classes are typically represented as integer values during model training, such as 1 for positive sentiment, 0 for neutral sentiment, and -1 for negative sentiment.
 
 ## Data ingestion and Exploration:
--  ___`Data ingestion:`___ It is the process of bringing data from various sources, such as databases, files, or websites, into a system where it can be used. Think of it like gathering ingredients in your kitchen before cooking a meal.
+-  ___`Data ingestion`___ is the process of bringing data from various sources, such as databases, files, or websites, into a system where it can be used. Think of it like gathering ingredients in your kitchen before cooking a meal.
 - Imagine your e-commerce company is collecting customer feedback from multiple online channels, including social media, support centre calls, emails, mobile apps, and website data. 
 - To accomplish this, you need a flexible and scalable repository capable of storing different file formats, including structured data like CSV files and unstructured data like support centre call audio files. Additionally, it should dynamically scale storage capacity as new data streams in. Cloud-based data lakes provide a solution to this problem.
-- ___`Data lake:`___ It is a centralized and secure repository that can store, discover, and share virtually any amount and type of data. Data can be ingested into a data lake in its raw format without prior transformation. Whether it's structured relational data in CSV or TSV file formats, semi-structured data like JSON or XML files, or unstructured data such as images, audio, and media files, it can all be ingested. Additionally, you can ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
+- ___`Data lake`___ is a centralized and secure repository that can store, discover, and share virtually any amount and type of data. Data can be ingested into a data lake in its raw format without prior transformation. Whether it's structured relational data in CSV or TSV file formats, semi-structured data like JSON or XML files, or unstructured data such as images, audio, and media files, it can all be ingested. Additionally, you can ingest streaming data such as continuous log file feeds or social media channel feeds into your data lake.
 - Effective governance is indeed crucial for managing a data lake, especially given the continuous influx of new data. Implementing mechanisms for discovering and cataloguing incoming data helps ensure that the data lake remains organized, accessible, and compliant with regulatory and organizational standards. This governance framework also facilitates efficient data utilization, enhances data quality, and supports data analytics and decision-making processes within an organization. Cloud services facilitate scalable storage, automated data ingestion, robust security and compliance measures, advanced analytics capabilities, cost efficiency, and seamless integration with machine learning, all crucial for effectively managing a data lake.
 - There are three types of storage technologies used in computer systems and data storage solutions:
-  > ___`File storage:`___ This is a storage technology that organizes data as individual files stored in a hierarchical directory structure, similar to how files are organized on personal computers or file servers. File storage is suitable for structured and semi-structured data such as documents, spreadsheets, multimedia files, and application data.
+  > ___`File storage`___ is a storage technology that organizes data as individual files stored in a hierarchical directory structure, similar to how files are organized on personal computers or file servers. File storage is suitable for structured and semi-structured data such as documents, spreadsheets, multimedia files, and application data.
 
-  > ___`Block storage:`___ This is a storage technology that manages data as individual blocks or chunks at the disk level, accessed using block-level protocols such as SCSI (small computer system interface) or Fibre Channel. It is commonly used in storage area networks (SANs).
+  > ___`Block storage`___ is a storage technology that manages data as individual blocks or chunks at the disk level, accessed using block-level protocols such as SCSI (small computer system interface) or Fibre Channel. It is commonly used in storage area networks (SANs).
   
-  > ___`Object storage:`___ This is a storage architecture that manages data as objects, each consisting of data, metadata (information that describes the object), and a unique identifier. Object storage is suitable for scalable and distributed storage of unstructured data like images, videos, backups, and log files.
+  > ___`Object storage`___ is a storage architecture that manages data as objects, each consisting of data, metadata (information that describes the object), and a unique identifier. Object storage is suitable for scalable and distributed storage of unstructured data like images, videos, backups, and log files.
 - Amazon S3 is commonly used as the underlying object storage for data lakes due to its durability, availability, and scalability. It allows ingestion of vast amounts of data, ranging from small datasets to exabytes. AWS provides tools and services that ensure data lakes built on Amazon S3 are secure, compliant with regulations, and auditable. This includes features like access control, encryption, data governance, and compliance certifications.
 - Amazon S3 serves as a centralized repository in data lakes, facilitating easy access and analysis of data for data warehousing analytics. This involves analyzing large volumes of structured data to derive insights and support decision-making. It also supports integration with machine learning tools for extracting deeper insights, identifying patterns, and making predictions based on business requirements.
 - Data lakes and data warehouses are indeed different technologies with distinct architectures and purposes. Data lakes are designed for storing vast amounts of raw and unstructured data, enabling flexible data exploration and analysis. In contrast, data warehouses are optimized for querying and analyzing structured data to support business intelligence and reporting.
@@ -93,7 +93,7 @@ print(df.head())
 ```
 
 - ___`AWS Glue`___ is a fully managed service from AWS designed for extract, transform, and load (ETL) tasks, automating processes such as data discovery, cataloguing, cleaning, and transformation. It simplifies ETL job creation and management through a graphical interface, allowing users to schedule and monitor jobs easily. AWS Glue seamlessly integrates with various AWS services like Amazon S3, Amazon RDS, and Amazon Redshift, facilitating efficient data integration and processing workflows across diverse data sources and formats.
-- ___`AWS Glue Crawler`___ AWS Glue Crawler is a tool provided within AWS Glue that automates the process of discovering and cataloguing data stored in different sources such as Amazon S3, databases, and data warehouses. It scans these data sources, infers the schema of the data (i.e., its structure and format), and then creates metadata tables in the AWS Glue Data Catalog. This allows AWS users to easily access and query the data using AWS Glue ETL jobs or other AWS analytics services like Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR. The AWS Glue Crawler simplifies the management of data cataloguing and ensures that metadata remains updated as new data is added or existing data changes, thereby supporting efficient data integration and processing workflows within AWS environments.
+- ___`AWS Glue Crawler`___ is a tool provided within AWS Glue that automates the process of discovering and cataloguing data stored in different sources such as Amazon S3, databases, and data warehouses. It scans these data sources, infers the schema of the data (i.e., its structure and format), and then creates metadata tables in the AWS Glue Data Catalog. This allows AWS users to easily access and query the data using AWS Glue ETL jobs or other AWS analytics services like Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR. The AWS Glue Crawler simplifies the management of data cataloguing and ensures that metadata remains updated as new data is added or existing data changes, thereby supporting efficient data integration and processing workflows within AWS environments.
 - ___`AWS Glue Data Catalogue`___ serves as a central metadata repository within AWS, storing comprehensive metadata information about databases and tables across your AWS environment. It operates independently as a persistent metadata store, managing both structural and operational metadata for all data assets. This includes storing definitions for tables, partitions, and other relevant metadata components, providing a consolidated and unified view of your data assets. The AWS Glue Data catalogue integrates seamlessly with AWS Glue itself, leveraging its metadata for tasks such as Extract, Transform, and Load (ETL) jobs. Furthermore, other AWS services like Amazon Athena, Amazon Redshift Spectrum, and Amazon EMR utilize the AWS Glue Data catalogue for efficient querying and processing of data, ensuring consistent and reliable access to metadata across different AWS services and environments.
 - While AWS Glue uses the Data Catalog to store metadata, they serve different primary functions: AWS Glue executes ETL tasks, while the Data Catalog manages and stores metadata about those tasks and data assets.
 - ___`AWS Athena`___ is an interactive query service provided by Amazon Web Services (AWS) that allows you to analyze and query data stored in Amazon S3 using standard SQL. It enables you to run ad-hoc queries on large amounts of data without needing to set up or manage any infrastructure. Athena is serverless, meaning there is no need for provisioning or scaling of resources, and you pay only for the queries you run. It supports a wide range of data formats, including CSV, JSON, Parquet, and ORC, making it versatile for analyzing different types of data stored in S3.
@@ -132,7 +132,6 @@ df = wr.athena.read_sql_query(
     boto3_session=wrangler_boto3_session
 )
 
-# Display the first few rows of the DataFrame
 print(df.head())
 ```
 
@@ -142,60 +141,45 @@ print(df.head())
 - ___`Matplotlib`___ is a widely used library for creating static, animated, and interactive visualizations in Python. It provides a variety of plotting functions to visualize data in different formats, ranging from simple line plots to complex 3D plots. 
 - ___`Seaborn`___ is built on top of matplotlib and enhances data visualizations with statistical data analysis capabilities. It provides a high-level interface for drawing attractive and informative statistical graphics, making it easier to create complex visualizations with fewer lines of code.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## Statistical bias and Feature importance:
-- Statistical bias and Feature importance help you gain a better understanding of your data quality and allows you to explore how the individual feature of your datasets contribute to the final model.
-- A dataset is biased if it fails to accurately represent the underlying problem space. Statistical bias refers to a tendency to either overestimate or underestimate a parameter.
-- For instance, in a dataset where fraudulent credit card transactions are rare, fraud detection models may struggle to identify fraudulent transactions due to lack of exposure. One solution to this issue is to augment the training dataset with more examples of fraudulent transactions.
-- Similarly, consider a product review dataset where one product category (A) has a large number of reviews compared to categories B and C. When building a sentiment prediction model using this biased dataset, the model may accurately predict sentiments for category A products but perform poorly for categories B and C.
-- ___Bias___ can be introduced in the dataset in various ways:
-  > ___`Activity bias`___ Activity bias occurs when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity. In an online shopping dataset, frequent users may have more data recorded about their preferences and behaviors compared to occasional users, leading to biased predictions.
+__Statistical bias and Feature importance:__
+- Statistical bias and feature importance are indeed critical tools for evaluating the quality of your data and understanding the role each feature plays in your model. Statistical bias helps you identify any systematic errors in your data, while feature importance helps you understand which features significantly contribute to your model's predictions.
+- A dataset is biased if it does not accurately represent the underlying problem space. Statistical bias refers to a consistent deviation from the true parameter, either through overestimation or underestimation. This can lead to systematic errors in your model’s predictions.
+- For example, In fraud detection, if fraudulent transactions are rare in the dataset, the model may not perform well in identifying fraud due to insufficient examples of fraudulent transactions. One common solution is to augment the training dataset with more fraudulent examples, which can help the model learn to identify fraud more effectively. 
+- Similarly, In our use case, If one product category (e.g., category A) has significantly more reviews than others (e.g., categories B and C), the model may become biased towards predicting sentiments accurately for category A while performing poorly for categories B and C. This happens because the model has more information and training data for category A, making it less effective for underrepresented categories.
+- There are various ways in which bias can be introduced in the dataset:
+  > ___`Activity bias`___ arises when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity. For example, in an online shopping dataset, frequent users might have more recorded data about their preferences and behaviors compared to occasional users. This can lead to biased predictions, as the model may learn more about the frequent users and thus be less accurate for occasional users.
   
-  > ___`Societal bias`___ reflects existing societal inequalities and prejudices that are reflected in the data, leading to unfair treatment of certain groups. Historical biases against certain demographics (e.g., race, gender) may be perpetuated in datasets, resulting in biased decisions in areas like hiring or lending.
+  > ___`Societal bias`___ reflects existing societal inequalities and prejudices that are mirrored in the data. This type of bias can lead to unfair treatment of certain groups. Historical biases against certain demographics, such as race or gender, may be embedded in the datasets, resulting in biased outcomes in areas like hiring or lending. For instance, if historical hiring data is biased against a particular gender, a model trained on this data may also discriminate against that gender.
   
-  > ___`Selection bias`___ occurs when the data collection process systematically favors certain samples over others, leading to an unrepresentative dataset. A survey conducted only among tech-savvy individuals may not accurately represent the opinions of the general population, leading to biased conclusions.
-- ___Drift___ refers to a change or deviation in the statistical properties or distribution of data over time. It can occur in various forms:
-  > ___`Data drift`___ happens when the data used by a model changes over time, making the model less accurate.
+  > ___`Selection bias`___ occurs when the data collection process systematically favors certain samples over others, resulting in an unrepresentative dataset. For instance, if a survey is conducted only among tech-savvy individuals, it may not accurately capture the opinions of the general population. This can lead to biased conclusions, as the sample is not representative of the entire population.
+
+__Drift:__ 
+- Drift refers to any change or deviation in the statistical properties or distribution of data over time that can impact the performance of models. These changes can occur in various forms, affecting different aspects of the data and the model's behaviour:
+  > ___`Data drift`___ occurs when the statistical properties of the data used by a model change over time. This can make the model less accurate because it was trained on data with different characteristics. For example, if the features of the data (like user behaviours or product preferences) change, the model's performance may degrade.
   
-  > ___`Concept drift`___ occurs when the relationship between the model's input and output changes over time. For example, if you're predicting whether someone will buy a product based on their age, and suddenly younger people start buying more than older people, that's concept drift.
+  > ___`Concept drift`___ refers to a change in the relationship between the input and output variables over time. For instance, if a model predicts product purchases based on age and the purchasing behaviour of different age groups shifts, the model's predictions will become less accurate..
   
-  > ___Covariate drift`___ happens when the characteristics used by the model to make predictions change over time. Let's say you're trying to predict how much ice cream people will buy based on the temperature. If suddenly people start buying more ice cream on colder days instead of hotter ones, that's covariate drift.
+  > ___`Covariate drift`___ happens when the distribution of the predictor variables (features) changes over time. For example, if temperature was a key predictor for ice cream sales, and the relationship between temperature and sales changes (people start buying more ice cream on colder days), the model's predictions would be affected.
   
-  > ___`Prior probability drift`___ is the shift in the frequency of each outcome over time. Imagine you're flipping a coin, and at first, it comes up heads 70% of the time and tails 30% of the time. Your model learns from this and gets good at predicting based on that. But then, over time, the coin changes, and now it's heads only 50% of the time and tails 50% of the time.
+  > ___`Prior probability drift`___ occurs when the frequency of the target outcomes changes over time. For instance, if a coin flip initially results in heads 70% of the time and later changes to a 50-50 distribution, a model trained on the initial data will be less accurate in predicting future outcomes.
   
-  > ___`Model drift`___ is when a model that used to perform well becomes less accurate over time. This can happen if the data the model was trained on changes, or if the world changes in a way that the model didn't expect.
+  > ___`Model drift`___ refers to the phenomenon where a model that used to perform well becomes less accurate over time. This can happen due to changes in the data distribution, changes in the real world that affect the relationships the model learned, or other factors that make the original model less relevant.
   
-  > ___`Population drift`___ occurs when the population the model is applied to changes over time, making the model less accurate. Let's say you're building a model to predict what kind of movies people will like, and you train it on data from one country. If you then try to use that model in a different country where people have different tastes, that's population drift.
+  > ___`Population drift`___ Population drift occurs when the population on which the model is applied changes over time. For example, a model trained on movie preferences in one country may not perform well if applied to a different country with different preferences.
   
-  > ___`Label drift`___ is when the answers or labels you have for your data change over time. It's like if you were trying to label pictures of cats and dogs, but then someone changed their mind about what a cat looks like. So, the labels for the pictures change, making it harder for your model to learn from them because the right answers keep changing.
-- ___`Class imbalance`___ refers to the situation where one class (or category) of data is significantly more or less prevalent than another class.  
-- The ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of a particular outcomes between different groups or categories within a dataset.
-- It helps to understand whether there are imbalances in outcomes across different groups or categories. Identifying such differences is essential for understanding biases, making decisions, and designing strategies to address disparities.
-- In context of product reviews dataset. understanding the DPL between different product categories is crucial for identifying which categories tend to receive more positive reviews than others. This insight can inform marketing strategies, product development priorities, and resource allocation decisions within a company.
-- So, while CI looks at overall reviews, DPL looks at whether some categories get higher ratings than others.
-- For example, consider we have a dataset of customer reviews for an e-commerce platform. Each review is labeled as either "positive" or "negative" sentiment based on the customer's feedback.
+  > ___`Label drift`___ Label drift happens when the meaning of the target labels changes over time. For example, if the criteria for labeling data as "cat" or "dog" change, the model will struggle to learn and make accurate predictions because the definitions of the labels are inconsistent.
+  
+___`Class imbalance:`___
+- Class imbalance refers to a situation in a classification problem where the number of instances in each class is not evenly distributed.
+
+__Matrics to measure imbalance in data:__
+> __Difference in Proportions of Labels (DPL):__
+- The Difference in Proportions of Labels (DPL) calculates the absolute difference in the proportions of particular outcomes (e.g., positive vs. negative reviews) between different groups or categories within a dataset. This helps to quantify the degree of imbalance or disparity in outcomes across these groups.
+- DPL helps to understand whether there are imbalances in outcomes across different groups or categories.
+- In the context of a product reviews dataset, understanding the DPL between different product categories is crucial. For instance, if some categories receive disproportionately more positive reviews than others, this insight can inform various strategic decisions such as marketing efforts, product development, and resource allocation within a company.
+- While Cumulative Incidence (CI) or overall reviews look at the total number of reviews and their general trends, DPL specifically focuses on whether some categories get higher or lower ratings than others. This targeted analysis is useful for identifying specific areas where there might be an imbalance.
+- Consider a dataset of customer reviews for an e-commerce platform where each review is labelled as either "positive" or "negative". By calculating the DPL, you can determine if certain product categories receive more positive (or negative) reviews compared to others, highlighting potential biases or areas for improvement.
+
 - ___`Sagemaker Clarify`___ offers functionality for detecting biases in both datasets and machine learning models. It analyzes training and testing datasets to identify biases based on facet/sensitive features (such as gender or race) and generate detailed bias reports. These reports include metrics, visualizations, and insights to help users understand and mitigate biases in their datasets.
 - SageMaker Clarify seamlessly integrates with other components of Amazon SageMaker, allowing users to incorporate bias detection and model explainability into their ML workflows. 
 - ___`Sagemaker Wrangler`___ focuses on data preparation tasks such as connecting to various data sources, visualizing, transforming data, and generating reports on the data.can help with preparing the data for bias analysis by cleaning and preprocessing it, it does not include built-in features for detecting biases or generating bias reports.
