@@ -141,21 +141,26 @@ print(df.head())
 - ___`Matplotlib`___ is a widely used library for creating static, animated, and interactive visualizations in Python. It provides a variety of plotting functions to visualize data in different formats, ranging from simple line plots to complex 3D plots. 
 - ___`Seaborn`___ is built on top of matplotlib and enhances data visualizations with statistical data analysis capabilities. It provides a high-level interface for drawing attractive and informative statistical graphics, making it easier to create complex visualizations with fewer lines of code.
 
-## Statistical bias and Feature importance:
+__Statistical bias and Feature importance:__
 - Statistical bias and feature importance are indeed critical tools for evaluating the quality of your data and understanding the role each feature plays in your model. Statistical bias helps you identify any systematic errors in your data, while feature importance helps you understand which features significantly contribute to your model's predictions.
-- A dataset is biased if it does not accurately represent the underlying problem space. Statistical bias refers to a consistent deviation from the true parameter, either through overestimation or underestimation. This can lead to systematic errors in your model’s predictions.
+- ___`Statistical bias`___ refers to a systematic error or deviation from the true value or an expected value in the data or a model's predictions. This bias results from the data collection process, model assumptions, or other factors that cause the estimates to be consistently inaccurate in a particular direction.
+- ___`Feature importance`___ refers to the measure of the impact or significance of each feature in a dataset on the predictions made by a machine learning model. It evaluates how much each feature contributes to the model's predictive power. Feature importance provides a ranking of features based on their contribution to the model's performance. This ranking helps in understanding which features are most influential in making predictions and which ones have less impact.
 - For example, In fraud detection, if fraudulent transactions are rare in the dataset, the model may not perform well in identifying fraud due to insufficient examples of fraudulent transactions. One common solution is to augment the training dataset with more fraudulent examples, which can help the model learn to identify fraud more effectively. 
 - Similarly, In our use case, If one product category (e.g., category A) has significantly more reviews than others (e.g., categories B and C), the model may become biased towards predicting sentiments accurately for category A while performing poorly for categories B and C. This happens because the model has more information and training data for category A, making it less effective for underrepresented categories.
-
- ### Bias:
 - There are various ways in which bias can be introduced in the dataset:
   > ___`Activity bias`___ arises when certain groups or individuals are overrepresented or underrepresented in the data due to their level of engagement or activity. For example, in an online shopping dataset, frequent users might have more recorded data about their preferences and behaviours compared to occasional users. This can lead to biased predictions, as the model may learn more about the frequent users and thus be less accurate for occasional users.
   
   > ___`Societal bias`___ reflects existing societal inequalities and prejudices that are mirrored in the data. This type of bias can lead to unfair treatment of certain groups. Historical biases against certain demographics, such as race or gender, may be embedded in the datasets, resulting in biased outcomes in areas like hiring or lending. For instance, if historical hiring data is biased against a particular gender, a model trained on this data may also discriminate against that gender.
   
   > ___`Selection bias`___ occurs when the data collection process systematically favours certain samples over others, resulting in an unrepresentative dataset. For instance, if a survey is conducted only among tech-savvy individuals, it may not accurately capture the opinions of the general population. This can lead to biased conclusions, as the sample is not representative of the entire population.
+  
+  > ___`Measurement bias`___ happens when there are inaccuracies in data collection methods, leading to systematically incorrect measurements.
+  
+  > ___`Sampling bias`___ results from a non-random sample of a population, leading to certain groups being over or under-represented.
+  
+  > ___`Response bias`___ arises when respondents provide inaccurate or false information, often influenced by the question's wording or the survey environment.
 
-### Drift:
+__Drift:__
 - Drift refers to any change or deviation in the statistical properties or distribution of data over time that can impact the performance of models. These changes can occur in various forms, affecting different aspects of the data and the model's behaviour:
   > ___`Data drift`___ occurs when the statistical properties of the data used by a model change over time. This can make the model less accurate because it was trained on data with different characteristics. For example, if the features of the data (like user behaviours or product preferences) change, the model's performance may degrade.
   
@@ -171,22 +176,24 @@ print(df.head())
   
   > ___`Label drift`___ Label drift happens when the meaning of the target labels changes over time. For example, if the criteria for labelling data as "cat" or "dog" change, the model will struggle to learn and make accurate predictions because the definitions of the labels are inconsistent.
 
-### Matrics to measure imbalance in data:
-- Below are some of the matrices used to measure class imbalance in dataset:
-  > ___`Class imbalance`___ refers to a situation in a classification problem where the number of instances in each class is not evenly distributed.
+__Matrics to measure imbalance in data:__
+- ___`Class imbalance`___ refers to a situation in a classification problem where the number of instances in each class is not evenly distributed.
+- ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of particular outcomes (e.g., positive vs. negative reviews) between different groups or categories within a dataset. This helps to quantify the degree of imbalance or disparity in outcomes across these groups. DPL helps to understand whether there are imbalances in outcomes across different groups or categories. In the context of a product reviews dataset, understanding the DPL between different product categories is crucial. For instance, if some categories receive disproportionately more positive reviews than others, this insight can inform various strategic decisions such as marketing efforts, product development, and resource allocation within a company. While Cumulative Incidence (CI) or overall reviews look at the total number of reviews and their general trends, DPL specifically focuses on whether some categories get higher or lower ratings than others. This targeted analysis is useful for identifying specific areas where there might be an imbalance. Consider a dataset of customer reviews for an e-commerce platform where each review is labelled as either "positive" or "negative". By calculating the DPL, you can determine if certain product categories receive more positive (or negative) reviews compared to others, highlighting potential biases or areas for improvement.
+-  ___`SHapley Additive exPlanations (SHAP)`___ values can also be used to assess feature importance by averaging the absolute SHAP values for each feature across all predictions. It is a method for interpreting individual predictions from machine learning models. They aim to explain the output of a machine learning model by attributing the prediction outcome to different features in the input data. SHAP values are based on the idea of Shapley values in cooperative game theory. Shapley values calculate the contribution of each player (feature) in a coalition (subset of features) to the overall outcome (prediction).
 
-  > ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of particular outcomes (e.g., positive vs. negative reviews) between different groups or categories within a dataset. This helps to quantify the degree of imbalance or disparity in outcomes across these groups. DPL helps to understand whether there are imbalances in outcomes across different groups or categories.
 
-  In the context of a product reviews dataset, understanding the DPL between different product categories is crucial. For instance, if some categories receive disproportionately more positive reviews than others, this insight can inform various strategic decisions such as marketing efforts, product development, and resource allocation within a company. While Cumulative Incidence (CI) or overall reviews look at the total number of reviews and their general trends, DPL specifically focuses on whether some categories get higher or lower ratings than others. This targeted analysis is useful for identifying specific areas where there might be an imbalance. Consider a dataset of customer reviews for an e-commerce platform where each review is labelled as either "positive" or "negative". By calculating the DPL, you can determine if certain product categories receive more positive (or negative) reviews compared to others, highlighting potential biases or areas for improvement.
 
+
+
+
+
+
+
+# Ding DOng
 - ___`Sagemaker Clarify`___ offers functionality for detecting biases in both datasets and machine learning models. It analyzes training and testing datasets to identify biases based on facet/sensitive features (such as gender or race) and generate detailed bias reports. These reports include metrics, visualizations, and insights to help users understand and mitigate biases in their datasets.
 - SageMaker Clarify seamlessly integrates with other components of Amazon SageMaker, allowing users to incorporate bias detection and model explainability into their ML workflows. 
 - ___`Sagemaker Wrangler`___ focuses on data preparation tasks such as connecting to various data sources, visualizing, transforming data, and generating reports on the data.can help with preparing the data for bias analysis by cleaning and preprocessing it, it does not include built-in features for detecting biases or generating bias reports.
-- ___`Feature importance`___ refers to the measure of the impact or significance of each feature in a dataset on the prediction made by a machine learning model. It provides a ranking of features based on their contribution to the model's performance.
-- It provides a high-level overview of feature importance across the entire dataset.
-- ___`SHapley Additive exPlanations (SHAP)`___ is a method for explaining individual predictions made by machine learning models. It provides a unified framework for understanding the contribution of each feature to the prediction for a specific instance. SHAP values represent the impact of each feature on the difference between the actual prediction and the average prediction across all instances in the dataset.
-- SHAP values offer a more detailed and instance-specific explanation of feature contributions, allowing for a deeper understanding of model behavior and individual predictions.
-- 
+
 # This is till week2 everything is up to date you just have to walk through the coding part and include importatnt images
 
 ### Important links:
