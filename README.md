@@ -239,20 +239,13 @@ clarify_processor.run_bias(data_config=data_config,
 
 # Wait for the job to finish
 clarify_processor.wait()
-
 ```
+| ___`Amazon SageMaker Data Wrangler`___                                                                                                                                                              | ___`Amazon SageMaker Clarify`___                                                                                                                                                  |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| - SageMaker Data Wrangler is designed for data preparation, transformation, and feature engineering.                                                                                                | - SageMaker Clarify is used primarily for bias detection, explainability, and fairness assessment in machine learning models.                                                     |
+| -  Use SageMaker Data Wrangler when you need to integrate and preprocess data from multiple sources, benefiting from its visual interface and efficient data handling across distributed locations. | - Use SageMaker Clarify if your priority is to analyze biases and ensure model fairness across a vast dataset, leveraging its scalability and robust bias detection capabilities. |
 
-__Important links:__
-- [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
-- [AWS SDK](https://github.com/aws/aws-sdk-pandas)
-- [AWS Glue](https://aws.amazon.com/glue/)
-- [AWS Athena](https://aws.amazon.com/athena/)
-- [Matplotlib](https://matplotlib.org/)
-- [Seaborn](https://seaborn.pydata.org/)
-- [Pandas](https://pandas.pydata.org/)
-- [NumPy](https://numpy.org/)
-- [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
-- [use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
+
 
 
 - ___`Automated Machine Learning (AutoMl)`___,
@@ -338,3 +331,14 @@ In this section, you will build a custom model using BERT algorithm and build an
 
 ### C] Optimize Ml models and deploy human-in-the-loop pipelines:
 -
+__Important links:__
+- [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
+- [AWS SDK](https://github.com/aws/aws-sdk-pandas)
+- [AWS Glue](https://aws.amazon.com/glue/)
+- [AWS Athena](https://aws.amazon.com/athena/)
+- [Matplotlib](https://matplotlib.org/)
+- [Seaborn](https://seaborn.pydata.org/)
+- [Pandas](https://pandas.pydata.org/)
+- [NumPy](https://numpy.org/)
+- [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
+- [use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
