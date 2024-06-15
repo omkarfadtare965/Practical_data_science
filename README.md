@@ -172,9 +172,9 @@ __Drift:__
   
   > ___`Model drift`___ refers to the phenomenon where a model that used to perform well becomes less accurate over time. This can happen due to changes in the data distribution, changes in the real world that affect the relationships the model learned, or other factors that make the original model less relevant.
   
-  > ___`Population drift`___ Population drift occurs when the population on which the model is applied changes over time. For example, a model trained on movie preferences in one country may not perform well if applied to a different country with different preferences.
+  > ___`Population drift`___ occurs when the population on which the model is applied changes over time. For example, a model trained on movie preferences in one country may not perform well if applied to a different country with different preferences.
   
-  > ___`Label drift`___ Label drift happens when the meaning of the target labels changes over time. For example, if the criteria for labelling data as "cat" or "dog" change, the model will struggle to learn and make accurate predictions because the definitions of the labels are inconsistent.
+  > ___`Label drift`___ happens when the meaning of the target labels changes over time. For example, if the criteria for labelling data as "cat" or "dog" change, the model will struggle to learn and make accurate predictions because the definitions of the labels are inconsistent.
 
 __Matrics to measure imbalance in data:__
 - ___`Class imbalance`___ refers to a situation in a classification problem where the number of instances in each class is not evenly distributed.
