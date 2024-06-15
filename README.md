@@ -181,22 +181,68 @@ __Matrics to measure imbalance in data:__
 - ___`Difference in Proportions of Labels (DPL)`___ calculates the absolute difference in the proportions of particular outcomes (e.g., positive vs. negative reviews) between different groups or categories within a dataset. This helps to quantify the degree of imbalance or disparity in outcomes across these groups. DPL helps to understand whether there are imbalances in outcomes across different groups or categories. In the context of a product reviews dataset, understanding the DPL between different product categories is crucial. For instance, if some categories receive disproportionately more positive reviews than others, this insight can inform various strategic decisions such as marketing efforts, product development, and resource allocation within a company. While Cumulative Incidence (CI) or overall reviews look at the total number of reviews and their general trends, DPL specifically focuses on whether some categories get higher or lower ratings than others. This targeted analysis is useful for identifying specific areas where there might be an imbalance. Consider a dataset of customer reviews for an e-commerce platform where each review is labelled as either "positive" or "negative". By calculating the DPL, you can determine if certain product categories receive more positive (or negative) reviews compared to others, highlighting potential biases or areas for improvement.
 -  ___`SHapley Additive exPlanations (SHAP)`___ values can also be used to assess feature importance by averaging the absolute SHAP values for each feature across all predictions. It is a method for interpreting individual predictions from machine learning models. They aim to explain the output of a machine learning model by attributing the prediction outcome to different features in the input data. SHAP values are based on the idea of Shapley values in cooperative game theory. Shapley values calculate the contribution of each player (feature) in a coalition (subset of features) to the overall outcome (prediction).
 
+__Tools to detect Statistical bias in the dataset:__
+- ___`Amazon SageMaker Data Wrangler`___ is a powerful tool designed to simplify the process of data preparation and feature engineering for machine learning. It is part of Amazon SageMaker, a fully managed service that provides every developer and data scientist with the ability to build, train, and deploy machine learning models quickly and easily. AWS 
+SageMaker Data Wrangler offers a visual interface that allows users to interactively prepare their data without writing code. It provides a wide range of built-in data transformers and recipes that simplify common data preparation tasks. These include handling missing values, encoding categorical variables, scaling features, and more. SageMaker Data Wrangler seamlessly integrates with various AWS data sources and services, such as Amazon S3 for data storage, Amazon Athena for querying data in S3 using SQL, Amazon Redshift for data warehousing, and AWS Glue for ETL (Extract, Transform, Load) jobs. The tool includes automated data profiling capabilities that help users understand their datasets better. This includes summary statistics, data distribution visualizations, and insights into potential data quality issues. Users can visualize their data and transformations to gain insights into how features are modified and how data distributions change after processing steps.
+- ___`Amazon SageMaker Clarify`___ is indeed a critical tool that helps detect biases in both training data and model predictions. It provides model explainability through tools like SHAP values, which highlight the contribution of each feature to predictions, aiding in understanding model behaviour. SageMaker Clarify generates bias reports that include statistical analyses such as disparate impact analysis and fairness metrics across different demographic groups defined by sensitive attributes (e.g., race, gender). These reports offer insights into biases present in the model and its predictions. SageMaker Clarify not only detects biases but also performs bias detection in both trained and deployed models, ensuring ongoing monitoring and mitigation of biases throughout the model's lifecycle. 
+> Code to detect statistical bias using Amazon SageMaker Clarify:
+```python
+import sagemaker
+from sagemaker import clarify
 
+# Specify your SageMaker execution role and session
+role = sagemaker.get_execution_role()
+session = sagemaker.Session()
 
+# Define the S3 bucket and prefix for input and output data
+bucket = 'your-s3-bucket-name'
+prefix = 'sagemaker/clarify'
 
+# Specify the path to your training dataset in S3
+train_data_uri = f's3://{bucket}/{prefix}/train_data.csv'
 
+# Specify the path to your model artifacts in S3
+model_uri = f's3://{bucket}/{prefix}/model.tar.gz'
 
+# Specify the S3 path for bias report output
+bias_report_output_path = f's3://{bucket}/{prefix}/bias_reports'
 
+# Create a SageMaker Clarify processor
+clarify_processor = clarify.SageMakerClarifyProcessor(role=role,
+                                                      instance_count=1,
+                                                      instance_type='ml.m5.large',
+                                                      sagemaker_session=session)
 
+# Specify configuration for bias detection job
+bias_config = clarify.BiasConfig(
+    label_name='your_label_column_name',
+    facet_name='your_sensitive_attribute_column_name',
+    group_name='your_group_id_column_name',
+    # Additional configuration options can be set here, such as reference_groups and probability_threshold
+)
 
-# Ding DOng
-- ___`Sagemaker Clarify`___ offers functionality for detecting biases in both datasets and machine learning models. It analyzes training and testing datasets to identify biases based on facet/sensitive features (such as gender or race) and generate detailed bias reports. These reports include metrics, visualizations, and insights to help users understand and mitigate biases in their datasets.
-- SageMaker Clarify seamlessly integrates with other components of Amazon SageMaker, allowing users to incorporate bias detection and model explainability into their ML workflows. 
-- ___`Sagemaker Wrangler`___ focuses on data preparation tasks such as connecting to various data sources, visualizing, transforming data, and generating reports on the data.can help with preparing the data for bias analysis by cleaning and preprocessing it, it does not include built-in features for detecting biases or generating bias reports.
+# Specify data configuration
+data_config = clarify.DataConfig(
+    s3_data_input_path=train_data_uri,
+    s3_output_path=bias_report_output_path,
+    label='your_label_column_name',
+    headers=train_data.columns.to_list(),  # Optional: Provide headers if your dataset has headers
+    dataset_type='text/csv'
+)
 
-# This is till week2 everything is up to date you just have to walk through the coding part and include importatnt images
+# Run bias detection job
+clarify_processor.run_bias(data_config=data_config,
+                            data_bias_config=bias_config,
+                            model_uri=model_uri,
+                            pre_training_methods='all',
+                            post_training_methods='all')
 
-### Important links:
+# Wait for the job to finish
+clarify_processor.wait()
+
+```
+
+__Important links:__
 [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
 [AWS SDK](https://github.com/aws/aws-sdk-pandas)
 [AWS Glue](https://aws.amazon.com/glue/)
