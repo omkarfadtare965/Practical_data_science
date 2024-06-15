@@ -243,16 +243,16 @@ clarify_processor.wait()
 ```
 
 __Important links:__
-[Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
-[AWS SDK](https://github.com/aws/aws-sdk-pandas)
-[AWS Glue](https://aws.amazon.com/glue/)
-[AWS Athena](https://aws.amazon.com/athena/)
-[matplotlib](https://matplotlib.org/)
-[Seaborn](https://seaborn.pydata.org/)
-[Pandas](https://pandas.pydata.org/)
-[NumPy](https://numpy.org/)
-[AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
-[use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
+- [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
+- [AWS SDK](https://github.com/aws/aws-sdk-pandas)
+- [AWS Glue](https://aws.amazon.com/glue/)
+- [AWS Athena](https://aws.amazon.com/athena/)
+- [Matplotlib](https://matplotlib.org/)
+- [Seaborn](https://seaborn.pydata.org/)
+- [Pandas](https://pandas.pydata.org/)
+- [NumPy](https://numpy.org/)
+- [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
+- [use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
 
 
 - ___`Automated Machine Learning (AutoMl)`___,
