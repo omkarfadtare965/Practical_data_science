@@ -246,6 +246,9 @@ clarify_processor.wait()
 | -  Use SageMaker Data Wrangler when you need to integrate and preprocess data from multiple sources, benefiting from its visual interface and efficient data handling across distributed locations. | - Use SageMaker Clarify if your priority is to analyze biases and ensure model fairness across a vast dataset, leveraging its scalability and robust bias detection capabilities. |
 
 ## AutoML:
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/4e730206-b5e9-4b68-ae6b-e0521ba02aaf)
+
 - ___`AutoML (Automated Machine Learning)`___ refers to the process of automating the end-to-end process of applying machine learning to real-world problems. It includes automating tasks such as data preprocessing, feature selection, model selection, hyperparameter tuning, and model evaluation. 
 - AutoML makes machine learning accessible to those without extensive expertise by providing a graphical interface or easy-to-use APIs, automating repetitive tasks, and speeding up the model development process while efficiently utilizing computational resources. It ensures standardized procedures for model training and evaluation, facilitating reproducible results through standardized workflows. Often resulting in better-performing models, AutoML systematically and thoroughly tunes hyperparameters and selects models, employing cutting-edge algorithms and methodologies without requiring users to stay updated with the latest advancements.
 - AutoML can be integrated at various stages of the machine-learning workflow:
@@ -261,13 +264,40 @@ clarify_processor.wait()
   
   > ___`Monitoring and Maintenance:`___ AutoML involves continuous performance tracking to ensure models meet expected standards in the production environment. It includes drift detection to identify data drift and concept drift, signalling when the model's accuracy begins to degrade over time. The system provides alerts and notifications for anomalies or significant performance changes, enabling timely intervention. Additionally, it facilitates automated retraining of models using updated data to maintain their performance and relevance.
 
-- ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the process of data exploration, identifying the machine laerning problem, selecting the algorithm based on the machine learning problem and your data also transforming the data to get it into the format that is expected by your algorithm and finally training and performing hyperparameter tuinning to find the optimal set of hyperparameters that results in most performeant model. In addition tocovering this workflow tasks and steps it is also fully transparent meaning it will automatically generate and share the feature engineering code and generate jupyter notebooks that walk you how the models were built this includes the data processing as well as the algorithms hyperparameters and the training configuration   training, and tuning the best machine learning models. It automatically performs preprocessing, feature engineering, model selection, and hyperparameter tuning. It provides insights and visibility into the steps taken during the automation process, allowing users to understand and trust the model development process. It allows users to customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. Amazon SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
-- Steps to Use SageMaker Autopilot:
-  > Prepare and store the labelled dataset in an S3 bucket. Tell the Autopilot what your target attribute is when creating Autopilot experiemnt
-  > Create Autopilot job.
-  > Use the SageMaker console or SDK to monitor the progress of the Autopilot job.
-  > After the job completes, review the generated model candidates and their performance metrics.
-  > Select the best model and deploy it to a SageMaker endpoint for inference.
+- ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the end-to-end process of machine learning model development. It starts with data exploration, identifying the machine learning problem, and selecting an appropriate algorithm based on the dataset and problem type. It also transforms the data to the format expected by the selected algorithm and performs training and hyperparameter tuning to find the optimal set of hyperparameters for the best-performing model. SageMaker Autopilot provides transparency by automatically generating and sharing feature engineering code. It also generates Jupyter notebooks that detail how the models were built, including data processing steps, algorithm selection, hyperparameters, and training configurations. This transparency helps users understand and trust the model development process. Users can customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
+- Users can interact with Amazon SageMaker Autopilot in several ways, such as programmatically through the SageMaker API, using the AWS CLI, AWS SDK, or the SageMaker Python SDK. Additionally, users can work with SageMaker Autopilot through SageMaker Studio, which is a workbench for end-to-end machine-learning activities. Regardless of whether you are interacting programmatically or using SageMaker Studio, you are using the same APIs.
+> Code to use SageMaker Autopilot programmatically:
+```python
+import sagemaker
+from sagemaker.automl.automl import AutoML
+
+# Define the S3 path for the input data
+input_data_uri = 's3://your-bucket/path/to/data.csv'
+
+# Define the S3 path for the output data
+output_data_uri = 's3://your-bucket/path/to/output/'
+
+# Create a SageMaker session
+sagemaker_session = sagemaker.Session()
+
+# Create an AutoML job
+automl = AutoML(role='your-sagemaker-role', 
+                target_attribute_name='target_column', 
+                sagemaker_session=sagemaker_session,
+                max_candidates=10,  # Number of models to train and evaluate
+                output_path=output_data_uri)
+
+# Start the AutoML job
+automl.fit(inputs=input_data_uri)
+
+# Deploy the best model
+best_candidate = automl.describe_auto_ml_job()['BestCandidate']
+model = sagemaker.Model(model_data=best_candidate['InferenceContainerDefinitions'][0]['ModelDataUrl'], 
+                        role='your-sagemaker-role', 
+                        sagemaker_session=sagemaker_session)
+predictor = model.deploy(initial_instance_count=1, instance_type='ml.m5.large')
+```
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/9da88a47-8348-4b18-bbd8-d26e525dc8c4)
 
 
 
