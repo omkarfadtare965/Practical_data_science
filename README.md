@@ -261,9 +261,13 @@ clarify_processor.wait()
   
   > ___`Monitoring and Maintenance:`___ AutoML involves continuous performance tracking to ensure models meet expected standards in the production environment. It includes drift detection to identify data drift and concept drift, signalling when the model's accuracy begins to degrade over time. The system provides alerts and notifications for anomalies or significant performance changes, enabling timely intervention. Additionally, it facilitates automated retraining of models using updated data to maintain their performance and relevance.
 
-
-
-
+- ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the process of data exploration, identifying the machine laerning problem, selecting the algorithm based on the machine learning problem and your data also transforming the data to get it into the format that is expected by your algorithm and finally training and performing hyperparameter tuinning to find the optimal set of hyperparameters that results in most performeant model. In addition tocovering this workflow tasks and steps it is also fully transparent meaning it will automatically generate and share the feature engineering code and generate jupyter notebooks that walk you how the models were built this includes the data processing as well as the algorithms hyperparameters and the training configuration   training, and tuning the best machine learning models. It automatically performs preprocessing, feature engineering, model selection, and hyperparameter tuning. It provides insights and visibility into the steps taken during the automation process, allowing users to understand and trust the model development process. It allows users to customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. Amazon SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
+- Steps to Use SageMaker Autopilot:
+  > Prepare and store the labelled dataset in an S3 bucket. Tell the Autopilot what your target attribute is when creating Autopilot experiemnt
+  > Create Autopilot job.
+  > Use the SageMaker console or SDK to monitor the progress of the Autopilot job.
+  > After the job completes, review the generated model candidates and their performance metrics.
+  > Select the best model and deploy it to a SageMaker endpoint for inference.
 
 
 
