@@ -266,6 +266,7 @@ clarify_processor.wait()
 
 - ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the end-to-end process of machine learning model development. It starts with data exploration, identifying the machine learning problem, and selecting an appropriate algorithm based on the dataset and problem type. It also transforms the data to the format expected by the selected algorithm and performs training and hyperparameter tuning to find the optimal set of hyperparameters for the best-performing model. SageMaker Autopilot provides transparency by automatically generating and sharing feature engineering code. It also generates Jupyter notebooks that detail how the models were built, including data processing steps, algorithm selection, hyperparameters, and training configurations. This transparency helps users understand and trust the model development process. Users can customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
 - Users can interact with Amazon SageMaker Autopilot in several ways, such as programmatically through the SageMaker API, using the AWS CLI, AWS SDK, or the SageMaker Python SDK. Additionally, users can work with SageMaker Autopilot through SageMaker Studio, which is a workbench for end-to-end machine-learning activities. Regardless of whether you are interacting programmatically or using SageMaker Studio, you are using the same APIs.
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/9da88a47-8348-4b18-bbd8-d26e525dc8c4)
 > Code to use SageMaker Autopilot programmatically:
 ```python
 import sagemaker
@@ -297,7 +298,6 @@ model = sagemaker.Model(model_data=best_candidate['InferenceContainerDefinitions
                         sagemaker_session=sagemaker_session)
 predictor = model.deploy(initial_instance_count=1, instance_type='ml.m5.large')
 ```
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/9da88a47-8348-4b18-bbd8-d26e525dc8c4)
 
 
 
