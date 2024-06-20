@@ -356,8 +356,7 @@ __When to Choose Built-in Algorithms:__
 - When you are conducting cutting-edge research or developing new machine learning methodologies.
 - When your project is expected to evolve significantly over time, requiring ongoing adaptation and enhancement.
  
-___`SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BYOC):`___
-
+__SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BYOC):__
 | ___`Feature/Criteria`___ | ___`SageMaker Built-in Algorithms`___                         | ___`	SageMaker Script Mode`___                                                                                           | ___`SageMaker Bring Your Own Container (BYOC)`___                                      |
 |--------------------------|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
 | Ease of Use              | Very high - minimal setup required                            | Moderate - requires coding in supported frameworks                                                                       | Low - requires Docker container setup and management                                   |
@@ -377,6 +376,25 @@ ___`SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BY
 | Automatic Scaling        | Supported                                                     | Supported                                                                                                                | Supported, but requires more configuration                                             |
 | Cost                     | Typically lower due to simplified management                  | Variable depending on custom setup                                                                                       | Potentially higher due to custom management and setup                                  |
 | Best for                 | Standard ML tasks with minimal customization needs.           | Custom training logic with a need for more control over the training script while leveraging SageMaker’s infrastructure. | Highly specialized tasks requiring full control over the environment and dependencies. |
+
+__Usecases and Algorithms:__
+| ___`Task`___             | ___`Use case`___                                                            | ___`Built-in Algorithms`___      |
+|--------------------------|-----------------------------------------------------------------------------|----------------------------------|
+| Classification           | Predict if an item belongs to a category: an email spam filter              | XGBoost, KNN                     |
+| Regression               | Predict numeric or continuous value: estimate the value of the house        | Linear regression, XGBoost       |
+| Time series forecasting  | Predict sales on a new product based on previous sales data                 | DeepAR forecasting               |
+| Dimensionality reduction | Drop weak features such as the color of the car when predicting its mileage | PCA                              |
+| Anomaly detection        | Detect abnormal behaviour                                                   | RCF (Random cut forest)          |
+| Clustering               | Group high/medium/low spending customers from transaction details           | Kmeans                           |
+| Topic modeling           | Organize a set of documents into topics based on words and phrases          | LDA, NTM (Neural topic model)    |
+| Content moderation       | Image classification                                                        | Full training, Transfer learning |
+| Object detection         | Detect people and object in an image                                        | Object detection algorithm       |
+| Computer vision          | Self driving cars identify  objects in their path                           | Semantic segmentation            |
+| Machine translation      | Convert spanish to english                                                  | Seq-to-Seq                       |
+| Text summarization       | Summarize a research paper                                                  | Seq-to-Seq                       |
+| Speech to text           | Transcribe call center conversations                                        | Seq-to-Seq                       |
+| Text classification      | Classify reviews into categories                                            | Blazing text classifier          |
+
 
 __Important links:__
 - [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
