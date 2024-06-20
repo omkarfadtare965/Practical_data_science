@@ -349,14 +349,14 @@ __When to Choose Built-in Algorithms:__
 - When your project has tight deadlines.
 
  __When to Choose Custom Code:__
- - If your problem requires specific algorithms or techniques not available in the built-in offerings.
- - When you need to perform custom preprocessing, feature engineering, or use a novel model architecture.
- - When you need fine-grained control over model performance and resource utilization.
- - When your solution must deeply integrate with other custom software or hardware components.
- - When you are conducting cutting-edge research or developing new machine learning methodologies.
- - When your project is expected to evolve significantly over time, requiring ongoing adaptation and enhancement.
+- If your problem requires specific algorithms or techniques not available in the built-in offerings.
+- When you need to perform custom preprocessing, feature engineering, or use a novel model architecture.
+- When you need fine-grained control over model performance and resource utilization.
+- When your solution must deeply integrate with other custom software or hardware components.
+- When you are conducting cutting-edge research or developing new machine learning methodologies.
+- When your project is expected to evolve significantly over time, requiring ongoing adaptation and enhancement.
  
-- ___`SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BYOC):`___
+___`SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BYOC):`___
 
 | ___`Feature/Criteria`___ | ___`SageMaker Built-in Algorithms`___                         | ___`	SageMaker Script Mode`___                                                                                           | ___`SageMaker Bring Your Own Container (BYOC)`___                                      |
 |--------------------------|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
