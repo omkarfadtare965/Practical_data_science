@@ -340,6 +340,10 @@ __Benifits of using Built-in algorithms:__
 - By managing the underlying infrastructure and providing optimized performance, built-in algorithms can be more cost-effective than developing and maintaining custom algorithms.
 - By handling the complexities of algorithm implementation and optimization, built-in algorithms allow data scientists and developers to focus more on business logic and the specific problem they are trying to solve.
 
+
+
+___`SageMaker Built-in Algorithms, Script Mode, and Bring Your Own Container (BYOC):`___
+
 | ___`Feature/Criteria`___ | ___`SageMaker Built-in Algorithms`___                         | ___`	SageMaker Script Mode`___                           | ___`SageMaker Bring Your Own Container (BYOC)`___        |
 |--------------------------|---------------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
 | Ease of Use              | Very high - minimal setup required                            | Moderate - requires coding in supported frameworks       | Low - requires Docker container setup and management     |
