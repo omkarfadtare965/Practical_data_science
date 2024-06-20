@@ -247,9 +247,9 @@ clarify_processor.wait()
 
 ## AutoML:
 
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/39244b29-7303-4ab3-827a-e3c9d973ee7f)
-
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a4df9583-d801-421b-ac1b-37e82103bbea)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/39244b29-7303-4ab3-827a-e3c9d973ee7f)
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7613eb99-7f6b-4f4e-b10d-5e47e3edd61c)
 
