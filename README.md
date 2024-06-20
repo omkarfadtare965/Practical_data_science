@@ -266,8 +266,12 @@ clarify_processor.wait()
 
 - ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the end-to-end process of machine learning model development. It starts with data exploration, identifying the machine learning problem, and selecting an appropriate algorithm based on the dataset and problem type. It also transforms the data to the format expected by the selected algorithm and performs training and hyperparameter tuning to find the optimal set of hyperparameters for the best-performing model. SageMaker Autopilot provides transparency by automatically generating and sharing feature engineering code. It also generates Jupyter notebooks that detail how the models were built, including data processing steps, algorithm selection, hyperparameters, and training configurations. This transparency helps users understand and trust the model development process. Users can customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
 - Users can interact with Amazon SageMaker Autopilot in several ways, such as programmatically through the SageMaker API, using the AWS CLI, AWS SDK, or the SageMaker Python SDK. Additionally, users can work with SageMaker Autopilot through SageMaker Studio, which is a workbench for end-to-end machine-learning activities. Regardless of whether you are interacting programmatically or using SageMaker Studio, you are using the same APIs.
-  
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/9da88a47-8348-4b18-bbd8-d26e525dc8c4)
+> SageMaker Autopilot at High-level:
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a4df9583-d801-421b-ac1b-37e82103bbea)
+
+> SageMaker Autopilot generates Resources & Artifacts: 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7613eb99-7f6b-4f4e-b10d-5e47e3edd61c)
+
 
 > Code to use SageMaker Autopilot programmatically:
 ```python
@@ -302,8 +306,6 @@ predictor = model.deploy(initial_instance_count=1, instance_type='ml.m5.large')
 ```
 - After completing an Amazon SageMaker Autopilot job, several resources and artefacts are automatically generated, including data transformation and configuration code, data exploration, and candidate generation notebooks. These notebooks provide visibility into the data exploration activities, detailing steps for each candidate model, including data preprocessors, algorithms, and hyperparameter settings. The generated artefacts help in refining models and are stored in the specified S3 bucket. Autopilot runs multiple experiments with various combinations of data transformation codes, algorithms, and hyperparameters to identify the best-performing model. Trained model artefacts and a leaderboard with metrics for each candidate are also stored in S3. Notebooks are accessible from both S3 and the SageMaker Studio console.
 - Autopilot generates multiple model candidate pipelines which basically refers to an automatically generated sequence of steps that includes data preprocessing, feature engineering, model training, and hyperparameter tuning.
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/d48dc436-437b-4ddf-927c-5253754132c0)
 
 __Model Hosting:__
 After using Autopilot to find the best-performing model, Sagemaker also supports both batch and real-time deployments. We are going for real-time deployment. 
