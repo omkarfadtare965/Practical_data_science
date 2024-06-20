@@ -249,6 +249,10 @@ clarify_processor.wait()
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/39244b29-7303-4ab3-827a-e3c9d973ee7f)
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a4df9583-d801-421b-ac1b-37e82103bbea)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7613eb99-7f6b-4f4e-b10d-5e47e3edd61c)
+
 - ___`AutoML (Automated Machine Learning)`___ refers to the process of automating the end-to-end process of applying machine learning to real-world problems. It includes automating tasks such as data preprocessing, feature selection, model selection, hyperparameter tuning, and model evaluation. 
 - AutoML makes machine learning accessible to those without extensive expertise by providing a graphical interface or easy-to-use APIs, automating repetitive tasks, and speeding up the model development process while efficiently utilizing computational resources. It ensures standardized procedures for model training and evaluation, facilitating reproducible results through standardized workflows. Often resulting in better-performing models, AutoML systematically and thoroughly tunes hyperparameters and selects models, employing cutting-edge algorithms and methodologies without requiring users to stay updated with the latest advancements.
 - AutoML can be integrated at various stages of the machine-learning workflow:
@@ -266,13 +270,6 @@ clarify_processor.wait()
 
 - ___`Amazon SageMaker Autopilot`___ is AWS's AutoML solution that automates the end-to-end process of machine learning model development. It starts with data exploration, identifying the machine learning problem, and selecting an appropriate algorithm based on the dataset and problem type. It also transforms the data to the format expected by the selected algorithm and performs training and hyperparameter tuning to find the optimal set of hyperparameters for the best-performing model. SageMaker Autopilot provides transparency by automatically generating and sharing feature engineering code. It also generates Jupyter notebooks that detail how the models were built, including data processing steps, algorithm selection, hyperparameters, and training configurations. This transparency helps users understand and trust the model development process. Users can customize certain aspects of the pipeline, such as selecting specific algorithms or defining custom preprocessing steps. SageMaker Autopilot seamlessly integrates with other AWS services like S3 for data storage, AWS Glue for data cataloguing, and SageMaker Studio for a comprehensive development environment.
 - Users can interact with Amazon SageMaker Autopilot in several ways, such as programmatically through the SageMaker API, using the AWS CLI, AWS SDK, or the SageMaker Python SDK. Additionally, users can work with SageMaker Autopilot through SageMaker Studio, which is a workbench for end-to-end machine-learning activities. Regardless of whether you are interacting programmatically or using SageMaker Studio, you are using the same APIs.
-> AWS SageMaker Autopilot at High-level:
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a4df9583-d801-421b-ac1b-37e82103bbea)
-
-> SageMaker Autopilot generates Resources & Artifacts:
-
-![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7613eb99-7f6b-4f4e-b10d-5e47e3edd61c)
 
 > Code to use SageMaker Autopilot programmatically:
 ```python
