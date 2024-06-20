@@ -340,29 +340,43 @@ __Benifits of using Built-in algorithms:__
 - By managing the underlying infrastructure and providing optimized performance, built-in algorithms can be more cost-effective than developing and maintaining custom algorithms.
 - By handling the complexities of algorithm implementation and optimization, built-in algorithms allow data scientists and developers to focus more on business logic and the specific problem they are trying to solve.
 
+__When to Choose Built-in Algorithms:__
+- When you need to rapidly test and validate a machine learning concept.
+- When you are addressing common problems like classification, regression, clustering, or recommendation systems.
+- When your team lacks extensive machine learning expertise or coding skills.
+- When you need to handle large datasets or require high-throughput processing.
+- When you want to leverage optimized performance on available hardware, especially with large datasets.
+- When your project has tight deadlines.
 
+ __When to Choose Custom Code:__
+ - If your problem requires specific algorithms or techniques not available in the built-in offerings.
+ - When you need to perform custom preprocessing, feature engineering, or use a novel model architecture.
+ - When you need fine-grained control over model performance and resource utilization.
+ - When your solution must deeply integrate with other custom software or hardware components.
+ - When you are conducting cutting-edge research or developing new machine learning methodologies.
+ - When your project is expected to evolve significantly over time, requiring ongoing adaptation and enhancement.
+ 
+- ___`SageMaker Built-in Algorithms vs Script Mode vs Bring Your Own Container (BYOC):`___
 
-___`SageMaker Built-in Algorithms, Script Mode, and Bring Your Own Container (BYOC):`___
-
-| ___`Feature/Criteria`___ | ___`SageMaker Built-in Algorithms`___                         | ___`	SageMaker Script Mode`___                           | ___`SageMaker Bring Your Own Container (BYOC)`___        |
-|--------------------------|---------------------------------------------------------------|----------------------------------------------------------|----------------------------------------------------------|
-| Ease of Use              | Very high - minimal setup required                            | Moderate - requires coding in supported frameworks       | Low - requires Docker container setup and management     |
-| Customization            | Low - limited to predefined algorithms                        | Moderate - custom training scripts allowed               | Very high - full control over the environment            |
-| Supported Frameworks     | Predefined algorithms in SageMaker                            | Popular ML frameworks (TensorFlow, PyTorch, MXNet)       | Any framework that can run in a Docker container         |
-| Control Over Environment | Minimal control                                               | Moderate control (training script)                       | Full control (entire Docker container)                   |
-| Setup Time               | Very quick                                                    | Moderate                                                 | High - need to build and manage Docker images            |
-| Scalability              | Built-in scalability                                          | Scalable with some configuration                         | Scalable but requires more setup and management          |
-| Performance Optimization | Pre-optimized for common tasks                                | Custom optimization possible through scripts             | Fully customizable optimization                          |
-| Dependency Management    | Managed by SageMaker                                          | Customizable via training script                         | Fully customizable within Dockerfile                     |
-| Use Cases                | Standard ML tasks like classification, regression, clustering | Custom ML tasks needing more control over training logic | Specialized tasks needing full environment customization |
-| Skill Level Required     | Beginner                                                      | Intermediate                                             | Advanced                                                 |
-| Example Algorithms       | Linear Learner, XGBoost, BlazingText, etc.                    | Custom TensorFlow or PyTorch models                      | Any model, including those requiring special libraries   |
-| Deployment               | Simplified via SageMaker interface                            | More involved but handled by SageMaker infrastructure    | Most involved; user handles deployment using Docker      |
-| Integration              | Seamless with SageMaker and other AWS services                | Good integration with some manual setup                  | Full control over integration, requires manual setup     |
-| Use of GPUs              | Supported where applicable                                    | Supported, user must configure                           | Supported, user must configure                           |
-| Automatic Scaling        | Supported                                                     | Supported                                                | Supported, but requires more configuration               |
-| Cost                     | Typically lower due to simplified management                  | Variable depending on custom setup                       | Potentially higher due to custom management and setup    |
-
+| ___`Feature/Criteria`___ | ___`SageMaker Built-in Algorithms`___                         | ___`	SageMaker Script Mode`___                                                                                           | ___`SageMaker Bring Your Own Container (BYOC)`___                                      |
+|--------------------------|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| Ease of Use              | Very high - minimal setup required                            | Moderate - requires coding in supported frameworks                                                                       | Low - requires Docker container setup and management                                   |
+| Customization            | Low - limited to predefined algorithms                        | Moderate - custom training scripts allowed                                                                               | Very high - full control over the environment                                          |
+| Supported Frameworks     | Predefined algorithms in SageMaker                            | Popular ML frameworks (TensorFlow, PyTorch, MXNet)                                                                       | Any framework that can run in a Docker container                                       |
+| Control Over Environment | Minimal control                                               | Moderate control (training script)                                                                                       | Full control (entire Docker container)                                                 |
+| Setup Time               | Very quick                                                    | Moderate                                                                                                                 | High - need to build and manage Docker images                                          |
+| Scalability              | Built-in scalability                                          | Scalable with some configuration                                                                                         | Scalable but requires more setup and management                                        |
+| Performance Optimization | Pre-optimized for common tasks                                | Custom optimization possible through scripts                                                                             | Fully customizable optimization                                                        |
+| Dependency Management    | Managed by SageMaker                                          | Customizable via training script                                                                                         | Fully customizable within Dockerfile                                                   |
+| Use Cases                | Standard ML tasks like classification, regression, clustering | Custom ML tasks needing more control over training logic                                                                 | Specialized tasks needing full environment customization                               |
+| Skill Level Required     | Beginner                                                      | Intermediate                                                                                                             | Advanced                                                                               |
+| Example Algorithms       | Linear Learner, XGBoost, BlazingText, etc.                    | Custom TensorFlow or PyTorch models                                                                                      | Any model, including those requiring special libraries                                 |
+| Deployment               | Simplified via SageMaker interface                            | More involved but handled by SageMaker infrastructure                                                                    | Most involved; user handles deployment using Docker                                    |
+| Integration              | Seamless with SageMaker and other AWS services                | Good integration with some manual setup                                                                                  | Full control over integration, requires manual setup                                   |
+| Use of GPUs              | Supported where applicable                                    | Supported, user must configure                                                                                           | Supported, user must configure                                                         |
+| Automatic Scaling        | Supported                                                     | Supported                                                                                                                | Supported, but requires more configuration                                             |
+| Cost                     | Typically lower due to simplified management                  | Variable depending on custom setup                                                                                       | Potentially higher due to custom management and setup                                  |
+| Best for                 | Standard ML tasks with minimal customization needs.           | Custom training logic with a need for more control over the training script while leveraging SageMaker’s infrastructure. | Highly specialized tasks requiring full control over the environment and dependencies. |
 
 __Important links:__
 - [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
