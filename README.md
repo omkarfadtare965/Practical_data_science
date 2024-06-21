@@ -394,15 +394,19 @@ __Usecases and Algorithms:__
 | Speech to text           | Transcribe call center conversations                                        | Seq-to-Seq                       |
 | Text classification      | Classify reviews into categories                                            | Blazing text classifier          |
 
-
 __Important links:__
 - [Dataset](https://www.kaggle.com/datasets/nicapotato/womens-ecommerce-clothing-reviews)
-- [AWS SDK](https://github.com/aws/aws-sdk-pandas)
+- [AWS Data Wrangler](https://github.com/aws/aws-sdk-pandas)
 - [AWS Glue](https://aws.amazon.com/glue/)
 - [AWS Athena](https://aws.amazon.com/athena/)
 - [Matplotlib](https://matplotlib.org/)
 - [Seaborn](https://seaborn.pydata.org/)
 - [Pandas](https://pandas.pydata.org/)
 - [NumPy](https://numpy.org/)
-- [AWS Wrangler](https://aws-sdk-pandas.readthedocs.io/en/stable/)
-- [use case](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
+- [Measure Pretraining Bias - Amazon SageMaker](https://docs.aws.amazon.com/sagemaker/latest/dg/clarify-measure-data-bias.html)
+- [SHAP](https://shap.readthedocs.io/en/latest/)
+- [Amazon SageMaker Autopilot](https://aws.amazon.com/sagemaker/canvas/)
+- [Word2Vec algorithm](chrome-extension://efaidnbmnnnibpcajpcglclefindmkaj/https://arxiv.org/pdf/1301.3781)
+- [AWS SDK for pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/)
+- [usecases](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
+
