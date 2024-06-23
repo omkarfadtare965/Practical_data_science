@@ -410,3 +410,37 @@ __Important links:__
 - [AWS SDK for pandas](https://aws-sdk-pandas.readthedocs.io/en/stable/)
 - [usecases](https://aws.amazon.com/sagemaker/canvas/customers/#samsung)
 
+## Build Train and Deploy Ml pipeline using BERT:
+### Feature engineering:
+- Feature engineering is the preocess of converting raw data from one or more resources into meaningful features that can be used for training machine learning models. You will apply your domain knowledge, business accuman and statistics to convert the features in to a features that can be  readily useful by a machine learning algorithm that you chose to solve a specific problem.
+- You perform feature engineering with two main goals in mind, first You are preparing your data so that it best fits the machine learning algorithm of your choice. Second by preparing ypur dat a you are trying to imporve the performance of the machine learning model.
+- There are typically three steps involved in feature engineering: Feature selection, feature creation and feature transformation. All these steps may or may not be applicable to your specific usecase depending on the raw datset that you start with.
+
+ ### Feature engineering steps:
+ - ___`Feature selection:`___ Here you identify the appropriate data attributes or features to include in your training dataset as well as filter out any redundant and irrelevant features
+ - You perform feature selection with goal of reducing the feature dimentionality so that the reduced feature set can help train your model much more quickly.
+ - How do you select features to include in your dataset? ne of the technique to use is feature importance score that we have already learned about. Which will indicate how imp or relevant each one of the feature is to the final model as indicated by the importance score.
+ - Keep in mind that using feature importance score is only one of the technique that you can use to select appropriate features to include in your training dataset
+ - ___`Feature creation`___ Here you can combine existing features ti create new features or you can infer new attributes from existing attributes. In our usecase you can infer product review sentiment based on existing feature rating. The idea here is by creating and using these new features you need your machine learning model to produce more accurate predictions.
+ - ___`Feature transformation`___ This would involve calculating the missing feature values using a technique like imputation or scaling numerical feature values using techniques like standardization and normalization and finally converting non numerical features into numerical values so that the algorithm canmake sense of these non numerical features.
+ - It also involves categorical encoding ad embedding, normalization, standardization imutation and one hot encoding.
+### Next step: Pipeline
+- Combined with the feature engineering steps along with the additional step to split the dataset into training and testing data you can built a feature engineering pipeline
+- a generic feature engineering pipeline would look like
+- ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/bc59cb3d-881e-46ba-8fae-c665eca00638)
+- Start by selecting appropraiate features along with creating and selecting proper labels, The dataset is then balanced so that there is a correct representation from all classes of the labels this is followed by spliting the dataset into training validation and test dataset and finally you perform the transformation techniques that you have learned so for on these dataset.
+
+### Spliting of the dataset:
+- Typically in machine learning you use a data set for both train the model as well as evaluate the model. Start by spolitting up the entire dataset into training data nad test data a major portion of training data is used to train your machine learning model. during the training process a small portion of the training data called validation data is used to frequently evaluate the model and tune the hyperparameters.Now the test data is the data that the model has never seen during the training threfore the test data is used to evaluate the trained model.
+- Input of feature engineering pipeline is a raw data and the output is a set of features that are ready to be used for training the machine learning model.
+
+### Question:
+- How do you take this generic pipeline and apply it to the specific usecase.
+
+### BERT algorithm and transforming raw product review text data into embeddings. 
+- BERT stands for bidirectional encoder represnetation from transformers which is a neural network based technique for training NLP based models
+
+### Difference between balzing text classifier and BERT
+- Balzing text is based on word2vec whereas BERT is based on transformer architecture
+- Bith blazing text and BERT generate word embedings however blazing text operates at word level whereas BERT oprates at senetence level. Additionally using a bidirectional nature of the trnasformer architecture BERT can capture context of the word.
+- Clarifiation: 
