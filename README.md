@@ -546,4 +546,210 @@ reviews_feature_store_query.run(query_string=..., ...)
 ### Train and debug a custom machine learning model:
 - For the fine tuning of the RoBERTa model is a supervised learning step. You will use the engineered features from the product reviews data, together with the sentiment label, as your training data. You will validate the model performance after each epoch using the validation data set. An epoch is a full pass through the training data set.  In this step, you calculate the validation accuracy and the validation loss.
 - Once you finish training your model, you will use the test data set the model hasn't seen before to calculate the final model metrics, such as test accuracy and test loss.
-- 
+
+### Difference between Built in algorithms and Pre-trained models
+- In pre-trained model You will provide specific text data, the product reviews data, to adapt the model to your text domain and also provide your task and model training code. Telling the pretrained model to perform a text classification task, with the three sentiment classes
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e4e07baf-8860-4f82-88c8-6071ed577b5f)
+
+### Model pretraining Model fine tunning:
+- Pretraining is an unsupervised learning. In which it will only learn the vector representaion of the words.
+- pretrained and all key models have been trained on large text corpus, such as large book collections or Wikipedia. In this unsupervised learning step, the model builds vocabulary of tokens, from the training data, and learns the vector representations. You can also pretrain NLP models on specific language data.
+- There are many more pretrained models available, that focus on specific text domains and use cases:
+  
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1b2ba168-b1d5-45b1-9725-f3bfb704db7b)
+
+### Model fine tunning:
+- Think of fine tunning as a transfer learning in NLP. It's a machine learning technique where a model is trained on one task and then repurposed on a second related task.
+- For example,  If you work with English product reviews as your training data, you can use an English language model, pretrained for example, on Wikipedia, and then fine tune it to the English product reviews.
+- The assumption here is that the majority of words used in the product reviews have been learned already from the English Wikipedia. As part of the fine tuning step, you would also train the model on your specific NLP task. In the product reviews example, adding a text classifier layer to the pretrained model that classifies the reviews into positive, neutral, and negative sentiment classes.
+- Fine tuning is generally faster than pretraining, as the model doesn't have to learn millions or billions of BERT vector representations. Also note that fine tuning is a supervised learning step, as you fit the model using labeled training data.
+
+### Where to find pretrained models:
+- Many of the popular machine learning frameworks, such as PyTorch, TensorFlow, and Apache mxnet, have dedicated model huts, or zoos, where you can find pretrained models.
+- The open source NLP project, Hugging Face, also provides an extensive model hub with over 8,000 pretrained NLP models. If you want to deploy pretrained models straight into your AWS account, you can use SageMaker JumpStart to get easy access to pretrained text and vision models.
+- JumpStart works with PyTorch Hub and TensorFlow Hub and lets you deploy supported models in one click into the SageMaker model hosting environment. JumpStart provides access to over a 100 pretrained vision models, such as Inception V3, ResNet 18, and many more. JumpStart also lists over 30 pretrained text models from PyTorch Hub and TensorFlow Hub, including a variety of BERT models.
+- In one click, you can deploy the pretrained model in your AWS account, or you can select the model and fine tune it to your data set. JumpStart also provides a collection of solutions for popular machine learning use cases, such as, for example, fraud detection in financial transactions, predictive maintenance, demand forecasting, churn prediction, and more.
+-  When you choose a solution, JumpStart provides a description of the solution and the launch button. There's no extra configuration needed. Solutions launch all of the resources necessary to run the solution, including training and model hosting instances.
+-  After launching the solution, JumpStart provides a link to a notebook that you can use to explore the solutions' features. If you don't find a suitable model via JumpStart, you can also pull in other pretrained models via custom code.
+
+### Implementing pretraining and fine tunnning with BERT models
+- While you can use BERT as is without training from scratch, BERT uses word masking and next sentence prediction in parallel to learn and understand language. As BERT sees new text, the model masks 15 percent of the words in each sentence. BERT then predicts the masked words and corrects itself, meaning it updates the model weights when it predicts incorrectly. This step is called masked language model or masked LM. 
+- Masking forces the model to learn the surrounding words for each sentence. At the same time, BERT is masking and predicting words, or to be more precise, input tokens. It is also performing next sentence prediction, or NSP, on pairs of input sequences. To perform NSP, BERT randomly chooses 50 percent of the sentence pairs and replaces one of the two sentences with a random sentence from another part of the document.
+- BERT then predicts if the two sentences are a valid sentence pair or not. BERT again will correct itself when it predicts incorrectly. Both of those training tasks are performed in parallel to create a single accuracy score for the combined training efforts. This results in a more robust model capable of performing word and sentence level predictive tasks.
+- this pre-training step is implemented as unsupervised learning. The input data is large collections of unlabeled text.
+- BERT has already been pre-trained on millions of public documents from Wikipedia and the Google Books corpus, the vocabulary and learned representations are indeed transferable to a large number of NLP and NLU tasks across a wide variety of domains.
+- In the fine-tuning step, you also configure the model for the actual NLP task, such as question and answer, text classification, or a named entity recognition. Fine-tuning is implemented as supervised learning and no masking or next sentence prediction happens. As a result, fine-tuning is very fast and requires a relatively small number of samples or product reviews, in our case.
+-  For our usecase we will take the pre-trained RoBERTa model from the Hugging Face model hub and fine tune it to classify the product reviews into the three sentiment classes.
+
+### Train a custom model with Amazon Sagemaker:
+- you learned how to train our product reviews text classifier using the building SageMaker blazing text algorithm. This time I show you how to train or fine tune the text classifier with a custom model code for the pre trained bert model you pull from the hugging face model hub. This option is also called bring your on script or a script mode in SageMaker.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/20dff86a-d9f4-4f8f-a867-6da3b6cc1722)
+
+- To start training a model in SageMaker, you create a training job. The training job includes The URL of the amazon S3 bucket where you have stored the training data. The compute resources that you want SageMaker to use for the model training. Compute resources are ml compute instances that are managed by SageMaker.  The URL of the S3 Bucket where you want to store the output of the training job. The Amazon elastic container registry or Amazon ECR path, where the training code image is stored. SageMaker provides built in docker images that include deep learning framework libraries and other dependencies needed for model training and inference. Using script mode, you can leverage these pre built images for many popular frameworks, including TensorFlow, pyTorch, and Mxnet.
+- After you create the training job, SageMaker launches the ml compute instances and uses the training code and the training data set to train the model. It saves the resulting model artifacts and other outputs in the S3 bucket you specify for the purpose.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/d14bf5c9-eb4d-4b4a-8048-5c07ac763f6b)
+
+> steps you need to perform:
+  - 1) first you need to configure the training validation and test data set
+  - 2) You also need to specify which evaluation metrics to capture, for example the validation loss and validation accuracy.
+  - 3) Next you need to configure the model type of parameters such as number of epochs, learning rate etc.
+  - 4) Then you need to write and provide the custom model training script used to fit the model.
+
+1) data set and the evaluation metrics:
+- You can use SageMaker training input class to configure a data input flow for the training. Below is the code to configure training input objects to use the training validation and test data splits uploaded to an S3 bucket.
+```python
+from sagemaker.inputs import TrainingInput
+
+s3_input_train_data = TrainingInput(s3_data=path)
+s3_input_validation_data = TrainingInput(s3_data=path)
+s3_input_test_data = TrainingInput(s3_data=path)
+```
+- Define regex expression to capture the values of these metrics from the Amazon cloudwatch logs.
+```python
+metric_definitions = [
+{'Name': 'validation:loss', 'Regex':'val_loss([0-9\\.]+)'}, {'Name': 'validation:accuracy', 'Regex':'val_Acc: ([0-9\\.]+)'}]
+```
+2) Configure the model Hyperparametrs:
+- Model hyper parameters include, for example, number of epochs, the learning rate, batch sizes for training, and validation data, and more. One important type of parameter for bert models is the maximum sequence length. the maximum sequence length refers to the maximum number of input tokens you can pass to the bert model per sample. I choose the value of 128 because the word distribution of the reviews showed that one 100% of the reviews in the training data said have 115 words or less.
+```python
+hyperparametrs = {'epochs':3,'learning_rate':2e-5, 'training_batch_size': 256, 'train_steps_per_epochs': 50, 'validation_batch_size': 256, 'validation_steps_per_epochs':50, 'max_seq_length': 128}
+```
+3) Provide your custom training script:
+- First you import the hugging phase, transform a library. Hugging face provides pretrained RobertaModel for sequence classification that already pre configured roberta for tax classification tasks, let's download the model conflict for this RobertaNodel. You can do this by calling RobertaConfig from pre-trained and simply provide the model name in this example, roberta-base. You can then customize the configuration by specifying the number of labels for the classifier. You can set non-labels to three representing the three sentiment classes. The ID to label and label to ID parameters. Let you map the zero based index to the actual class, label of -1 for the negative class. The label of 0 for the neutral class and the label of 1 for the positive class. You then download the pretrained RobertaModel from the hugging face library with the command. RobertaForSequenceClassification.
+```python
+from transformers import RobbertaModel, RobertaConfig
+from transformers import RobertaForSequenceClassification
+
+config = RobertaConfig.from_pretrained('roberta-base', num_labels=3, id2label={0: -1, 1:0, 2:1},
+label2id={-1:0,0:1,1:2})
+
+model = RobertaFOrSequenceClassification.from_pretrained('roberta-base',config = config)
+model = train_model(model, ...)
+```
+- With a pre-trained model at hand, you need to write the code to fine-tune the model here called train model. Below is the code to fine tune the model using pytorch
+```python
+def train_model(model, train_data_loader, df_train, val_data_loader, def_val, args):
+     loss_function = nn.CrossEntropyLoss()
+     Optimizer = optim.Adam(param=model.parameters(), lr = args.learning_rate)
+- Then you write the training code:
+```python
+for epoch in range(args.epochs):
+    print('EPOCH -- {}'.format(epoch))
+    for i, (sent, label) in enumerate(train_data_loader):
+        if i< args.train_steps_per_epoch:
+            model.train()
+            optimizer.zero_grad()
+            sent = sent.squeeze(0)
+            output = model(sent)[0]
+            _, predicted = torch.max(output, label)
+            loss.backword()
+            optimizer.step()
+            
+return model
+```
+4) FIt the model
+```python
+from sagemaker.pytorhc import PyTorch as PyTorchEstimator
+estimator = PyTorchEstimator(
+    entry_point = 'train.py',
+    source_dir = 'src',
+    role = role,
+    instance_count=1,
+    instance_type = 'ml.c5.9xlarge',
+    framewor_version = <PYTORCH_VERSION>,
+    hyperparameters = hyperparameters,
+    metric_definitions = metric_definitions)
+    
+estimator.fit(...) # To start the fine tunning of the model
+```
+### DEbugging and profiling 
+- Training machine learning models is difficult and often a OPEC process and especially training deep learning models usually takes a long time with several training iterations and different combinations of hyper parameters before your model yields the desired accuracy.
+- system resources could be inefficiently used, making the model training expensive and compute intensive.
+- Debugging and profiling your model training gives you visibility and control to quickly troubleshoot and take corrective measures if needed. For example, capturing metrics in real time during training can help you to detect common training errors such as the gradient values becoming too large or too small. Common training errors include vanishing or explode ingredients.
+-  Deep neural networks typically learn through back propagation, in which the models losses trace back through the network. The neurons weights are modified in order to minimize the loss. If the network is too deep, however, the learning algorithm can spend its whole lost touch it on the top layers and waits in the lower layers, never get updated. That's the vanishing gradient problem.
+-  In return, the learning algorithm might trace a series of errors to the same neuron resulting in a large modification to that neurons wade that it imbalances the network. That's the exploding gradient problem. Another common error is bad initialization. Initialization assigns random values to the model parameters. If all parameters have the same initial value, they received the same gradient and the model is unable to learn.
+-  Initializing parameters with values that are too small or too large may lead to vanishing or exploding gradients again. And then overfitting, the training loop consists of training and validation. If the model's performance improves on a training set but not on a validation data set, it's a clear indication that the model is overfitting. If the model's performance initially improves on the validation set but then begins to fall off, training needs to stop to prevent the overfitting.
+-  All these issues impact your model's learning process. Debugging them is usually hard and even harder when you run distributed training. Another area you want to track is the system resource utilization monitoring and profiling. System resources can help you answer how many GPU, CPU, network and memory resources your model training consumes more. Specifically, it helps you to detect and alert you on bottlenecks so you can quickly take corrective actions.
+-  These could include I/O bottlenecks when loading your data. CPU or memory bottlenecks when processing the data and GPU bottlenecks or maybe underutilization during model training.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/b548379a-9c44-47e7-af2a-313be17d2cce)
+
+- If you encounter any model training errors or a system bottlenecks, you want to be informed, so you can take corrective actions. For example, why not stop the model training as soon as the model starts overfitting. This can help save both time and money and it's not only about stopping the model training when an issue is found, maybe you also want to send a notification via email or via text message in that case.
+
+### Implementation of debugging and profiling
+- SageMaker Debugger automatically captures real time metrics during the model training such as training and validation loss and accuracy, confusion matrices and learn ingredients to help you improve model accuracy. The metrics from Debugger can also be visualized in SageMaker Studio for easy understanding.
+- Debugger can also generate warnings and remediation advice when common training problems are detected. Also Debugger automatically monitors and profiles your system resources such as CPU, GPU, network and memory in real time. And provides recommendations on reallocation of these resources.
+- This enables you to use your resources more efficiently during the model training and helps to reduce costs and resources.
+- Debugger captures real time debugging data during the model training and stores this data in your security S3 Bucket.  The captured data includes system metrics, framework metrics, and output tensors. System metrics include for example hardware resource utilization data such as CPU, GPU, and memory utilization. Network metrics as well as data input and output or I/O metrics. Framework metrics could include convolutional operations in the forward pass, batch normalization operations in backward pass. And a lot of operations between steps and gradient descent algorithm operations to calculate and update the loss function.
+- And finally the output tensors. Output tensors are collections of model parameters that are continuously updated during the back propagation and optimization process, of training machine learning and deep learning models. The captured data for output tensors includes scalar values such as for accuracy and loss, and matrices for example representing weights, gradients, input layers and output layers.
+- Now while the model training is still in progress, Debugger also reads the data from the S3 bucket and already runs a real time continuous analysis through rules.  list of Debugger building rules you can choose from.
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/393c031b-00ba-47e6-a079-0eb5b6c6fde6)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a0f2ac4f-9d76-41d8-a4f0-e1ebfa5690e6)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/45653d51-9dcd-4621-b14e-30ea5a132fff)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e32ccd6b-ce7e-4d5e-ba9f-f1996b2445df)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/614dd344-9be8-47a9-b41b-001f296c5548)
+- You can also take corrective actions. In case Debugger detects an issue, for example, the model starts to over fit. You can use Amazon CloudWatch events to create a trigger to send you a text message, email you the status or even stop the training job.  You can also analyze the data in your notebook environment using the Debugger SDK. Or you can visualize the training metrics and system resources using the SageMaker Studio IDE.
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/b45f518e-a587-4c69-841c-3a986f09b22b)
+
+> Code to leverage the building rules to watch for common training errors.
+```python
+from sagemaker.debugger import Rule, rule_configs
+rules = [
+    Rule.sagemaker(rule_config.loss_not_decreasing(),
+    Rule.sagemaker(rule_config.overtraining()]
+
+from sagemaker.pytorch import PyTorch as PyTorchEstimator
+estimator = PyTorchEstimator(
+    entry_point = 'train.py',
+    ...,
+    rules = rules
+    )
+    
+# Profile system and framework matrics for your training jobs
+from sagemaker.debugger import ProfileRule, rule_configs
+rules = [
+    ProfileRule.sagemaker(rule_config.LowGPUUtilization()),
+    ProfileRule.sagemaker(rule_config.ProfileerReport(),
+    ...,
+    ]
+    
+# COnfig profiler
+from sagemaker.debugger import ProfileConfig, FrameworkProfile
+profiler_config = ProfilerConfig(
+    system_monitor_interval_millis=500,
+    framework_profile_params = FrameworkProfile(num_steps =10))
+    
+from sagemaker.pytorch import PyTorch as PyTorchEstimator
+estimator = PyTorchEstimator(
+    entry_point = 'train.py', ...,
+    rules = rules,
+    profiler_config = profiler_config)
+```
+
+- Select the rules you want to evaluate, such as loss_not_decreasing or model starts to over train.
+- Then pass the rules with the rules parameter in your estimator. SageMaker will then start a separate processing job for each rule you specify in parallel to your training job.The processing job will collect the relevant data and observe the metrics.
+- To profile the system and framework metrics for your training jobs, you need to perform very similar steps.First you select the rules to observe again. Debugger comes with a list of building rules you can select such as check for low GPU utilization.  If you select the ProfilerReport rule, the rule will invoke all of the building rules for monitoring and profiling. By default, Debugger collects system metrics every 500 milliseconds. And basic output tensors that is scalar outputs such as loss and accuracy every 500 steps. you can modify the configuration if needed.To enable the framework profiling, configure the framework profile params parameter Then pass the rules and profiler_config in the estimator as shown earlier.
+- Note that the list of selected rules can contain both the debugging rules together with the profiling rules.
+
+ ### how can you analyze the results? 
+ - For any SageMaker training job, the Debugger profiler report rule invokes all of the monitoring and profiling rules and aggregates the rule analysis into a comprehensive report.You can download the Debugger profiling report while you're training job is running or after the job has finished from S3.
+ -  At the top of the report Debugger provides a summary of your training job.
+
+ ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/c28c5a64-172f-4d4c-a226-b107583dd4a3)
+
+- In rule summary section, Debugger aggregates all of the real evaluation results, analysis, rule descriptions and the suggestions.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/34263498-c410-474e-9fd7-1ad1e78fe780)
+
+- The report also shows system resource utilization such as CPU and network utilization over time.
+
+ ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/24d21da8-ca0a-45cb-843a-effcd83831c1)
+
+- Debugger also creates a system utilization heat map.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/deb9dbc0-af07-4579-ac81-238ad0f0c261)
+
+- In the sample shown here, I have run the training job on a MLC59 X large instance which consists of 36 VCPU's. The heat map here shows how each VCPU was utilized over time. The darker the color, the higher the utilization. If you see resources being underutilized, you could scale down to use a smaller instance type, and save cost and run the training job more efficiently
