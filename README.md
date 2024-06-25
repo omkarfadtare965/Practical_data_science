@@ -828,24 +828,66 @@ estimator = PyTorchEstimator(
 - Things like data drift, which can indicate that the data that you used to train your model now looks much different than the actual ground truth data. In this case, you want to set up the monitor with alerts so that you can get notified of any potential issues with model performance. This allows you to take action such as start of retraining pipeline.
 - there is a lot to consider when operationalizing your machine learning workloads and applying MLOps practices like, creating machine learning pipelines.
 
-
-
-
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/0212ed33-5d4f-4114-a894-4d46c5912ea7)
 
+### Creating a Machine learning pipelines:
+- We will cover creating machine learning pipelines as a way to iterate quickly, with reduced handoffs and reduce manual effort. quality gates into your pipeline so that you can not only iterate quickly, but also iterate with improved quality and traceability.
+- If you look at the high level tasks in your machine learning workflow, when you create a pipeline, you aim to automate the task and orchestrate the sequence and conditions of running that task. You also need to consider your pipeline triggers.
+- In the case of software development life cycles(SDLC), it's usually pretty clear when you have a commit to a source code repository, you're going to automatically start an automated bill. However in the case of a machine learning pipeline you have multiple potential triggers. Such as a change to algorithm, hyper parameters or code, or alternatively having new training data, which could also be another potential trigger for your machine learning pipeline.
+- Another key goal in building out an effective pipeline is establishing traceability, so ideally you have a central view of how pipeline artifacts were built. This is important not only for visibility and support, but also in the event of needing to recover any resource or artifact that's part of your pipeline.
+- Let's take a closer look at each of these tasks and the considerations for each.
+- ___Data task or specifically Data ingestion for model development:___   I work with a lot of teams. Where in this view you reach out to your data engineer, you ask them for some data, sometimes you need to go through a series of security approvals as well. And then ultimately get a data set that you can use for your model building activities.
+- However there are challenges with this model as you can imagine. First, it can really slow down model development time. Second, it can also result in limited traceability with these manual handoffs of data. Third, it also makes model development difficult in terms of automating any kind of retraining workflows.While you may be able to do some of those initial model build activities, retraining pipelines in this particular context are very difficult to support.
+- It's generally recommended to establish a data lake that provides governed access to data scientists or automated processes. This allows data scientists to quickly start a model development activities, and it also ensures there's traceability for that data because you know which data scientists have checked out specific data sets. This also allows you to create a model retraining workflow as well where the consumer in this particular case is the actual deployment pipeline or the machine learning pipeline, as opposed to the data scientist.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7cd78239-baa4-4a24-8519-80eaa1e955a1)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/49b72a2c-9073-402b-8b6e-1aca23c971c0)
 
 
+- ___data pre-processing and feature engineering___ After you get the data, a typical machine learning pipeline starts with the task that's needed to then take that raw data. And then transform it into a format that the algorithm can understand and that you can use for your model training or building activities. As we've discussed in the previous session's, your data pre-processing and feature engineering, can include any process or set of tasks. Whether it's a Python script or even another model that's being used to transform your data into the features, that will ultimately be used for training your model.
+- When you automate your data processing and feature engineering, you have a key input and that's your raw data. And this typically gets fed in through automation, and then that automation will extract and transform those features, ultimately producing artifacts that will be used in training. The artifacts that are produced in your data preparation step include your training, validation, and test data sets.
+  
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/c987a15a-a7c1-4db3-beb5-67c19392bbe2)
+
+- traceability being a benefit of machine learning pipelines. Traceability is partially a result of the versioning of the inputs and the outputs for each workflow step. For your data task, you have code versioning for the code that you used to transform the data, but you also have data versioning.
+- So as you can see in this slide, an example here would be that maybe you have that raw data set on input that's version one, and then you perform some feature transformations to ultimately create your output artifacts. So those output artifacts in this case, have aversion associated with them as well. So in this case your training validation and test data sets are your artifacts and maybe be at version 13. And this could be because you've had multiple iterations of feature engineering and data transformations, until you got it into the format that you really want it to be. The key here is that all of your inputs and artifacts that are produced as part of an automated step, should have versions associated with them. 
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/703ce7e9-b14c-47d3-a36a-8a72f5177da7)
+
+- Finally for your data task, there's a number of validation tests that could also be incorporated into your machine learning pipeline and automated to improve quality.
+- A few examples here include data quality checks where you can implement automated steps that gather statistics about your input data to look for any signals of potential data quality issues. So things like a specific attribute having an unexpectedly large number of missing values on input.
+- Another example here would be checking for indicators of statistical bias. Finally data schema is something that you can include in your automated checks as well. So in this case you can embed a quality check inside your pipeline that ensures that the data structure and schema that's coming in on input, is in the format is expected to be.
+- The key here is not only performing these tasks but also automating them as part of your machine learning pipeline.
+- ___Training model___  the output of your previous task, then becomes the input into the next task. So in this case the output was your training validation and test data sets, which will be used in training and tuning your model as well as evaluating your model.
+- The output includes a number of potential candidates until you find the best performing model according to your evaluation criteria. it will typically include evaluation metrics such as training metrics and model validation metrics at a foundational level.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/abe5c8fc-52f9-4136-bb48-fbf884aee2b0)
+
+- ___Model deployment task___ For a model deployment task, you're taking that model artifact and you're deploying it for consumption. This can take two different forms, you can either deploy in batch mode where you're basically wanting to send in batch records for prediction, and then receive batch responses back.
+- Or you can deploy your model for a real-time or persistent endpont. An endpoint can consistently serve prediction requests and responses through a serving stack.  And the serving stack typically includes a proxy, a web server, that can then accept and respond to your requests coming in on input.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/17a34040-fb76-4e9b-89ff-1bdad578ba48)
+
+- When you're setting up your model deployment task as part of your machine learning pipeline. It's important to understand how your model will be consumed when you're setting up that model deployment task as part of your pipeline. Because as you can see here, the surrounding resources that need to be built, will differ between these two different forms.
+- ___Operating task___ Finally once you've deployed and likely integrated your model into a broader solution, you have your operating task to consider. The output of your previous set of tasks is a deployed model or models that are then available for consumption. 
+- Although operating tasks are at the end of our workflow here, when you're setting up your pipeline you really need to be considering your operating tasks early so that they can be incorporated into your workload early.
+- As an example if there's runtime data that you need to capture, you need to ensure that the code is in place to capture and log that data. As an example here you could be capturing the request for predictions that come in, as well as the prediction responses that get returned.
+-  In this case for your product review use case, you may have a product review coming in that's entered through, say a web page and it ultimately gets classified as either negative, neutral or positive. You may want to capture that prediction request coming in, but you may also want to capture that prediction response going back out. And store it in a secondary data store to be able to perform additional reporting or analysis like determining whether a specific vendor supplying your product has potential quality issues.
+-  Also your operating tests include setting up monitors and alerts so that you can ensure that your deployed model has ongoing monitors that look for signs of things like model degradation. And also monitor the health of the systems that are supporting your model. So looking for common system metrics like CPU utilization or GPU utilization, that are supporting your machine learning model.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/2f09cd76-60b0-45ee-ba94-620746779e9e)
 
 
+-  One common challenge I run into is being able to have central visibility into your machine learning workflow, across all of the different personas and roles that are typically involved in an end to end machine learning workflow.
+- This is a challenge whether it's having visibility into the status of your pipeline, so knowing when a specific version of a model is deployed to production. Or having visibility into system performance for debugging or even having visibility into model performance to see how your model is performing over time.
+-  In this case, dashboards can serve as a central feedback mechanism for your machine learning pipelines as well as your deployed models. 
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/71e49fed-2e20-483c-b511-31b09513df4c)
 
-
-
-
-
-
-
-
+### Model Orchestration
+- I've talked about the steps in creating your machine learning pipelines and the tests that can be automated within those steps, but how do you bring it all together into an end to m pipeline? This is where pipeline orchestration comes in because you need a way to not only automate the tasks within your steps, but you also need a way to coordinate those steps that are performed across your end to end workflow.
+- There are a lot of great choices for pipeline orchestration but orchestration essentially allows you to manage the end to end traceability, of your pipeline. But focusing on using automation to capture the specific inputs and outputs of a given task, and the artifacts that are then produced by those tasks, and then bringing them all together in a controlled end to end pipeline.
 
 
 
