@@ -753,3 +753,109 @@ estimator = PyTorchEstimator(
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/deb9dbc0-af07-4579-ac81-238ad0f0c261)
 
 - In the sample shown here, I have run the training job on a MLC59 X large instance which consists of 36 VCPU's. The heat map here shows how each VCPU was utilized over time. The darker the color, the higher the utilization. If you see resources being underutilized, you could scale down to use a smaller instance type, and save cost and run the training job more efficiently
+
+### MLOps overview:
+- Automated pipelines actually span all of the workflow steps, including ingest and analyze, prepare and transform, train and tune, and finally deploy and manage.
+- How does the broader concept of MLOps relate to building automated machine learning pipelines? MLOps builds on DevOps practices that encompass people, process, and technology. 
+- However, MLOps also includes considerations and practices that are really unique to machine learning workloads. All of these practices aim to be able to deliver machine learning workloads quickly to production while still maintaining high quality consistency and ensuring end-to-end traceability.
+
+### key considerations in ensuring your models have a path to production(difference between SLDC and MLDC)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/21bcb73a-cd1e-43bd-85c1-74df17fc143c)
+
+- It's important to consider that the machine learning development life cycle is very different than the software development life cycle for a variety of reasons.
+- First, the model development life cycle is difficult to plan for from a project management perspective. It typically includes longer experimentation cycles than you would see in a standard agile software development process.
+- Also the development of machine learning models includes data tasks like feature engineering and data preparation. ou also have data processing code, as well as new inputs and artifacts to consider for versioning. You also have additional pipeline task as well.
+-  When you start to look at automating the machine learning workflow, the inputs and artifacts that are generated across these tasks result in multiple disparate pipelines with dependencies that can be a bit more challenging, stitched together than a typical software development workflow.
+- Second, some models exist by themselves where you might be manually reading prediction requests and getting responses through a batch process or even within your notebook on an ad hoc basis.  This is especially true in research environments.
+- However, in many cases, a model is typically a small part of an overall solution that incorporates machine-learning. While that model is still a very key component to that solution, most often there is a need for other components that need to be built or integrated.
+-  As an example, consider your product review use case and your model that is predicting the classes of sentiment for a product review. That model itself will be able to classify the sentiment related to a product, but you also need to consider how that prediction will actually be used and potentially integrated into other existing applications.
+-  For this, there may be additional tasks like creating a rest API as a common interface for other applications to integrate with your model or even building applications that can respond to those reviews. This could mean creating automation to initiate back-end processes that allow for customer support engineers to quickly react and respond to any negative reviews.
+-  This brings me to the third consideration where typically multiple personas span the machine learning development lifecycle, and all are really needed to ultimately be able to build, deploy, integrate, and operate a machine learning workload.
+- This can create challenges as these personas often have competing priorities and needs. There may also be skill gaps in building an operating machine learning workloads.
+- As an example, a data scientist may not have a traditional IT background. While they may be very comfortable in creating a model that meets the performance objectives that have been identified for your particular machine learning use case, they may not know how to host that model in a way that it can be consumed by other applications or other systems.
+- In this case, there may be a need to have a deployment engineer that is also engaged to help in building out the infrastructure and the resources that are needed to operate and host that model.
+- Also, I mentioned that you might need to integrate that hosted model with another application. In this case, you're likely to depend on a software engineer to perform that integration. If there isn't a cross-functional team with the same project goals in place, competing priorities and skill gaps across these personas make it really difficult to provide that path to production for your model.
+- Finally, many teams have processes in place supporting different regulatory or even internal corporate requirements. This means that when you're creating your machine learning pipeline, sometimes you also need to be able to ensure that traditional practices can be included inside the steps of your pipeline.
+- Something like change management as an example here. This may mean that within your pipeline, you're going to automatically open a change ticket anytime a new model gets deployed to production. Or maybe it's a manual approval that's required before your model can deploy to production.
+- All of these processes may need to be incorporated inside your machine learning pipeline. 
+- Considering and understanding all of these different aspects are key in ensuring you're able to provide a path to production of your model. 
+-  I just covered the considerations for providing a path to production for your machine learning workloads and some of the common challenges that teams run into.
+- MLOps aims to provide that path to production by reducing manual hand-offs between the steps in your workflow, increasing automation within those steps in your workflow, and then going a step further to orchestrate the steps across your workflow.
+- But you don't want to just apply automation, you also want to improve the quality of your models. To do that, you need to establish mechanisms and quality gates inside your machine learning pipeline.
+
+### Workflow tasks without MLOps:
+- Here's an example of a workflow starting with data ingestion and analysis. Here, a data engineer may create a raw dataset and manually send it to a data scientist.
+- Then a data scientist is typically going to iterate through their model-building activities. This includes performing feature engineering, and data transformations, as well as experimenting with multiple hyperparameters and algorithms across their different experiments as they run through their model training and tuning activities as well. They typically iterate through these activities until they have a candidate model that is performing well according to their evaluation metric.
+- At that point, a data scientist may hand that model off to a deployment team or an ML engineer who's responsible for deploying that model. If there's been limited communication between these teams up until this point in time, I often see this part result in a lot of delays because that model is essentially a black box to that deployment engineer.
+- This means there's very limited visibility into how that model was built, how you would consume that model, and then how you monitor that model.
+- To add to that, traditional deployment teams may not have a lot of experience in deploying and operating machine learning workloads. Once the deployment engineer has deployed the model, a software engineer often needs to create or make changes to applications that are going to then use that model.
+- Finally, someone ultimately needs to operate that model in production. This typically means ensuring the right level of monitoring is set up, which can be challenging as the team that's operating the model may not be familiar with machine learning workloads or how to monitor a model. This can also include things like identifying and setting up the model retraining strategy as well.
+- As you can see here, having a disconnected workflow with multiple manual hand-offs and limited cross team collaboration could really slow down your ability to get a model to production quickly and the ability to continue to iterate on that model as needed.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/0ba68279-11ff-48ba-8bea-0ca94e2d0979)
+
+
+### Let's now take a look at a view that incorporates cross team collaboration with automation to reduce those hand-offs and delays in a workflow.
+-  You can see in this view that you also incorporate a centralized Model Registry. the Model Registry holds key metadata and information about how your model was built, how the model performed with evaluation metrics. It's no longer a manual hand-off of a black box model. A Model Registry can also be used to trigger downstream deployment workflows as well.
+-  Once that model has been registered and approved, it can then trigger that downstream automated pipeline to deploy your model. That deployment pipeline typically includes the steps that are needed to package your model and then deploy it to one or more environments. Depending on the use case, that deployment may require additional code or packaging for consumption.
+- Often a software engineer will be needed here to provide the steps and the code that is needed to create or update the API that will then be used to create a RESTful interface or a commonly defined interface for integrating with other applications.
+- Finally, for operating your model, the correct monitors need to be identified and put in place early through your cross-functional teams. These monitors include traditional systems or performance monitors, but they also include model specific monitors like checking for things like model quality drift or data drift.
+- As you can see here, visibility into those monitors is provided back to the personas that are involved in creating that end-to-end workflow.
+- This is because there are some aspects of that monitoring that different personas may need more visibility into. As an example here, some logs may be generated by model monitors that the data scientist or machine learning engineers want to have visibility into
+- In this case it's key to make sure that you're providing that back as a feedback mechanism and providing that transparency and visibility to those personas.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/fe2da7e5-b246-4c10-b9b7-e6439558b717)
+
+- I've talked about automation within each of these workload steps, but how do you coordinate performing the steps across your workflow? This brings us to orchestration.
+
+### Orchestration vs Automation
+- With automation, you're typically looking at automating the step and the tasks within that step, that are required to accept an input or inputs and then ultimately produce some type of output or artifact.
+- As an example, your data preparation step may include one or more tasks that can help you automate and produce the intended output. In this example, you have your raw dataset input, and that's automatically ingested by the data processing step that is then responsible for taking that raw data, and transforming it into the format that can be consumed by your algorithm.
+- This step then produces an output artifact. In this case, it's your transformed data that can then be used and consumed by the next step in your pipeline. This would be your training and your validation datasets. It's important to not only automate these individual tasks, but also the end-to-end machine learning workflow as well.
+- To automate the steps across your end-to-end workflow, you also need to add a layer that can provide overall orchestration, in defining when and how these individual steps with automated task are run.
+- Automation is great for reducing cycle time and deploying more quickly, but what about improving and ensuring the quality of your model? Your orchestration layer can also provide those quality gates that I talked about a bit before.
+- You can use this orchestration layer to implement quality gates between your steps to determine when the pipeline should proceed to the next step in your machine learning pipeline.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/18ee4d81-e99c-4eb6-b1d7-1e6c111cab5b)
+
+
+- ___Quality gates___ The term quality gates refers to having an automated, or manual checkpoint within your pipeline that gates whether the next step in your pipeline can run based on some type of criteria or a conditional step that you define.
+- ___types of quality gates that can be used and included inside your machine learning pipelines___ As an example for data curation, you may have a quality gate that governs and restricts access to the data that can be used. For model building, you're typically setting up a minimum threshold for your model evaluation metrics. This typically means establishing a metric that you're trying to optimize for, so something like accuracy or F1 score.
+- Then establishing the lower boundary for that metric as a gate to proceed to the next step in your deployment pipeline. For model deployment, you can use something like A/B deployment strategy where you have model version 1 that's deployed into production, and you want to slowly deploy model version 2 to serve a portion of the traffic that's reaching your model.
+- You can then evaluate how model version 2 is performing relative to model version 1. If model version 2 is performing better than model version 1, you can then start to shift more traffic to that model version 2. For model integration, you want to make sure that the application that's consuming your model is able to get prediction requests bag
+- In these tests you're often making sure to check for things like your inference code is synchronized with your model and potentially the API. Then finally for model monitoring, you want to monitor for standard metrics, so things like CPU, GPU, or memory utilization. However, you also want to set up those monitors that are monitoring specifically for your model.
+- Things like data drift, which can indicate that the data that you used to train your model now looks much different than the actual ground truth data. In this case, you want to set up the monitor with alerts so that you can get notified of any potential issues with model performance. This allows you to take action such as start of retraining pipeline.
+- there is a lot to consider when operationalizing your machine learning workloads and applying MLOps practices like, creating machine learning pipelines.
+
+
+
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/0212ed33-5d4f-4114-a894-4d46c5912ea7)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
