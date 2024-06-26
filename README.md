@@ -1351,15 +1351,118 @@ tuner.fit(...)
 - Use small number of concurrent training jobs. SageMaker does allow you to run multiple jobs concurrently during the hyperparameter tuning process. On one hand, if you use a larger number of concurrent jobs, the tuning process will be completed faster. But in fact, the hyperparameter tuning process is able to find best possible results only by depending on the previously completed training jobs. So choose to use a smaller number of concurrent jobs when you're executing these hyperparameter tuning job.
 - When training and tuning at scale, it is important to continuously monitor and use the right compute resources.
 
-### BEst practices to follow to Monitoring Compute resources: 
+### Best practices to follow to Monitoring Compute resources: 
 - While you do have the flexibility of using different instance types and instance sizes, how do you determine the exact specific instance type and size to use for your workloads?
 - There is really no standard answer for this. It comes down to understanding your workload well and running empirical testing to determine the best possible compute resources to use for your tuning and training workloads.
 - SageMaker training jobs emits CloudWatch metrics for resource utilization of the underlying infrastructure. You can use these metrics to observe your training utilization and improve your successive training runs.
 - Additionally, when you enable SageMaker Debugger on your training jobs, Debugger provides the visibility into training jobs and infrastructure that is running these training jobs.  Debugger also monitors and reports on system resources such as CPU, GPU, and memory, providing you with the very useful insights on the resource utilization and resource bottlenecks.
 - You can use these insights and recommendations from Debugger as a guidance to further optimize your training infrastructure. 
 
+### Checkpointing with Machine learning training:
+- Machine learning training is typically a long-time intensive process. It's not uncommon to see training jobs running over multiple hours or even multiple days. 
+- If these long-running training jobs stop for any reason such as a power failure, or oils fault, or any other unforeseen error, then you'll have to start the training job from the very beginning. This leads to lost productivity.
+- Even if you don't encounter any unforeseen errors, there might be situations where you want to start a training job from a known state, to try out new experiments. In these situations, you will use machine learning checkpointing.
+- Checkpointing is a way to save the current state of a running training job so the training job, if it is stopped, can be resumed from a known state. Checkpoints are basically snapshots of model in training and include details like model architecture, which allows you to recreate the model training once it stopped, also includes model weights that have been learned in the training process so far. Also, training configuration such as number of epochs that have been executed, and the optimizer used, and the loss observed so far in training, and other metadata information. 
+- The checkpoints also include information such as optimizer state. This optimizer state allows you to easily resume the training job from where it has stopped.
+- When configuring your new training job with checkpointing take two things into consideration, one is the frequency of checkpointing, and the second is the number of checkpoint files you are saving each time.
+- If you have a high frequency of checkpointing and saving several different files each time, then you are quickly using up the storage. However, this high frequency and high number of checkpoints you're processing, this state will allow you to resume your training jobs without losing any training state information.
+- On the other hand, if the frequency and the number of checkpoints you're saving each time is low, you are definitely saving on the storage space, but there is a possibility that some of the training state has been lost when the training job is stopped.
+- When configuring your training jobs with these parameters, take the balance of your storage costs versus your productivity requirements into consideration.
 
+ ###  Amazon SageMaker Managed Spot
+- Allows you to save training costs. Managed Spot is based on the concept of Spot Instances that offer speed and unused capacity to users at discount prices. SageMaker Managed Spot uses these Spot Instances for hyperparameter tuning and training and leverages machine learning checkpointing to resume training jobs easily.
+- Here's how it works. You start a training job on a Docker container on a Spot Instance. Here, you use a training script called train.python. Since Spot Instances can be preempted and terminated with just a two-minute notice, it is important that your train.py file implement the ability to save checkpoints, and the ability to resume from checkpoints.
+- SageMaker Managed Spot does the remaining. It automatically backs up the checkpoints to an S3 bucket. In case a Spot Instance is terminated because of lack of capacity, SageMaker Managed Spot continues to pull for additional capacity.
+- Once the additional capacity becomes available, a new Spot Instance is created to resume your training and the service automatically transfers all the dataset as well as the checkpoints that are saved into the S3 bucket into your new Instance so that training can be resumed.
+- A key thing for you to take advantage of Managed Spot capability is implementing your training script so that they can periodically save the checkpoints and have the ability to resume from a saved checkpoint.
 
+### Distributed training strategies:
+- Training at scale challenges comes in two flavors, One is the increased training data volume and second is the increased model complexity and model size as a result of the increased training data volume. Using huge amounts of training data and the resulting model complexity could give you a more accurate model. However, there is always a physical limit on the amount of the training data or the size of the model that you can fit on a single computer instance memory.
+- Even if you try to use a very powerful CPU or even a GPU instance, increased training data volumes typically means increased number of computations during training process and that could potentially lead to long running training jobs.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/b666c66f-bde4-438a-a7a1-40fdfb3f0b86)
+
+- Distributed training is often a technique used to address the scale challenges in distributed training. The training load is split across multiple CPUs and GPUs, also called as devices within a single Compute Node or the node can be distributed across multiple compute nodes or compute instances that form a compute cluster.
+- Regardless of whether you choose to distribute the training load within a single compute node or across multiple compute nodes there are two distributed training strategies at play: data parallelism and model parallelism.
+- With data parallelism the training data is split up across the multiple nodes that are involved in the training cluster. The underlying algorithm or the neural network is replicated on each individual nodes of the cluster. Now, batches of data are retrained on all nodes using the algorithm and the final model as a result of a combination of results from each individual node.
+- In model parallelism, the underlying algorithm or the neural network in this case, is split across the multiple nodes. Batches of data are send to all of the nodes again so that each batch of the data can be processed by the entire neural network. The results are once again combined for a final model. 
+> Code:
+```python
+# Data parallelism
+from sagemaker.pytorch import PyTorch
+estimator = PyTorch(
+    entry_point = 'train.py',
+    role = sagemaker.get_execution_role(),
+    framework_version = '1.6.0',
+    py_version = 'py3',
+    instance_count = 3,
+    instance_type = 'ml.p3.16xlarge',
+    distribution = {'smdistributed': {'dataparallel': {enabled:True}}}
+    )
+    
+estimator.fit()
+
+# Model parallelism
+from sagemaker.pytorch import PyTorch
+estimator = PyTorch(
+    entry_point = 'train.py',
+    role = sagemaker.get_execution_role(),
+    framework_version = '1.6.0',
+    py_version = 'py3',
+    instance_count = 3,
+    instance_type = 'ml.p3.16xlarge',
+    distribution = {'smdistributed': {'modelparallel': {enabled:True}}}
+    )
+    
+estimator.fit()
+```
+
+### Making a selection of which one to use for your specific requirements?
+- When choosing a distributed training strategy always keep in mind that if your training across multiple nodes or multiple instances, there is always a certain training overhead. The training overhead comes in the form of internode communication because of the data that needs to be exchanged between the multiple nodes of the cluster.
+- If the train model can fit on a single node's memory, then use data parallelism. In the situations where the model cannot fit on a single node's memory, you have some experimentation to do to see if you can reduce the model size to fit on that single node. All of these experimentations will include an effort to resize the model. Some of the things that you can try to resize your model include tuning the hyperparameters.
+- Tuning the hyperparameters, such as the number of neural network layers in your neural network, as well as tuning the optimizer to use will have a considerable effect on the final model size. Another thing you can try is reduce the batch size. Try to incrementally decrease the batch size to see if the final end model can fit in a single node's memory.
+- Additionally, you can also try to reduce the model input size. If for example, your model is taking a text input, then consider embedding the text with a low dimensional embedded in vector. Or if your model is taking image as an input, try to reduce the image resolution to reduce the model input.
+- After trying these various experimentation, go back and check if the final model fits on a single node's memory. And if it does use data parallelism on a single node. Now, even after these experiments if the model is too big to fit on a single node memory, then choose to implement model parallelism.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/62c5fbfc-bc07-4a0e-a4c5-7aecb2e21e3e)
+
+### Options with Amazon Sagemaker:
+- Built-in Algorithms: you use the estimator object and to the estimator object, you're passing in the image URI. The image URI is pointing to a container that consist the implementation of the built-in algorithm as well as the training and inference logic.
+> Code:
+```python
+estimator = sagemaker.estimator.Estimator(image_uri = image_uri, ...)
+estimator.set_hyperparameters(...)
+estimator.fit(...)
+```
+- Bring your own script: Here, you're using a SageMaker provided container such as a PyTorch container, but you are providing your own training script to be used during training with that particular provided container. Here, you're using the PyTorch container for the estimator and passing in your own script, training.python for the training purposes.
+> Code: 
+```python
+from sagemaker.pytorch import PyTorch
+pytorch_estimator = PyTorch(
+    entry_point = 'train.py',
+    ...
+    )
+```
+- Bring your own container: When it is time for you to bring in your own algorithms, you will also create a container and bring that container to be used with a SageMaker. Thats the third option. Bringing your own container to be used with SageMaker consists of four different steps. First, you clear the code that captures all the logic and then you containerize the code. Once you have the container ready, you register the container with Amazon ECR, which is the Elastic Container Registry. Once the container is registered with ECR, you can use the image URI of the registered container with the estimated object. Let's dive a little bit deeper into each one of these steps.
+- The first step is codifying your logic. The code should include the logic for the algorithm that you want to implement, as well as the training logic and the inference logic. Once you have the code ready, next step is to containerize your code. Here create a Docker container using the docker build command. Once you have the Docker container ready, next step is to register it with Amazon ECR, which is the Elastic Container Registry.
+> Code to create a docker container using docker build command:
+```python
+algorithm_name = tf-custom-container-test
+docker build -t${algorithm_name}
+``` 
+- Here, first, you will create a repository to hold all of your algorithm logic as a container and into that repository, you push the container from the previous step using the docker push command. Once the push command is successful, you have successfully registered your container with Amazon ECR. This registered containers can be accessed within image URI that you can use to finally create an estimator.
+> Code:
+```python
+aws ecr create-repository --repositry-name"${algorithm_name}">/dev/null
+fullname="${account}.dkr.ecr.${region}.amazonaws.com/${algorithm_name}:latest"
+docker push${fullname}
+
+# Format for image uri:
+byoc_image_uri = '{}.dkr.ecr.{}.{}/{}'.format(account_id,region, uri_suffix, ecr_repository + tag)
+estimator = Estimator(image_name = byoc_image_uri, ...)
+```
+- Once you have that image URL, you simply create an estimator object by passing in that URI. After this point, using estimator is very similar to how you would use an estimator object with a built-in algorithm, for example.
+- Using the four steps that are outlined in this video, you can bring your custom algorithm implementation and train and host the model on the infrastructure that is managed by SageMaker.
 
 
 
