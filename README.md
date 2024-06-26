@@ -889,13 +889,58 @@ estimator = PyTorchEstimator(
 - I've talked about the steps in creating your machine learning pipelines and the tests that can be automated within those steps, but how do you bring it all together into an end to m pipeline? This is where pipeline orchestration comes in because you need a way to not only automate the tasks within your steps, but you also need a way to coordinate those steps that are performed across your end to end workflow.
 - There are a lot of great choices for pipeline orchestration but orchestration essentially allows you to manage the end to end traceability, of your pipeline. But focusing on using automation to capture the specific inputs and outputs of a given task, and the artifacts that are then produced by those tasks, and then bringing them all together in a controlled end to end pipeline.
 
+### Model lineage and Artificate tracking
+- Bringing all of your automated tasks and steps together in an end-to-end pipeline, allows you to trace the inputs that are used by each step in your pipeline, as well as the artifacts or outputs that are produced by each step in your pipeline.
+- Model lineage essentially refers to understanding and tracking all of the inputs that were used to create a specific version of a model.
+- There are typically many inputs that go into training a specific version of a model. These inputs include things like the version of the data that was used to train the model in combination with the versions of the code and the hyperparameters that were used to build the model. However, inputs also includes things like the versions of the algorithms or the frameworks that were used. Depending on how you're building your model, this can also include things like the version of your docker images that were used for training, as well as different versions of packages or libraries that were used. it's basically all of the data that tells us exactly how a specific version of a model was built.
+  
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7d2d8ad2-f8d6-4902-8db2-9380aba65969)
+
+- For an example;  you can see all of the model inputs that were used to create version 26 of this model. Each of these inputs has a version or multiple versions associated with it. An input may even have some additional metadata as well.
+-  As an example, for your Python code, you probably have a commit hash for the source code commit that was used to commit this particular piece of code. But you may also want to capture additional metadata, like the name of the source code repository, so that all of these inputs together are the main data points that allow you to capture the information and provide a complete picture about how this model was actually built.
+-  You also typically want to capture information about the trained model artifact itself as well. Things like the evaluation metrics for that particular version, as well as the location of the model artifacts. As you can see, this is a lot of information to track
+- Where does that information about model lineage get stored, and how do you capture all of this information as part of your machine learning workflow? This is where model registry comes in. A model registry is a central store for managing model metadata and model artifacts.
+  
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/ee212e04-cb31-427f-89c5-8c4f97689722)
+
+- When you incorporate a model registry into your automated pipeline, it can provide traceability and auditability for your models, allowing you to effectively manage models, especially when you begin to manage at scale and you have tens or hundreds or even thousands of models.
+- A model registry also gives you the visibility into how each of the model versions was built. It also typically includes other metadata, such as information about environments where a particular version of a model is deployed into.
+- Model registry is a centrally managed model metadata and model artifact tracks which models are deploy across environments
+- Keep in mind though, that a model is one artifact that's produced as part of your machine learning pipelines. There's other outputs and artifacts that are produced that you also want to consider for complete end-to-end traceability.
 
 
+### an example of artifacts that are produced in your machine learning workflow and why artifact tracking is so important.
+- Artifact is the output of a step or task that can be consumed by the next step in pipeline or deployed directly for consumption.
+- In below you can see your machine learning workflow with corresponding tasks. Let's assume that these tasks have been automated, and you're now orchestrating these tasks into your machine learning pipeline.
+- or each task, you have a consumable artifact that becomes the input into the next task. Each of these artifacts has different versions associated with them. For your data task, your process training dataset is an artifact from this task. In your model-building task, your model artifact that is produced becomes input into your model deployment task. A machine learning pipeline really provides a consistent mechanism to capture the metadata and the versions of the inputs that are consumed by each step, as well as the artifacts that are produced by each step.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/56f5c2b9-ef69-4a24-9a5c-c14204ec5bed)
+
+___But why is all this so important?___
+- operational efficiency is one key reason. When you need to go and debug something, it's important to know what version is deployed at any given time, as well as what versions of the inputs were used to create that deployable artifact or the consumable artifact.
+-  It's also important for the reliability of your workload. Because what if, for example, a human goes in and inadvertently deletes a live endpoint? Without knowing exactly how that endpoint was built, it's difficult, if not impossible, to recover that endpoint without disruption in your service.
+
+### How to create Machine learning pipeline with amazon sagemaker pipelines:
+- Sagemaker Pipelines allows you to create automated workflows using a Python SDK, that's purpose-built for automating model-building tasks. You can also visualize your workflows inside Amazon SageMaker Studio. Pipelines also includes the ability to natively integrate with SageMaker Model Registry.  This allows you to capture some of that Model Metadata that I previously discussed, like the location of your training model artifact in S3, or key information about your trained model, so things like model evaluation metrics. Model Registry also allows you to choose the best performing model that you want to approve for deployment. Finally, SageMaker Projects allows you to extend your pipelines, and incorporate CI/CD practices into your machine learning pipelines. This includes things like source and version control for that true end-to-end traceability.
+
+### Features or components of pipelines:
+- ___Pipelines___ First, you have pipelines, which allows you to build automated Model Building workflows using your Python SDK. Again, these workflows can be visualized inside SageMaker Studio.
+- ___SAgemaker Model registry___ Second, you have SageMaker Model Registry, which stores Metadata about the model and has built-in capabilities to include Model Deployment approval workflows as well.
+- ___Sagemaker projects___ Finally, you have Projects which includes built-in project templates, as well as the ability to bring your own custom templates that establish and pre-configured a pattern for incorporating CI/CD practices into your Model Building Pipelines and your Model Deployment Pipelines.
+- SageMaker Pipelines provides the ability to work with all three of these components.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1c655b9f-5cc6-45b8-8561-52e82d72f8af)
 
 
+### Sagamker pipelines:
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7d5aad76-4a5a-4e2c-a709-da05553f7b97)
 
+- SageMaker Pipelines allows you to take those machine learning workflow tasks, that I've been talking about and automate them together, into a pipeline that's built through code.
+-  A Python SDK is provided, so that you can build and configured these workflows. The pipeline visualizations again, which are similar to what you see here, are all provided through SageMaker Studio.
+-  Pipelines provides a server-less option for creating and managing automated machine learning pipelines. Meaning, you don't have to worry about any of the Infrastructure or managing any of the servers that are hosting the actual pipeline.
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1551f2a5-ccb5-4a78-a84d-671ae3b3b79f)
 
 
 
