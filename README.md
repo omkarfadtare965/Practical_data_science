@@ -1254,8 +1254,109 @@ execution = Pipeline.start(
  
   ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e908a4ad-4e19-4d3a-9987-cc678d4f898d)
 
-### 
+### Tunning a BERT based classifier:
+- Sagemaker's automatic model tuning, also called as hyperparameter tuning, finds the best version of the model by running multiple training jobs on your dataset using the hyperparameter range values that you specify.
+- Additionally to the hyperparameter tuning job, you can also provide objective metric and tuning strategy. For example, you can specify the objective metric as maximizing the validation accuracy. For tuning strategies, SageMaker natively supports random and Bayesian optimization strategies. You can extend this functionality by providing an implementation of another tuning strategy as a docker container.
+- I want to use the random tuning strategy for the hyperparameter tuning.SageMaker behind the scenes, runs multiple training jobs and returns the training job with the best possible validation accuracy.
+- There are three steps involved in this process. Creating the PyTorch Estimator, and creating a hyperparameter tuner job, and then finally, analyzing the results from the tuner job.
+- ___`Creating a PyTorch Estimator:`___ The Pytorch Estimator will hold a fixed set of hyperparameters that you do not want to tune during this process. These hyperparameters are defined like a dictionary. Once You have a fixed hyperparameter, create a PyTorch estimator and pass in the fixed hyperparameters dictionary to the PyTorch estimator.
+> Code:
+```python
+hyperparameters = {
+    'epochs':3,
+    'train_step_per_epoch':50,
+    'validation_batch_size':64,
+    'validation_steps_per_epoch':50,
+    'freeze_bert_layer':False,
+    'seed':42,
+    'max_seq_length':64,
+    'backend':'gloo',
+    'run_validation':True,
+    'run_sample_validation':False
+}
 
+from sagemaker.pytorch import PyTorch as PyTorchEstimator
+
+estimator = PyTorchEstimator(
+    entry_point = 'train.py',
+    ...,
+    hyperparameters = hyperparameters,
+    )
+```
+- ___`Creating a hyperparameter tuner job:`___ In this step, I want to define the hyperparameters that I want to tune.
+> Code:
+```python
+# Hyperparameter type: Could be categorical or continuous or integer type.
+# Categorical Hyperparameter type: If your hyperparameter can take specific categorical values. For example, if you want to test your neural network with different types of optimizers, you can use the categorical variable. You can also use the categorical type with numerical values, if you want to test for specific values instead of a range. For example, for the batch size parameter, if you want to test specific values of 128 and 256 instead of a range. You can treat the batch size as a categorical parameter. If you have any parameters that can take Boolean values like true and false, you can treat that as a categorical type as well.
+'train_batch_size': CategoricalParameter([128,256])
+'freeze_bert_layer': CategoricalParameter([True,False])
+
+# Integer Hyperparameter type: Use this if you would rather explore a range of values for your parameters. For example, here, for the batch size, I want to explore all the values between 16 and 1024 as batch sizes. I use the integer type here.If the range of values is large to explore, definitely use logarithmic scale to optimize the tuning process.
+'train_batch_size': IntegerParameter(16,1024, scaling_type = 'Logarithmic')
+
+# Continuous Hyperparameter type: Example of a continuous type hyperparameter could be learning rate. Here, you're asking the tuning job to explore the values between the low and the high values for the range in a linear scale.
+'learning_rate': ContinuousParameter(0.00001, 0.00005, scaling_type = 'linear')
+
+# Define the tunable hyperparameters with the name, type, and the values to explore
+
+from sagemaker.tuner import CategoricalParameter
+from sagemaker.tuner import CatinuousParameter
+from sagemaker.tuner import IntegerParameter
+
+hyperparameter_ranges = {
+    'learning_rate': CatinuousParameter(0.00001, 0.00005),
+    scaling_type = 'Linear',
+    'train_batch_size': CategoricalParameter([128,256])
+}
+
+# Pass those in to the hyperparameter Tuner object:
+from sagemaker.tuner import HyperparameterTuner
+tuner = HyperparameterTuner(
+    estimator = ...,
+    hyperparameter_ranges = ...,
+    objective_type = ...,
+    objective_metric_name = ...,
+    strategy = ...,
+    )
+tuner.fit(inputs={...},...)
+```
+- ___`Analyzing the results from the tuner job:`___ Use the tuner object and get the DataFrame to analyze the result
+> Code:
+```python
+df_results = tuner.analytics().dataframe()
+```
+- ___`Warm start hyperparameter tunning job`____ It reuses prior results from a previously completed hyperparameter tuning job or a set of completed hyperparameter tuning jobs to speed up the optimization process and reduce the overall cost. For example, You perform warm start using a single parent, which is a previously completed tuning job. A warm start is particularly useful if you want to change the hyperparameter tuning ranges from the previous job, or if you want to add new hyperparameters to explore. Both these situations can use the knowledge from the previously completed job to speed up the process and find the best model quickly.
+- With warm start, there are two different types supported. The first type is identical data and algorithm. When you implement this type, the new hyperparameter tuning job uses the same input data and the training data and the training algorithm as the parent tuning job. You have a chance to update the hyperparameter tuning ranges and the maximum number of training jobs.
+- The second type is transfer learning. With this type, the new hyperparameter tuning job uses an updated training data and also can use a different version of the training algorithm. Perhaps you have collected more training data since your last tuning job, and you want to explore the best possible model for the entire training data. Or you may have come across a new algorithm that you would like to explore.
+> Code:
+```python
+from sagemaker.tuner import WarmStartConfig
+from sagemaker.tuner import WarmStartTypes
+
+warm_start_config = WarmStartConfig(
+    warm_start_type = WarmStartTypes.IDENTICAL_DATA_ANDALGORITHM,
+    parents = <PARENT_TUNING_JOB_NAME>)
+
+tuner = HyperparameterTuner(
+    ...
+    warm_start_config = warm_start_config)
+    
+tuner.fit(...)
+```
+### Best practices to follow when you train and tune your models on SageMaker:
+- Select a small number of hyperparameters; Hyperparameter Tuning, is a time and computation intensive task. The computational complexity is directly proportional to the number of hyperparameters that you tune. SageMaker does allow you to tune up to 20 different hyperparameters at a time. However, choosing a smaller number of hyperparameters to tune will typically yield better results.
+- Choose a smaller range of values to explore for the hyperparameters. The values that you choose for the hyperparameters can significantly affect the success of hyperparameter optimization. you will get better results by limiting your search to a small range of values, instead of specifying a large range of values.
+- Enable warm start, as discussed when you enable warm start, the hyperparameter tuning job uses results from previously completed jobs to speed up the optimization process and save you the tuning cost.
+- Enable early stop. When you enable early stop on the hyperparameter tuning job, the individual training jobs that are launched by the tuning job are dominated early in case the objective metric is not continuously improving. This early stopping of the individual training jobs leads to earlier completion of the hyperparameter tuning job and reduce costs.
+- Use small number of concurrent training jobs. SageMaker does allow you to run multiple jobs concurrently during the hyperparameter tuning process. On one hand, if you use a larger number of concurrent jobs, the tuning process will be completed faster. But in fact, the hyperparameter tuning process is able to find best possible results only by depending on the previously completed training jobs. So choose to use a smaller number of concurrent jobs when you're executing these hyperparameter tuning job.
+- When training and tuning at scale, it is important to continuously monitor and use the right compute resources.
+
+### BEst practices to follow to Monitoring Compute resources: 
+- While you do have the flexibility of using different instance types and instance sizes, how do you determine the exact specific instance type and size to use for your workloads?
+- There is really no standard answer for this. It comes down to understanding your workload well and running empirical testing to determine the best possible compute resources to use for your tuning and training workloads.
+- SageMaker training jobs emits CloudWatch metrics for resource utilization of the underlying infrastructure. You can use these metrics to observe your training utilization and improve your successive training runs.
+- Additionally, when you enable SageMaker Debugger on your training jobs, Debugger provides the visibility into training jobs and infrastructure that is running these training jobs.  Debugger also monitors and reports on system resources such as CPU, GPU, and memory, providing you with the very useful insights on the resource utilization and resource bottlenecks.
+- You can use these insights and recommendations from Debugger as a guidance to further optimize your training infrastructure. 
 
 
 
