@@ -1190,3 +1190,83 @@ execution = Pipeline.start(
 -  With projects you can create end to end machine learning pipelines that incorporate CI/CD practices like source and version control, as well as the ability to trigger downstream deployments off of an approved model in the model registry.
 -  Projects have built in MLOps templates that provision and pre configure the underlying resources that are needed to build end to end CI/CD pipelines. These pipelines include things like source control for your model build and deployment code, automatic integration with SageMaker model registry, as well as approval workflows to start downstream deployments to other environments.
 -  You can use these built-in project templates or you can also create your own project templates. 
+
+## Course 3
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/4b626468-a6de-46d5-ae59-0d3e65ba35b0)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/5f2f449b-c0b3-4575-a912-546b2ac19a74)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/b6082eb8-ce0b-4af9-9767-0a4a212254bf)
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/0be0e0ba-2b95-4b1d-ad20-3f73ed7cbc0b)
+
+### Week1 Outline:
+- Dive into a few advanced concepts in training and tuning machine learning models. When training machine learning models, hyper parameter tuning is a critical step to get the best quality model and this could mean a model with the highest possible accuracy or lowest possible error.
+- Learn about a few popular algorithms that are used for automated model tuning and then I will discuss automated hyper parameter tuning on amazon Sage maker.
+- Learn how to apply the automated hyper parameter tuning to BERT based NLP or the natural language processing text classifier.
+- Hyper parameter tuning is typically a time consuming and a compute intensive process. Learn about the concept of warm start with hyper parameter tuning on Sage maker that allows you to speed up your tuning jobs.
+- Introduce a concept of check pointing in machine learning and discuss how Sage maker leverages the idea of check pointing to save on training costs using a capability called managed spot training.
+- Introduce tune distributed training strategies; Data parallelism, and model parallelism that allow you to handle training at scale. The challenges addressed by these strategies include training with large volumes of data as well as dealing with increased model complexity.
+- Discussion of Sage maker capability of bringing your own container, which allows you to implement your own custom logic for your algorithms and train on Sage maker managed infrastructure.
+
+### Advanced Model Training and Tunning:
+- Discuss training and tuning strategies that help with challenges related to skill of training and tuning machine learning models while optimizing machine learning costs.
+- Introduce SageMaker capabilities for automated hyperparameter tuning, distributor training, and optimizing training costs. Discussion on how you can use your custom algorithms with SageMaker.
+- Model tuning is a part of model training process. The goal of model training process is to fit the model to the underlying data patterns in your training data and learn the best possible parameters for your model. Some example parameters include node rates and biases.
+- For example, the roberta-base model that you have used in the previous courses of this specialization comes with 125 million parameters.
+- In contrast, model hyperparameters need to be defined before the training process starts because these hyperparameters influence the model learning process. Some hyperparameters include number of epochs, the learning rate, as well as the batch sizes to use during your training.
+- You evaluate the model's performance continuously during your model training process to find the model accuracy using a holdout validation dataset. During this process, you fine-tune the model parameters and hyperparameters as necessary. "If you can't measure it, you can't improve it."
+- An important step in model development is to evaluate the final model with another holdout dataset called test dataset that your model has never seen before. These final model metrics can be used to compare and contrast competing models. Typically, the higher this final score is, the better is the ability of the model to generalize.
+- Hyperparameter tuning is an important part of model development process. When you start working on a new model, you're most likely to start with manually selecting hyperparameter values depending on the algorithm that you choose for your use case.
+- For popular algorithms and use cases, you can generally find great guidance on the values of hyperparameters to use from the data science and the research community.
+- Once you have validated your choices of algorithm, code, and dataset to solve your machine learning use cases, you can leverage automatic model tuning to fine tune your hyperparameters to find the best performing values.
+- few popular algorithms for automatic model tuning:
+  
+  > ___`Gridsearch`___
+  - To tune your model, you start by defining available hyperparameter sets that include both the name of the hyperparameter and the range of values you want to explore for the hyperparameter.
+  - The grid search algorithm tests every combination by training the model on each of the hyperparameters and selecting the best possible parameters.
+  - Advantage of the grid search is that it allows you to explore all possible combinations. This idea works really well when you have a small number of hyperparameters and a small range of hyperparameter values to explore for these hyperparameters.
+  - However, when the number of hyperparameters increases or the range of values that you want to explore for these hyperparameters increases, this could become very time consuming. The grid search does not scale well to large number of parameters.
+    
+  > ___`Randomsearch`___
+  - To address this issue, you can use random search. In random search, once again, you start by defining the available hyperparameter sets that consists of the name of the hyperparameters and the values that you want to explore. Here, the algorithm, instead of searching for every single combination, picks random hyperparameter values to explore in the defined search space.
+  - Additionally, you can also define stop criteria, such as the time elapsed or the maximum number of trainings to be completed. Once the stop criteria is met, you select the best performing set of hyperparameters from the trained models available so far. An advantage of random search is that it is much more faster when compared to the grid search.
+  - However, due to the randomness involved in the search process, this algorithm might miss the better performing hyperparameters. When you apply the concept of hyperparameter tuning to classification and regression models, it is very similar to finding the best possible model parameters by minimizing the loss function.
+    
+  > ___`Bayesian Optimization`___
+  - In Bayesian optimization, hyperparameter tuning is treated as a regression problem. The hyperparameter values are learned by trying to minimize the loss function of a surrogate model. Here, the algorithm starts with random values for the hyperparameters and continuously narrows down the search space by using the results from the previous searches.
+  - The strength of Bayesian optimization is that the algorithm is much more efficient in finding the best possible hyperparameters because it continues to improve on the results from previous searches.
+  - However, this also means that the algorithm requires a sequential execution. There is also a possibility that Bayesian optimization could get stuck in a local minima, which is a very prominent problem when you use techniques like gradient descent for minimizing a loss function.
+ 
+  > ___`Hyperband`___
+  - Hyperband is based on bandit approach. Bandit approaches typically use a combination of exploitation and exploration to find the best possible hyperparameters. The strength of the bandit approaches is that dynamic pull between exploitation and exploration.
+  - When applied to the hyperparameter tuning problem space, You start with the larger space of random hyperparameter set and then you explore a random subset of these hyperparameters for a few iterations.
+  - After the first few iterations, you discard the worst performing half of the hyperparameter sets. In the subsequent few iterations, you continue to explore the best performing hyperparameters from the previous iteration.
+  - You continue this process until the set time is elapsed or you remain with just one possible candidate. Hyperband clearly stands out by spending the time much more efficiently than other approaches we discussed to explore the hyperparameter values using the combination of exploitation and exploration.
+  - On the downside, it might discard good candidates very early on and these could be the candidate that converge slowly.
+
+### 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
