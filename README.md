@@ -1208,6 +1208,9 @@ execution = Pipeline.start(
 - Discussion of Sage maker capability of bringing your own container, which allows you to implement your own custom logic for your algorithms and train on Sage maker managed infrastructure.
 
 ### Advanced Model Training and Tunning:
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/dc90d623-d37a-4183-9421-60eb1734caf6)
+
 - Discuss training and tuning strategies that help with challenges related to skill of training and tuning machine learning models while optimizing machine learning costs.
 - Introduce SageMaker capabilities for automated hyperparameter tuning, distributor training, and optimizing training costs. Discussion on how you can use your custom algorithms with SageMaker.
 - Model tuning is a part of model training process. The goal of model training process is to fit the model to the underlying data patterns in your training data and learn the best possible parameters for your model. Some example parameters include node rates and biases.
@@ -1225,23 +1228,31 @@ execution = Pipeline.start(
   - The grid search algorithm tests every combination by training the model on each of the hyperparameters and selecting the best possible parameters.
   - Advantage of the grid search is that it allows you to explore all possible combinations. This idea works really well when you have a small number of hyperparameters and a small range of hyperparameter values to explore for these hyperparameters.
   - However, when the number of hyperparameters increases or the range of values that you want to explore for these hyperparameters increases, this could become very time consuming. The grid search does not scale well to large number of parameters.
+  
+  ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/6907d45e-20f6-4d32-bc2a-c13d2c97ae82)
     
   > ___`Randomsearch`___
   - To address this issue, you can use random search. In random search, once again, you start by defining the available hyperparameter sets that consists of the name of the hyperparameters and the values that you want to explore. Here, the algorithm, instead of searching for every single combination, picks random hyperparameter values to explore in the defined search space.
   - Additionally, you can also define stop criteria, such as the time elapsed or the maximum number of trainings to be completed. Once the stop criteria is met, you select the best performing set of hyperparameters from the trained models available so far. An advantage of random search is that it is much more faster when compared to the grid search.
   - However, due to the randomness involved in the search process, this algorithm might miss the better performing hyperparameters. When you apply the concept of hyperparameter tuning to classification and regression models, it is very similar to finding the best possible model parameters by minimizing the loss function.
-    
+  
+  ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/050e82aa-777d-4794-bd68-55fdf807246c)
+
   > ___`Bayesian Optimization`___
   - In Bayesian optimization, hyperparameter tuning is treated as a regression problem. The hyperparameter values are learned by trying to minimize the loss function of a surrogate model. Here, the algorithm starts with random values for the hyperparameters and continuously narrows down the search space by using the results from the previous searches.
   - The strength of Bayesian optimization is that the algorithm is much more efficient in finding the best possible hyperparameters because it continues to improve on the results from previous searches.
   - However, this also means that the algorithm requires a sequential execution. There is also a possibility that Bayesian optimization could get stuck in a local minima, which is a very prominent problem when you use techniques like gradient descent for minimizing a loss function.
- 
+  
+  ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/bcf24e37-b07c-4dfa-9a0c-4afc526bf586)
+
   > ___`Hyperband`___
   - Hyperband is based on bandit approach. Bandit approaches typically use a combination of exploitation and exploration to find the best possible hyperparameters. The strength of the bandit approaches is that dynamic pull between exploitation and exploration.
   - When applied to the hyperparameter tuning problem space, You start with the larger space of random hyperparameter set and then you explore a random subset of these hyperparameters for a few iterations.
   - After the first few iterations, you discard the worst performing half of the hyperparameter sets. In the subsequent few iterations, you continue to explore the best performing hyperparameters from the previous iteration.
   - You continue this process until the set time is elapsed or you remain with just one possible candidate. Hyperband clearly stands out by spending the time much more efficiently than other approaches we discussed to explore the hyperparameter values using the combination of exploitation and exploration.
   - On the downside, it might discard good candidates very early on and these could be the candidate that converge slowly.
+ 
+  ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e908a4ad-4e19-4d3a-9987-cc678d4f898d)
 
 ### 
 
