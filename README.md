@@ -942,7 +942,251 @@ ___But why is all this so important?___
 
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1551f2a5-ccb5-4a78-a84d-671ae3b3b79f)
 
+- if you look at the first step in your pipeline, you have a data processing step. For this, SageMaker pipelines supports Amazon SageMaker processing jobs that you can use to transform your raw data into your training datasets. SageMaker processing expect your input to be an Amazon S3. Your input in this case is your raw data, or more specifically, your product review dataset. SageMaker processing also expects your data processing script to be an S3 as well. in this case, your script is your Scikit-learn data processing script that will be run for your processing job, in that will be used to transform your data, and split it into your training test and validation datasets.
 
+> Code to configure this step in to pipeline:
+```python
+# Define step Inputs and Outputs:
+processing_inputs = [
+    ProcessingInputs(
+        input_name = 'customer-reviews-input-data',
+        source = 's3 path',
+        destination = 'path',
+        s3_data_distribution_type = 'ShardedByS3Key'
+    )
+]
 
+processing_outputs = [
+    Processingoutputs(...)]
+    
+# Configure processing step:
+processing_step = Processing_step(
+    name = 'Processing',
+    code = 'path', # Name of the script that you want to run
+    processor = processor, # sklearn processor
+    inputs = processing_inputs,
+    outputs = processing_outputs,
+    job_arguments = [ # 
+        '--train-split-percentage',
+        str(train_split_percentage.default_value,
+        ...
+    )])
+    
+    # Use amazon sagmaker training jobs to train the model using the oututs from the previous step as input
+    # the output of your processing step is then fed into the input of your training step.
+    #  In this case, you'll want to use your training dataset to train the model and then you're going to use the validation dataset to evaluate how well the model is actually learning during training
+    # The output of this particular step is going to be a trained model artifact that gets stored in S3.
+    
+    # COnfiguring the hyperparameters that we'll use as input into the training job step.
+hyperparameters = {
+    'max-seq-length' : max_seq_length,
+    'epochs' : epochs,
+    'learning_rate' : learning_rate,
+    ...
+    }
+    
+    # Configure the Estimator:
+from sagemaker.pytorch import pyTorch as PyTorchEstimator
+estimator = PyTorchEstimator(
+    entry_point = 'train.py',
+    source_dir = 'src',
+    role = role,
+    instance_count = train_instance_count,
+    instance_type = train_instance_type,
+    volume_size = train_volume_size,
+    py_version = 'py3',
+    framework_version = '1.6.0',
+    hyperparameters = hyperparameters,
+    metric_definitions = metric_definitions,
+    input_mode = input_mode
+    )
+    
+# COnfigure the training step:
+training_step = Training_step(
+    name = 'Train',
+    estimator = estimator,
+    inputs={
+        'train': TrainingInput
+        s3_data = processing_step.properties.ProcessingOutputCOnfig.Outputs[
+            'sentiment-train'
+            ].S3Output.S2Uri,
+            content_type = 'text/csv')
+            , 'validation' : TrainingInput(...)
+    })
+    
+# Use Amazon Sagemaker processing to evaluate trained model using test holdout dataset
+# The trained model artifact then becomes input into the next step inside your pipeline, which is the evaluation step.
 
+```
 
+### how do you then use it for model evaluation in your SageMaker processing job?
+```python
+# Model evaluation code/script
+from sklearn.metrics import classification_report
+from sklearn.metrics import accuracy_score
+
+def predict_fn(input_data, model):
+    ...
+    return predicted_clsses_jsonlines
+    
+...
+y_test = df_test_reviews['review_body'].map(predict)
+y_actual = df_test_reviews['sentiment'].astype('int64')
+
+print(classification_report(y_true = y_test, y_pred = y_actual))
+accuracy = accuracy_score(y_true=y_test, y_pred=y_actual)
+print('Test accuracy: ',accuracy)
+
+# This evaluation script is provided as input to Sagemaker processing job for model evaluation
+# Once the processing job has completed as a step inside your pipeline you can then analyze the results as shown below
+
+from pprint import pprint
+evaluation_jason = sagemaker.s3.S3Downloader.read_file(
+    "{}/evaluation.json".format(evaluation_metrics_s3_uri))
+    
+print(json.loads(evaluation_json))
+
+# {'metrics':{'accuracy': {'value': 0.74}}}
+
+# how you include this step inside your pipeline; This step is going to look similar to the data processing test step that i previously shown but there is one exception PropertyFile
+
+# DEfine Output
+from sagemaker.workflow.properties import PropertyFile
+evaluation_report = PropertyFile(
+    name = 'EvaluationReport',
+    output_name = 'metrics',
+    path = 'evaluation.json'
+    )
+    
+# In this case, the property file will include your evaluation metrics, which will then be used in a conditional step that determines whether or not you want to deploy this model based on the metrics in that file. 
+
+# Configure the pipeline processing job 
+evalustion_step = ProcessingStep(
+    name = 'EvaluationModel',
+    processor = evaluation_processor,
+    code = 'src/evaluation_metrics.py',
+    inputs=[
+        ProcessingInput(...),
+        ],
+        outputs = [
+        ProcessingOutput(...),
+        ],
+        job_arguments = [...],
+        property_files = [evaluation_report],
+        )
+# Condition step: Use Amazon Sagemaker Pipeline condition step to conditionally execute step(s)
+# COnfiguring condition step: Define a condition and import conditional workflow step:
+min_accuracy_value = ParameterFloat(
+    name = 'MinAccuracyValue',
+    default_value = 0.01
+    )
+
+from sagemaker.workflow.conditions import ConditionGreaterThanOrEqualTo
+
+from sagemaker.workflow.condition_step import(ConditionsStep, JsonGet,
+)
+
+# COnfigure the condition
+minimum_accuracy_condition = ConditionGreaterThanOrEqualTo(
+    left = JsonGet(
+        step = evaluation_step,
+        property_file = evaluation_report,
+        json_path = 'metrics.accuracy.value'),
+        right=min_accuracy_value)
+        
+# OCnfigure this step 
+minimum_accuracy_condition_step = ConditionStep(
+    name = 'AccuracyCondition', 
+    conditions = [minimum_accuracy_condition],
+    # Success continue with model registration
+    if_steps = [register_step, create_step],
+    else_steps = [] # Fail end the pipeline
+    )
+```
+- In this case, the condition is, if accuracy is above 99 percent, you will register that model and then create the model. Which essentially packages that model for deployment.
+  
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/e3c4ddf7-2254-45f6-b2fd-27d96eec2004)
+
+- Now that I've covered the pipeline steps that are used for your data and your model building or training tasks,
+
+### Registering the model and creating model package that can be used for deployment
+- one of the key components of SageMaker Pipelines is SageMaker model registry. It's very difficult to manage machine learning models at scale without a model registry. It's often one of the first conversations that I have with teams that are looking to scale and manage their machine learning workloads more effectively.
+- SageMaker model registry and incorporating it as a step inside our pipeline. SageMaker model registry contains a central catalog of models with their corresponding metadata. It also contains the ability to manage their approval status of a workflow by either marking a model as approved or rejected.
+- Let's say the model accuracy is still lower than required for production deployment. As a machine learning engineer, you may want to mark that model as rejected so it's not a candidate for deployment to a higher-level environment. You could also use the model registry as a trigger for downstream deployment pipeline so that when you approve a model, it then automatically kicks off a deployment pipeline to deploy your model to downstream environments.
+- When you register your model, you want to indicate which serving image should be used when you decide to deploy that model. This ensures that not only do you know how the model was trained through the metadata that you capture in the model registry, but you also know how you can host that same model because you've defined the image to use for inference.
+- You also need to define your model metrics where you're essentially pulling data that already exists about your model, but ensuring that it's stored as metadata into that central model registry.
+- Finally, you configure the actual step inside SageMaker Pipelines using the built-in function called Register Model.
+- In your configuration, you include the container image that should be used for inference, the location of your model artifact in S3, the target configuration for the compute resources that you would use for deployment of the model, as well as some metrics that are very specific to this model version.
+- All of this metadata will be used to populate the model registry. You can see here that when you register the model, the approval status is also a configuration parameter that you can optional use to set the approval status for the model when you register it. The default is to set the approval status to pending manual approval, which is more in line with the continuous delivery strategy versus the continuous deployment strategy because you're indicating that you still want a human to approve that model manually before you start any downstream deployment activities.
+> Code to configure model registry:
+```python
+# Define deployment image fro inferance
+inferance_image_uri = sagemaker.image_uris.retrieve(
+    framework = 'pytorch',
+    region = region,
+    version = '1.6.0',
+    py_version = 'py36',
+    instance_type = deploy_instance_type,
+    image_scope = 'inferance'
+    )
+    # Defininf model metrics to be stored as metadata:
+    from sagemaker.model_metrics import MetricsSource, ModelMetrics
+    
+    model_metrics = ModelMetrics(model_statistics = MetricsSource(
+        s3_uri = 's3://...'),
+        content_type = 'application/json')
+
+# COnfigure the model registry step:
+register_step = RegisterModel(
+    name = "RegisterModel",
+    estimator = estimator,
+    image_uri = ...,
+    model_data = 
+    training_step.properties.ModelArtifacts.S3ModelArtifacts,
+    content_types = ["application/jasonlines"],
+    response_types = ["application/jasonlines"],
+    inferance_instances = [deploy_instance_type],
+    transform_instances= ['ml.m5*large'] # batch transform
+    model_package_group_name = model_package_group_name,
+    approval_status = model_approval_status,
+    model_metrics = model_metrics)
+
+# How do you link all these steps together? Once you have all these steps configured within your pipeline, you now need to link them together to create an end-to-end machine learning pipeline. To link all of these steps together, you need to configure the pipeline using the pipeline function that's part of the SDK.
+# Configure the pipeline:
+from sagemaker.workflow.pipeline import Pipeline
+
+pipeline = Pipeline(
+    name = pipeline_name,
+    parameters = [
+        input_data,
+        processing_instance_count,
+        ...
+        ],
+        steps = [processing_step, training_step, evaluation_step, minimum_accuracy_condition_step], sagemaker_session = sess,
+        )
+        
+# To actually run this pipeline Create and execute the pipeline:
+response = pipeline.create(role_arn = role)
+
+pipeline_arn = response['PipelineArn']
+
+execution = Pipeline.start(
+    parameters = dict(
+        InputData = raw_input_data_s3_uri,
+        ProcessingInstanceCount = 1,
+        ...
+        ))
+        
+# when you start your pipeline, you can then visualize the status of each of your steps through SageMaker Studio or you can describe the status of your steps using the Python SDK. 
+```
+
+# Sagemaker Projects:
+- Projects allows you to automatically incorporate CI/CD practices such as source control and setting up automated workflows to automatically initiate downstream deployment processes based on an approved model in your model registry.
+- when you talk about creating machine learning pipelines, you focus first on automation including quality gates, tracking model lineage and some of the key artifacts that are produced as part of that pipeline.
+- Incorporating additional CI/CD practices becomes more of an advanced topic. We're choosing not to dive too deep into that particular aspect in this particular session, because it's important to first understand the components of a machine learning pipeline.
+- Including how to automate the steps in your workflow, as well as how to orchestrate those steps. You can then continue to evolve and improve your pipelines by incorporating CI/CD practices.
+-  SageMaker projects gives you a lot of those capabilities with preconfigured MLOps templates. SageMaker projects integrates directly with SageMaker pipelines and SageMaker model registry.
+-  And it's used to create MLOps solutions to orchestrate and manage your end to end machine learning pipelines, while also incorporating CI/CD practices.
+-  With projects you can create end to end machine learning pipelines that incorporate CI/CD practices like source and version control, as well as the ability to trigger downstream deployments off of an approved model in the model registry.
+-  Projects have built in MLOps templates that provision and pre configure the underlying resources that are needed to build end to end CI/CD pipelines. These pipelines include things like source control for your model build and deployment code, automatic integration with SageMaker model registry, as well as approval workflows to start downstream deployments to other environments.
+-  You can use these built-in project templates or you can also create your own project templates. 
