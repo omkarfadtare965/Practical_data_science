@@ -1464,12 +1464,109 @@ estimator = Estimator(image_name = byoc_image_uri, ...)
 - Once you have that image URL, you simply create an estimator object by passing in that URI. After this point, using estimator is very similar to how you would use an estimator object with a built-in algorithm, for example.
 - Using the four steps that are outlined in this video, you can bring your custom algorithm implementation and train and host the model on the infrastructure that is managed by SageMaker.
 
+## Week2
+### Model deployment options & Strategies:
+- Being able to choose the right deployment option that best meets your use case is critical when looking at practical data science for cloud deployments. There are two general options including real-time Inference and batch inference.
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/eb7eb910-8826-465d-804b-5dd3d110da6b)
 
+### Deploying a model for real-time inference in the cloud: 
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/8eec4339-8342-46bc-ac8a-90054b7ee060)
 
+- Deploying a model for real-time inference means deploying it to a persistent hosted environment that's able to serve requests for prediction and provide prediction responses back in real-time or near real-time. This involves exposing an endpoint that has a serving stack that can accept and respond to requests. 
+- A serving stack needs to include a proxy that can accept incoming requests and direct them to an application that then uses your Inference code to interact with your model. This is a good option when you need to have low latency combined with the ability to serve new prediction requests that come in, so some example use cases here would be fraud detection. Where you may need to be able to identify whether an incoming transactions is potentially fraudulent in near real time or product recommendations. Where you want to be able to predict the appropriate products based on a customer's current search history or a customer's current shopping cart.
 
+ ### How a real time persistent endpoint would apply to your product review use case?
+ - In our usecase, you need to identify whether a product review is negative and immediately notify a customer support engineer about negative reviews, So that they can proactively reach out to the customer right away.  Here you have some type of web application that a consumer enters their product review into. Then that web application or secondary process called by that web application coordinates a call to your real time end point that serves your model with the new product review text. The hosted model then returns a prediction. So in this case it would be a negative class for sentiment that can then be used to initiate a back end process that opens a high severity support ticket to the customer support engineer. Given that your objective here is to have quick customer support response.
+- You can see where you would need to have that model consistently available through a real time endpoint that's able to serve your prediction requests that come in. And serve your response traffic.
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/ef6f3328-8813-4095-8288-be5ece8cf115)
+
+### Deploying a model for batch inference in the cloud: 
+- With batch inference, You aren't hosting a model that persists and can serve requests for prediction as they come in. Instead, your batch in those requests for prediction, running a batch job against those batch requests and then out putting your prediction responses typically is batch records as well. Then once you have your prediction responses, they can then be used in a number of different ways. Those prediction responses are often used for reporting or are persisted into a secondary data store for use by other applications or for additional reporting.
+- Use cases that are focused on forecasting are a natural fit for batch inference. So say you're doing sales forecasting where you typically use batch sales data over a period of time to come up with new sales forecast. In this case, you'd use batch jobs to process those prediction requests and potentially store those predictions for additional visibility or analysis.
+- let's go back to your product review case. So let's say your ultimate business goal here is to be able to identify vendors that have potential quality issues by detecting trends for negative product reviews per vendor.
+- So in this case, you don't need a real time end point, but you would use a batch inference job to take a batch of product review data. Then run batch jobs at a reasonable frequency that you identify that can take all of those product reviews on input. Process those predictions and that output that data just as the prediction request data is a set of batch records on input.
+- The prediction responses that are output to the model are also collected as a collection of batch records. That data could then be persisted so that your analysts could aggregate the data. Run reports to identify any potential issues with vendors that have a large number of negative reviews with your batch job.
+- These jobs aren't persisted so they run for only the amount of time that it takes to process those batch requests on input.
+ 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cde7c7ae-a983-45cb-8ed5-d9266da6bb27)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/53387e2e-f2cb-4de8-86b5-6de16d338dbf)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/af4c27f0-dc41-4ed3-81d1-f9cdb2b7d5bb)
+
+###  Deployment to the edge:
+- Is not a cloud-specific. But is a key consideration when deploying models closer to your users or in areas with poor network connectivity. In the case of edge deployments, you train your models in another environment in this case in the cloud and then optimize your model for deployment to edge devices. This process is typically aimed at compiling or packaging your model in a way that is optimized to run at the edge. Which usually means things like reducing the model package size for running on smaller devices. In this case you could use something like Sagemaker Neo to compile your model in a way that is optimized for running at the edge.
+- Edge use cases bring your model closer to where it will be used for prediction, so typical use cases here would be like manufacturing, where you have cameras on an assembly line And you need to make real time inferences or in use cases where you need to detect equipment anomalies at the edge. Inference data in this case is often sent back to the cloud for additional analysis or for collection of ground truth data that can then be used to further optimize your model.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/ad97fac1-2318-48a9-8cb0-76b81fe8d104)
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/1531d320-4e91-4249-8c3a-5e313b7c163c)
+
+|                     | ___`Real-Time inference`___                                         | ___`Batch  inference`___                                                              | ___`Edge`___                                                                           |
+|---------------------|---------------------------------------------------------------------|---------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| ___`When to use`___ | Low latency real-time predictions (ex: interactive recommendations) | Batch request & response prediction is acceptable for your use case (ex: forecasting) | Models need to deployed to edge devices (ex: Limited connectivity, internet of things) |
+| ___`Cost`___        | Persistent endpoint - pay for resources while endpoint is running   | Transient environments - pay for resources for the duration of the batch job          | Varies                                                                                 |
+
+- The choice to deploy to the edge is typically an obvious one as there's edge devices and you might be working with use cases where there is limited network connectivity. You might also be working with internet of things or IOT use cases or use cases where the cost in terms of the time spent in data transfer is not an option even when it's single digit millisecond response.
+- the choice between real time inference and batch inference typically comes down to the ways that you need to request and consume predictions in combination with cost. A real time endpoint can serve real time predictions, where the prediction requests sent on input is unique and requires an immediate response with low latency.
+- The trade off is that a persistent endpoint typically cost more because you pay for the compute. And the storage resources that are required to host that model while that endpoint is up and running a batch job in contrast works well when you can batch your data for prediction And that's your responses back, now, these responses can then be persisted into a secondary database that can serve real time applications when there is no need for new prediction requests. And responses per transaction
+- so in this case, you can run batch jobs in a transient environment. Meaning that the compute and storage environments are only active for the duration of your batch job.
+
+### Model deployment strategies:
+- This is important because you want to be able to deploy new models in a way that minimizes risk and downtime while measuring the performance of a new model or a new model version. As an example, if you have a newer version of a model, you typically don't want to deploy that model or that new version in a way that disrupts service. You may also want to monitor the performance of that new model version for a period of time in a way that allows you to seamlessly roll back if there is an issue with that new version.
+
+ ### Common deployment strategies:
+- Blue/Green, Shadow, Canary, A/B testing are static approaches to deploying new or updated models. meaning that you manually identify things like when to swap traffic and how to distribute that traffic. However Multi-armed bandit is the approach that is more dynamic in nature, meaning that instead of manually identifying when and how you distribute traffic, you can take advantage of approaches that incorporate machine learning to automatically decide when and how to distribute traffic between multiple versions of a deployed model.
+- __Blue/Green deployments:__
+  - With blue/green deployments, you deploy your new model version to a stack that conserved prediction and response traffic coming into an endpoint. Then when you're ready to have that new model version actually start to process prediction requests coming in, you swap the traffic to that new model version.
+  - This makes it easy to roll back because if there are issues with that new model or that new model version doesn't perform well, you can swap traffic back to the previous model version.
+  - With blue/green deployment, you have a current model version running in production. In this case, we have version 1. This accepts 100 percent of the prediction request traffic and responds with prediction responses. When you have a new model version to deploy, in this case, model version 2, you build a new server or container to deploy your model version into. This includes not only the new model version but also the code in the software that's needed to accept and respond to prediction requests.
+  - the new model version is deployed, but the load balancer has not yet been updated to point to that new server hosting the model, so no traffic is hitting that endpoint yet. After the new model version is deployed successfully, you can then shift 100 percent of your traffic to that new cluster serving model version 2 by updating your load balancer.
+  - This strategy helps reduce downtime if there's a need to roll back and swap back to version 1 because you only need to re-point your load balancer back to version 1. The downside to this strategy is that it is 100 percent swap of traffic. So if the new model version, version 2, in this case, is not performing well, then you run the risk of serving bad predictions to 100 percent of your traffic versus a smaller percentage of traffic.
+
+ ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/01797620-afd8-4978-bdf8-e8d9384f2606)
+
+- __Shadow challenger:__
+  - in this case, you're running a new model version in production by letting the new version accept prediction requests to see how that new model would respond, but you're not actually serving the prediction response data from that new model version. This lets you validate the new model version with real traffic without impacting live prediction responses.
+  - with the shadow or challenger deployment strategy, the new model version is deployed and both versions have 100 percent of prediction requests traffic being sent to each version. However, you'll notice for version 2, only the prediction requests are sent to the model, and you aren't actually serving prediction responses from model version 2.
+  - Responses that would have been sent back for model version 2 are typically captured and then analyzed for whether version 1 or version 2 of the model would have performed better against that full traffic load.
+  - This strategy also allows you to minimize the risk of deploying a new model version that may not perform as well as model version 1, and this is because you're still able to analyze how version 2 of your model would perform without actually serving the prediction responses back from that model version.
+  - Then once you are comfortable that model version 2 is performing better, you can actually start to serve prediction responses directly from model version 2 instead of model version 1.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/369aa737-478d-4612-a827-bfb00db7a34e)
+
+- __Canary deployments:__
+  - With a canary deployment, you split traffic between model versions and target a smaller group to expose that new model version 2. Typically, you're exposing the select set of users to the new model for a smaller period of time to be able to validate the performance of that new model version before fully deploying that new version out to production.
+  - Canary deployment is a deployment strategy where you're essentially splitting traffic between two model versions, and again, with canary deployments, you typically expose a smaller specific group to that new model version while model version 1 still serves the majority of your traffic.
+  - Below, you can see that 95 per cent of prediction requests and responses are served by Model Version 1 and a smaller set of users are directed to Model Version 2. Canary deployments are good for validating a new model version with a specific or smaller set of users before rolling it out to all users.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/0ad7ff0d-6d07-48fc-beb4-ef434475dba4)
+
+- __A/B testing:__
+  - Canary and A/B testing are similar in that you're splitting traffic. However, A/B testing is different in that typically you're splitting traffic between larger groups and for longer periods of time to measure performance of different model versions over time. This split can be done by targeting specific user groups or just by setting a percentage of traffic to randomly distribute to different groups.
+  - Let's take a closer look at A/B testing. With A/B testing, again, you're also splitting your traffic to compare model versions. However, here you split traffic between those larger groups for the purpose of comparing different model versions in live production environments.
+  - Here, you typically do a larger split across users. So 50 percent one model version, 50 percent the other model version. You can also perform A/B testing against more than two model versions as well. While A/B testing seemed similar to canary deployments, A/B testing tests those larger groups, and typically runs for longer periods of time than canary deployments.
+  - A/B tests are focused on gathering live data about different model versions. to gather that performance data that is statistically significant enough, which provides that ability to confidently roll out Version 2 to a larger percent of traffic.
+  - Because you're running multiple models for longer periods of time, A/B testing allows you to really validate your different model versions over multiple variations of user behavior.
+  - As an example, you may have a forecasting use case that has seasonality to it. You need to be able to capture how your model performs over changes to the environment over time.
+  - A/B tests are typically fairly static and need to run over a period of time. With this, you do run the potential risk of running with a bad or low-performing model for that same longer period of time.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/aa313d1e-80c2-49a2-a8ff-9de7746ea7a4)
+
+- __Multi-Armed Bandits:__
+  - Multi-armed bandits use reinforcement learning as a way to dynamically shift traffic to the winning model versions by rewarding the winning model with more traffic but still exploring the nonwinning model versions in the case that those early winners were not the overall best models.
+  - In this implementation, you first have an experiment manager, which is basically a model that uses reinforcement learning to determine how to distribute traffic between your model versions. This model chooses the model version to send traffic to based on the current reward metrics and the chosen exploit explore strategy.
+  - Exploitation refers to continuing to send traffic to that winning model, whereas exploration allows for routing traffic to other models to see if they can eventually catch up or perform as well as the other model. It will also continue to adjust that prediction traffic to send more traffic to the winning model.
+  - in this case, your model versions are trying to predict the star rating. You can see Model Version 1 predicted that this was a five-star rating, while Model Version 2 predicted it was a four-star rating. The actual rating was four stars. So in this case Model Version 2 wins. So your multi-arm bandit will reward that model by sending more traffic to Model Version 2.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7708481b-06bb-404c-b3ef-2ef51eda3c1b)
+
+### Amazon sagemaker Hosting: Real-time inference:
+- SageMaker hosting includes SageMaker endpoints, these are persistent endpoints that can be used for real-time inference. SageMaker endpoints can be used to serve your models for predictions in real-time with low latency. Serving your predictions in real-time requires a model serving stack that not only has your trained model, but also a hosting stack to be able to serve those predictions.
+- That hosting stack typically include some type of a proxy, a web server that can interact with your loaded serving code and your trained model. Your model can then be consumed by client applications through real time invoke API request. 
 
 
 
