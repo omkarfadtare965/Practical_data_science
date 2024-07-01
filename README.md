@@ -1565,12 +1565,44 @@ estimator = Estimator(image_name = byoc_image_uri, ...)
 ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/7708481b-06bb-404c-b3ef-2ef51eda3c1b)
 
 ### Amazon sagemaker Hosting: Real-time inference:
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/4cdd94bb-f835-49d1-b7bb-715883e75c4a)
+
 - SageMaker hosting includes SageMaker endpoints, these are persistent endpoints that can be used for real-time inference. SageMaker endpoints can be used to serve your models for predictions in real-time with low latency. Serving your predictions in real-time requires a model serving stack that not only has your trained model, but also a hosting stack to be able to serve those predictions.
-- That hosting stack typically include some type of a proxy, a web server that can interact with your loaded serving code and your trained model. Your model can then be consumed by client applications through real time invoke API request. 
+- That hosting stack typically include some type of a proxy, a web server that can interact with your loaded serving code and your trained model. Your model can then be consumed by client applications through real time invoke API request.
+- The request payload sent when you invoke the endpoint is routed to a load balancer and then routed to your machine learning instance or instances that are hosting your models for prediction.
+- SageMaker has several built-in serializers and deserializers that you can use depending on your data formats. As an example for serialization on prediction request, you can use the JSON line serializer, which will then serialize your inference requests data to a JSON lines formatted string. For deserialization on prediction response, the JSON deserializer will then deserialize JSON lines data from an inference endpoint response. Finally, response payload is then routed back to the client application.
+- With SageMaker model hosting, you choose the machine-learning instance type, as well as the count combined with the docker container image and optionally the inference code, and then SageMaker takes care of creating the endpoint, and deploying that model to the endpoint. The type of machine learning instance you choose really comes down to the amount of compute and memory you need. 
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/773830aa-a4ac-4b73-84ff-a04a8b1e6a31)
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/9c14ee0a-bba6-443a-9508-c95e5f168fd6)
 
+- SageMaker has three basic scenarios for deployment when you use it to train and deploy your model. You can use prebuilt code, prebuilt serving containers, or a mixture of the two.
 
+ ![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/ed949c67-4528-4900-8f39-c79a3b25b3d1)
+
+- __Deploying a model that was trained using a built-in algorithm__
+  - In this option, you use both prebuilt inference code combined with a prebuilt serving container. The container includes the web proxy and the serving stack combined with the code that's needed to load and serve your model for real time predictions. This scenario would be valid for some of the SageMaker built-in algorithms where you need only your trained model and the configuration for how you want to host that machine learning instance behind that endpoint.
+  - For this scenario to deploy your endpoint, you identify the prebuilt container image to use and then the location of your trained model artifact in S3. Because SageMaker provides these built-in container images, you don't have any container images to actually build for this scenario.
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/ef3b1cbe-69e0-4c4f-8fd9-15af3790aa76)
+
+- __Deploying a model using a built-in framework like TensorFlow or PyTorch__ where you're still using prebuilt container images for inference, but with the option of bringing your own serving code as well.
+- The next option still uses a prebuilt container that's purpose-built for a framework such as TensorFlow or PyTorch, and then you can optionally bring your own serving code. In this option, you'll notice that while you're still using a prebuilt container image, you may still need or want to bring your own inference code. 
+
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/14c8cc20-48ff-47a6-b80e-08e13f2d8046)
+
+- __Bringing your own container image and inference code for hosting a model on a SageMaker endpoint__
+  -  you'll have some additional work to do by creating a container that's compatible with SageMaker for inference. Here you'll have some additional work to do by creating a container that's compatible with SageMaker for inference. But this also offers the flexibility to choose and customize the underlying container that's hosting your model. 
+- All of these options deploy your model to a number of machine learning instances that you specify when you're configuring your endpoint. You typically want to use smaller instances and more than one machine learning instance. In this case, SageMaker will automatically distribute those instances across AWS availability zones for high availability.
+
+__Once your endpoints are deployed, how do you then ensure that you're able to scale up and down to meet the demands of your workloads without overprovisioning your ML instances?__
+- This is where autoscaling comes in. It allows you to scale the number of machine learning instances that are hosting your endpoints up or down based on your workload demands.
+- This is also important for cost optimization for two reasons. First, not only can you scale your instances up to meet the higher workload demands when you need it, but you can also scale it back down to a lower level of compute when it is no longer needed. Second, using autoscaling allows you to maintain a minimum footprint during normal traffic workloads, versus overprovisioning and paying for compute that you don't need.
+- The on-demand access to compute and storage resources that the Cloud provides allows for this ability to quickly scale up and down.
+
+__How autoscaling works?__
+- 
 
 
 
