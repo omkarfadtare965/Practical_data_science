@@ -1602,15 +1602,141 @@ __Once your endpoints are deployed, how do you then ensure that you're able to s
 - The on-demand access to compute and storage resources that the Cloud provides allows for this ability to quickly scale up and down.
 
 __How autoscaling works?__
-- 
+- When you deploy your endpoint, the machine learning instances that back that endpoint will emit a number of metrics to Amazon CloudWatch. CloudWatch is the managed AWS service for monitoring your AWS resources. SageMaker emits a number of metrics about that deployed endpoints such as utilization metrics and invocation metrics.
+- Invocation metrics indicate the number of times an invoke endpoint request has been run against your endpoint, and it's the default scaling metric for SageMaker autoscaling. You can actually define a custom scaling metric as well, such as CPU utilization.
+- et's assume you've set up your autoscaling on your endpoint and you're using the default scaling metric of number of invocations. Each instance will emit that metric to CloudWatch. As part of the scaling policy that you can figure.
+- If the number of invocations exceeds the threshold that you've identified, then SageMaker will apply the scaling policy and scale up by the number of instances that you've configured. After scaling policy for your endpoint, the new instances will come online and your load balancer will be able to distribute traffic load to those new instances automatically.
+- You can also add a cool down policy for scaling out your model, which is the value in seconds that you specify to wait for a previous scaled-out activity to take effect. The scale out cooldown period is intended to allow instances to scale out continuously, but not excessively.
+- you can specify a cool down period for scaling in your model as well. This is the amount of time in seconds, again, after a scale-in activity completes, before another scale-in activity can start. This allows instances to scale in slowly.
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/a238de43-f2cd-418a-b095-8ccbd81afc34)
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/83c3a9cd-0452-4032-81ba-63a1b19911c7)
 
+### How you actually set up Autoscalling?
+- First, you register your scalable target. A scalable target is an AWS resource, and in this case, you want to scale the SageMaker resource as indicated in the service namespace.
+-  After you register your scalable target, you need to then define the scaling policy. The scaling policy provides additional information about the scaling behavior for your instances. In this case, you have your predefined metric, which is the number of invocations on your instance, and then your target value, which indicates the number of invocations per machine learning instance that you want to allow before invoking your scaling policy.
+- You'll also see the scale-out and scale-in cooldown metrics that I mentioned previously. In this case, you see a scale-out cooldown of 60, which means that after autoscaling successfully scales out, it starts to calculate that cool-down time. The Scaling policy will increase again to that desired capacity until the cool down period ends. The ScaleInCool down setting of 300 seconds means a SageMaker will not attempt to start another cool down policy within 300 seconds when the last one completed.
+- In your final step to set up autoscaling, you will apply autoscaling policy, which means you apply that policy to your endpoint. Your endpoint will now be skilled in and scaled out according to that scaling policy that you've defined. You'll notice here you refer to the previous configuration that was discussed, and you'll also see a new parameter called policy type. Target tracking scaling refers to the specific autoscaling type that is supported by SageMaker. This uses a scaling metric and a target value as an indicator to scale. You'll have the opportunity to get hands on your lab for this week in setting up and applying autoscaling to SageMaker endpoints.
 
+> Code
+```python
+autoscale.register_scalable_target(
+    ServiceNamespace = "sagemaker",
+    ResourceID = "endpoint/" + endpoint_name,
+    ScalableDimension = "sagemaker:variant:DesiredInstanceCount",
+    MinCapacity = 1,
+    MaxCapacity = 2,
+    RoleARN = role,
+    SuspendedState = {
+        "DynamicScalingInSuspended" : False,
+        "DynamicScalingOutSuspended" : False,
+        "ScheduledScalingSuspended" : False,
+    })
 
+# Define scaling policy
+    scaling_policy = {
+        "TargetValue" : 2.0,
+        "PredefinedMatricsSpecification" : {
+            "PredefinedmatricType" : # Scaling metric "SageMakerVariantInvocationsPerInstance",
+        },
+        "ScaleOutCooldown" : 60, # Wait time before beginning another scale out activity after last one completes
+        "ScaleInCooldown" : 300, # Wait time before beginning another scale in activity after last one completes
+        }
+        
+# Apply scaling policy
+autoscale.put_scaling_policy(PolicyName = ...,
+ServiceNamespace = "sagemaker",
+ResourceID = "endpoint/" + endpoint_name,
+ScalableDimension = "sagemaker:variant:DesiredInstanceCount",
+PolicyType = "TargetTrackingScaling",
+TargetTrackingScalingPolicyConfiguration = scaling_policy)
+```
 
+### multi-model endpoints and inference pipelines
+- SageMaker endpoints that serve predictions for one model can also host multiple models behind a single endpoint. Instead of downloading your model from S3 to the machine learning instance immediately when you create the endpoint, with multi-model endpoints SageMaker dynamically loads your models when you invoke them. You invoke them through your client applications by explicitly identifying the model that you're invoking.
+- In this case you see the predict function is identifying Model 1 for this prediction request. SageMaker will keep that model loaded until resources are exhausted on that instance. the deployment options around the container image that is used for inference when you deploy a SageMaker endpoint. All of the models that are hosted on a multi-modal endpoint must share the same serving container image.
+- Multi-model endpoints are an option that can improve endpoint utilization when your models are of similar size and share the same container image and have similar invocation latency requirements. Inference pipeline allows you to host multiple models behind a single endpoint. But in this case, the models are sequential chain of models with the steps that are required for inference.
+- This allows you to take your data transformation model, your predictor model, and your post-processing transformer, and host them so they can be sequentially run behind a single endpoint. As you can see in this picture, the inference request comes into the endpoint, then the first model is invoked, and that model is your data transformation. The output of that model is then passed to the next step, which is actually your XGBoost model here, or your predictor model. That output is then passed to the next step, where ultimately in that final step in the pipeline, it provides the final response or the post-process response to that inference request.
+- This allows you to couple your pre and post-processing code behind the same endpoint and helps ensure that your training and your inference code stay synchronized. 
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/826fbc0b-74e8-4baf-9938-4eabf96a379a)
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/cb82c442-a0e6-4e51-83c4-38865e97fc09)
 
+![image](https://github.com/omkarfadtare/Practical_data_science/assets/154773580/eca1e9af-209e-4783-9e82-07e6b2f4f415)
 
+### Production variants and how they can be used to implement advanced deployment options for your real-time endpoints hosted using Amazon SageMaker hosting:
+- Production variants can be used for A/B testing or canary testing. But for this week's labs, you will use them specifically for A/B testing. If you remember, A/B testing is essentially splitting traffic across larger groups for a period of time to measure and compare the performance of different model versions.
+- I've shown have mostly shown a single model behind an endpoint. That single model is one production variant. A production variant is a package SageMaker model combined with the configuration that defines how that model will be hosted.
+- SageMaker model includes information such as the S3 location of that trained model artifact, the container image that can be used for inference with that model, and the service run-time role and the model's name. The hosting resources configuration includes information about how you want that model to be hosted. This includes things like the number and the type of machine learning instances, a pointer to the SageMaker packaged model, as well as the variant name and variant weight.
+- A single SageMaker endpoint can actually include multiple production variants. Production variants can be used for both canary testing and A/B testing, as well as some of the other deployment strategies that I discussed earlier.
+- canary deployment includes canary groups, which are smaller subsets of users that are directed to a specific model version to gauge the performance of that model version on a specific group of users.
+- In this below picture, you see a SageMaker endpoint that's configured with two variants, variant A and variant B. Variant A has been configured so that 95 percent of the traffic will continue to be served by that model version, but only five percent of traffic will be served by variant B.
+- The client application here controls this traffic on which users will be exposed to which variant. This is done programmatically by specifying the target variant when the client application invokes that target endpoint. This is one way to use production variants for canary roll-outs.
+- Let's now look at another way to use production variants for A/B testing. This is what you'll also be doing in your lab for this week. In this case, you still have two variants, variant A and variant B. However, in this case, you're splitting traffic equally. 50 percent of traffic is being served by variant A, and 50 percent is being served by variant B. So in this case, the client application just invokes the SageMaker endpoint, and traffic is automatically routed based on that variant weight.
+- However, you could also configure it to use the client application to route your 50 percent traffic to specific users as well. A/B testing is similar to what you would do for a canary roll-out, but you'd be doing it for a larger user group and typically running both model versions for a longer period of time while you compare the results of those different model versions.
 
+### how you can set up production variants for A/B testing between two model versions.
+- you'll learn how to use production variants for the SageMaker option where you're using a pre-built container image. In this first step, you construct the URI for the pre-built Docker container image. For this, you're using a SageMaker provided function to generate the URI of the Amazon Elastic Container Registry image that'll be used for hosting.
+> Code
+```python
+import sagemaker
+
+inferance_image_uri = sagemaker.image_uris.retrieve(
+    framework = ..., PyTorch, Tensorflow, etc ..., 
+    version = '1.6.0',
+    instance_type = 'ml.m5.xlarge',
+    py_version = 'py3',
+    image_scope = 'inference'
+    )
+``` 
+- The next step includes creating two model objects which packages each of your trained models for deployment to a SageMaker endpoint. To create the model packages, you'll use the URI information from the previous step and supply a few other items for packaging, such as the location of your trained model artifact is stored in Amazon S3, the AWS identity and access management or the IAM role that will be used by the inference code to access AWS resources.
+
+> Code
+```python
+sm.create_model(
+    name= model_name_a,
+...)
+
+sm.create_model(
+    name= model_name_b,
+...)
+```
+- Next, you configure the production variants that will be used when you create your endpoint. Each variant points to one of the previously configured model packages, and it also includes the hosting resources configuration.
+- you're indicating that you want 50 percent of your traffic sent to model variant A and 50 percent of your traffic sent to model variant B. Recall that the model package, combined with the hosting resources configuration, make up a single production variant. Now that you've configured your production variants, you now need to configure the endpoint to use these two variants.
+> Code
+```python
+from sagemaker.session \ 
+import production_variant
+
+variantA = production_variant(
+    model_name = ...,
+    instance_type = ...,
+    inital_instance_count = 1,
+    variant_name = 'VariantA',
+    initial_weight = 50,
+)
+
+from sagemaker.session \ 
+import production_variant
+
+variantA = production_variant(
+    model_name = ...,
+    instance_type = ...,
+    inital_instance_count = 1,
+    variant_name = 'VariantB',
+    initial_weight = 50,
+)
+```
+- In this step, you create the endpoint configuration by specifying the name and pointing to the two production variants that you just configured. The endpoint configuration tells SageMaker how you want to host those models. Finally, you create the endpoint, which uses your endpoint configuration to create a new endpoint with two models or two production variants
+> Code
+```python
+endpoint_config = sm.create_endpoint_config(
+    EndpointConfigName = ...,
+    ProductionVariants = [variantA, varinatB]
+    )
+    
+endpoint_response = sm.create_endpoint(EndpointName = ..., 
+EndpointConfigName = ...)
+```
