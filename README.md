@@ -1740,3 +1740,43 @@ endpoint_config = sm.create_endpoint_config(
 endpoint_response = sm.create_endpoint(EndpointName = ..., 
 EndpointConfigName = ...)
 ```
+
+### Learn how to deploy your batch use cases Using SageMaker Batch Transform:
+![image](https://github.com/user-attachments/assets/3920e95b-87dd-4f85-a1ae-521e50ca61f7)
+
+![image](https://github.com/user-attachments/assets/6d0e6aca-e784-40dd-8726-077de4f88687)
+
+![image](https://github.com/user-attachments/assets/6021fad2-db62-4a6f-9e04-60a564412296)
+
+![image](https://github.com/user-attachments/assets/780c79af-2235-499b-9b48-85281371b005)
+
+![image](https://github.com/user-attachments/assets/ebaf32dd-1c7f-4e1d-accd-32a990218fa4)
+
+
+- let's start with how batch Transform jobs work. With batch Transform, you package your model first. This step is the same, whether you're going to deploy your model to a SageMaker endpoint, or whether you're deploying it for batch use cases.
+- Similar to hosting for SageMaker endpoints, you either use a built-in container for your inference image or you can also bring your own. Your model package contains information about the S3 location of your trained model artifact, and the container image to use for inference.
+- Next, you create your transformer. For this, you provide the configuration information about how you want your batch job to run.  This also includes parameters such as the size and the type of machine learning instances that you want to run your batch job with, as well as the name of the model package that you previously created. Additionally, you specify the output location, which is the S3 bucket, where you want to store your prediction responses.
+- After you've configured your transformer, you're ready to start your batch transformed job. This can be done on an ad hoc basis or scheduled as part of a normal process. When you start your job, you provide the S3 location of your batch prediction requests data. SageMaker will then automatically spin up the Machine Learning instances using the configuration that you supplied, and it will process you're batch requests for prediction.
+- When the job is complete, SageMaker will automatically output the prediction response data to the S3 location that you specified and spin down the Machine Learning Instances.
+- Batch jobs operate in a transient environment, which means that the Compute is only needed for the time it takes to complete the batch Transform job. Batch Transform also has more advanced features such as inference pipeline.  If you recall, inference pipeline allows you to sequentially chain together multiple models.
+- You can combine your steps for inference within a single batch job so that the batch job includes your data transformation model for transforming your input data into the format expected by the model, the actual model for prediction, and then potentially a data post-processing model that transforms the labels that will be used as your inference response and put to your S3 bucket for output.
+- SageMaker endpoints, you can use the feature called inference pipeline to combine multiple models to run sequentially during your batch job.
+
+## Model integration patterns for integrating your client applications with your deployed machine learning models. 
+- once you have your model deployed to an endpoint, what are some of the considerations for integrating your models with client applications? When you deploy a model to an endpoint, that model is trained using specific features that have been engineered for model performance, and also to ensure that those features are in the required format and are understandable to your machine learning algorithm. The same transformations that were applied to your data for training, need to be applied to your prediction requests that are sent to that same deployed model.
+- with your product review use case, if you were to send the exact text payload with the string of, "I simply love it" into your hosted model, you would get an error. This is because your model was trained on data in a specific format. Without performing a data transformation to put it in that same format that is expected for inference, you'll get an error because your model can't understand that text data.
+- To fix this you'd need to apply those same data transformations that were applied when you trained your model, to your product review text before you send it to the model for prediction. There's a number of ways that you can do this, but let's look at one potential method.
+
+ ![image](https://github.com/user-attachments/assets/5e99fa48-c91b-4e8d-b1f5-a2b0137ea165)
+
+![image](https://github.com/user-attachments/assets/c07658a1-73c9-4005-bd27-476a94845f1f)
+
+- In this case, you're relying on your client applications to transform that prediction requests data into the correct format before it's actually sent to the endpoint for inference.
+- All this would work if your client code always remains synchronized with your training code. It's difficult to scale when you have multiple applications or teams that interface with your model.
+- As you can imagine, it's challenging in this case to always ensure that your data preprocessing code stays synchronized with the data preprocessing code used for training your model.
+- Another consideration here is you may also still need to convert that model prediction response into a format that's readable by your client application. As an example, you're model here will return a one for positive, but your client applications know that a class of one actually translates into positive.
+- Let's look at another option. You could implement a back-end function or process that runs before you reach the endpoint, that hosts your model for prediction. This is a common implementation pattern, but you still need to ensure that your data transformation code or the transformer model that runs before the formatted prediction request is sent to your endpoint, always stay synchronized with your trained model.
+- Finally, you can also couple your data preprocessing transformers with your model by hosting them behind the same endpoint. In this case, because your data preprocessing is tightly coupled and hosted as well as deployed along with your model. It helps ensure that your training and your inference code stay synchronized, while abstracting the complexity away from the machine learning client applications that integrate with your model.
+
+### considerations for Monitoring ML models:
+- 
