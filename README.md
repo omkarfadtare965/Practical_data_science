@@ -1779,4 +1779,149 @@ EndpointConfigName = ...)
 - Finally, you can also couple your data preprocessing transformers with your model by hosting them behind the same endpoint. In this case, because your data preprocessing is tightly coupled and hosted as well as deployed along with your model. It helps ensure that your training and your inference code stay synchronized, while abstracting the complexity away from the machine learning client applications that integrate with your model.
 
 ### considerations for Monitoring ML models:
-- 
+- Machine learning workloads have some similarities with other type of workloads. We will cover some of the unique considerations here by focusing on three core areas of monitoring, including business, system, and model monitoring.
+
+### Monitoring models:
+- Why do you need to monitor models? Models decay over time for a number of reasons. they typically relate to some type of change in the environment where the model was originally trained.
+
+![image](https://github.com/user-attachments/assets/e7a2e117-6748-4f60-b4bf-c70d1c094ecc)
+
+- the trained models make predictions based on old information or they are able to adapt to changes in the environment over time.
+- examples for what causes models to degrade?
+- First, you can have a change in customer behavior. So let's say you have a model that's trying to predict which products a specific customer might be interested in. Customer behavior can change drastically and quickly, based on a number of factors such as life changes or the economy, just to name a few. They may be interested in new products based on those life changes. And if you're using a model that's trained on old data, the likelihood of providing timely and relevant recommendations goes down.
+- Next, you could have changing business environments, let's say your company acquired a new product line.
+- Finally, you could have a sudden change in the upstream data as a result of a changing data pipeline. So let's say you ingest raw data that's used to train your model for multiple sources and suddenly a feature that is used to train your model no longer appears in your ingested data. All of these examples and many more can lead to model decay.
+
+![image](https://github.com/user-attachments/assets/2fea2478-4be4-446c-9493-2ad3eb5aff3d)
+
+### how can we monitor for signals of model decay?
+- You often hear about two types of monitors when it comes to monitoring machine learning models. The first is concept drift and the second is data drift.
+
+![image](https://github.com/user-attachments/assets/adf0aec3-88e2-4bc2-88db-27fc52a6a81d)
+
+![image](https://github.com/user-attachments/assets/186f220e-e594-4b35-8a4b-f08e9f98bc85)
+
+- ___COncept drift:___ At a high level, concept drift happens when the environment you trained your model in no longer reflects the current environment.
+- In this case, the actual definition of a label changes depending on a particular feature, such as geographical location or age group.
+- When you have a model that predicts information in a dynamic world, the underlying dynamics of that world can shift, impacting the target your machine learning model is trying to predict. A method for detecting concept drift includes continuing to collect ground truth data that reflects your current environment.
+- And running this labeled ground truth data against your deployed model to evaluate your model performance against your current environment.
+- Here, you're looking to see if the performance metric that you optimize for during training like accuracy still performs within an acceptable range for your current environment.
+- ___DAta drift:___  With data drift, you're looking for changes in the model input data or changes to the feature data.
+- So you're looking for signals that the serving data has shifted from the original expected data distribution that was actually used for training. This is often referred to as training serving skew.
+
+![image](https://github.com/user-attachments/assets/894be525-49a9-4d28-9a77-a115a7089924)
+
+- There are many methods to help with this level of monitoring. One is an open source library called Deequ, which performs a few steps to detect signs of data drift. First, you do data profiling to gather statistics about each feature that was used to train the model. So collecting data like the number of distinct values for categorical data or statistics like min and max for numeric features.
+- Using those statistics that are gathered during that data profiling, constraints get established to then identify the boundaries for normal or expected ranges of values for your feature data.
+- Finally, by using the profile data in combination with the identified constraints, you can then detect anomalies to determine when your data goes out of range from the constraints.
+- We have covered two common types of model monitors for detecting concept and data drift. This isn't inclusive of every model monitor or method for monitoring your models. But it gives you a good idea of monitors you should consider to detect for potential signs of model decay.
+
+### system monitoring:
+
+![image](https://github.com/user-attachments/assets/ffbd794f-bdd4-4a1d-8909-32932f869637)
+
+- system monitoring is also key to ensuring your models in the surrounding resources that are supporting your machine learning workloads are monitored for signals of disruption as well as potential performance decline.
+- You want to ensure you include system monitoring so that you can make sure that the surrounding and underlying resources that are used to host your model are healthy and functioning as expected.
+- This includes monitoring things like model latency, which is the time it takes for a model to respond to a prediction request.
+- This also includes system metrics for the infrastructure that's hosting your model, so things like CPU utilization.
+- Finally, another example is monitoring your machine learning pipelines so that you know, if there are any potential issues with model retraining or deploying a new model version.
+- These are just some of the examples of system monitoring you would need to consider as part of your overall monitoring strategy for your machine learning workloads.
+
+### monitoring or measuring of business impact
+
+![image](https://github.com/user-attachments/assets/1938b5fa-c5ee-4d75-9180-ded0e3db6294)
+
+- With this, you're looking at ensuring your deployed model is actually accomplishing what you intend for it to do, which ties back to the impact to your business objectives. This can be difficult to monitor or measure depending on the use case, but let's say you have excess stock of a particular item.
+- And you want to get rid of that excess stock by offering coupons to customers who are likely to be interested in that particular product. The model you're building in this case will predict which users are likely to respond to that offer.
+- You can typically identify how much stock you have before sending those target coupons, then see how many of the customers you send coupons to actually bought the product. As well as the impact that it had on your stock of products.
+
+### Model monitoring using Amazon sagemaker model monitors:
+- Monitoring your deployed machine learning model using amazon sagemaker model monitors.
+-  Model monitor includes four different monitor types including data quality, to monitor drift in data model quality to monitor drift in model quality metrics.
+-  Statistical bias drift, which is used to monitor signs of statistical bias drift in your model predictions and finally feature attribution drift. Which is used to monitor drift in features.
+
+![image](https://github.com/user-attachments/assets/6e5d22b6-8c08-4cdb-b836-e085690c3599)
+
+- ___Data quality___  With the data quality, monitor your monitoring for signals that the feature data that was used to train your models has now drifted or is statistically different from the current data that's coming in for Inference model monitor uses DQ.
+- Which is an open source library built on Apache spark that performs data profiling generates constraints based on that data profile. And then detects for anomalies when data goes out of bounds from the expected values or constraints.
+> How to set up the data quality monitor for your hosted Sage maker employments.
+- To start, you need to enable data capture on your end point, which tells your endpoint to begin capturing the prediction request data coming in and the prediction response data.
+- You can also identify a sampling percentage which is the percentage of traffic that you want to capture.
+- Next you create a baseline which actually runs a Sage maker processing job that runs DQ to capture statistics about your data, that was used to train your model.
+- Once that baseline runs the output includes statistics about each feature of your training data. So depending on the features there will be statistics relevant to that feature type.
+- As an example for our numeric data, you'll see statistics like the min or the max or as for string or categorical data, you'll see statistics on missing or distinct values. The baseline job also automatically identifies constraints based on the statistics discovered.
+- You can optionally add or modify constraints based on your domain knowledge as well. These constraints are then used to evaluate or monitor for potential signs of data drift.
+- In the next step, you set up the monitoring schedule which identifies how often you want to analyze your inference data against the established baseline. More specifically against those constraints that have been identified.
+- the monitoring job outputs results, which includes statistics in any violations against your identified constraints. That information is also captured in amazon cloud watch as well so that you can set up alerts for potential signs of data drift.
+
+![image](https://github.com/user-attachments/assets/288e3271-f7a6-4293-bd94-48e3e50f85c5)
+
+![image](https://github.com/user-attachments/assets/6010e50f-1449-4a06-8c06-7666b1ddc4b6)
+
+```python
+data_capture_config = DataCaptureConfig(
+    enable_capture = True,
+    sampling_percentage = 100,
+    destination_s3_uri = s3_capture_upload_path)
+
+predictor = model.deploy(
+    initial_instance_count = 1,
+    instance_type = 'ml.m4.xlarge',
+    endpoint_name = endpoint_name
+    data_capture_config = data_capture_config)
+```
+- ___Model quality___ With the model quality monitor, you're actually using new ground truth data that is collected to evaluate against your deployed model for signs of concept drift.
+- So here you use the new label data to evaluate your model against the performance metric that you've optimized for during training, which could be something like accuracy.
+- You then compare the new accuracy value to the one you identify during model training to save your accuracy is potentially going down.
+- the general steps in model monitor include the same steps that you saw before with data quality where you enable data capture on your end point, create a model quality baseline and then set up a monitoring schedule.
+- you also need to ensure for model quality that you have a method in place to collect and ingest new ground truth data that can be used to evaluate your model performance on that new label data.
+
+![image](https://github.com/user-attachments/assets/1c22ea40-3194-414b-8e36-f8c8cb4d87cc)
+
+- ___Concept drift/Statistical bias drift___ The statistical bias drift monitor, monitors for predictions for signals of statistical bias. And it does this by integrating with Sage maker, clarify again, the process to set up this monitor is similar to the others.
+- In this case you create a baseline that is specific to bias drift and then schedule your monitoring jobs just like the other monitoring types.
+- ___Data drift/ Feature attribution drift___ monitors for drift in your features for this model, monitor, monitors drift by comparing how the ranking of individual features changed from the training data to the live data. This helps explain model predictions over time.
+- the steps for this model monitor type are similar to the others. However, the baseline job in this case uses SHAP behind the scenes SHAP or shapely additive explanations is a common technique used to explain the output of a machine learning model.
+
+## Human in the loop:
+- importance of data labeling, common data labeling types, and data labeling challenges. how to perform data labeling at scale using human workforces and apply data labeling best practices.
+- discuss the concept of automatic data labeling and active learning for efficient data labeling at scale.
+- concept of human in the loop pipelines and how they can help you review machine learning model predictions.
+- discuss how humans can be part of your machine learning pipelines and how they can help to further scale and improve the quality of your models.
+- Two examples: One is discuss the importance of data labeling and how you can leverage human workforces to help you label your data at scale.
+- Second is  how you can build human in the loop pipelines to review model predictions.
+- Amazon SageMaker Ground Truth for building data labeling workflows, and Amazon Augmented AI or Amazon A2I, for implementing human in the loop pipelines.
+
+![image](https://github.com/user-attachments/assets/80cdd09f-fbb4-483e-a9a9-95de299df341)
+
+### Data labeling:
+- Prior to building training and deploying machine learning models, you need data. successful models are built on high quality training data. But collecting and labelling the training data sets involves a lot of time and effort.
+- To build training data sets you need to evaluate and label a large number of data samples. These labeling tasks are usually distributed across more than only one person, adding significant overhead and cost. If there are incorrect labels, the system will learn from the bad information and make inaccurate predictions.
+
+![image](https://github.com/user-attachments/assets/daebe83f-6fa1-4f03-90a4-717f54c9c4b3)
+
+###  concept of data labeling, common data labeling types, its challenges and ways to efficiently label data
+- data labeling is the process of identifying raw data such as images, text files, and videos, among others, and adding one or more meaningful and informative labels to the data.
+- For supervised learning to work, you need a label set of data that the model can learn from, so it can make the correct decisions.
+- In machine learning, a properly labeled data set that you use as the objective standard to train and assess a given model is often called the ground truth.
+- The accuracy of your trained model will depend on the accuracy of your ground truth. So spending the time and resources to ensure highly accurate data labeling is essential.
+- When building a computer vision system, you need to label images or pixels or create a border that fully encloses a digital image known as a bounding box to generate your training data set. You can classify images by type, such as an image showing either a scene from a basketball or a soccer game. Or you can classify images by content defining what's actually in the image itself, such as a human and a vehicle in the example shown here.
+- These are examples of single label and multi label classification. You can also segmented image at the pixel level. The process known as semantic segmentation identifies all pixels that fall under a given label and usually involves applying a colored filler or mask over those pixels. You can use labeled image data to build a computer vision model to automatically categorize images, detect the location of objects, or segment an image.
+- If you need to label video data, you can choose between video classification and video object detection tasks. In a video classification task, you categorize your video clips into specific classes, such as whether the video shows a scene from a concert or sports. In video object detection tasks, you can choose between bounding box, where workers draw bounding boxes around specified objects in your video. Polygon, where you draw polygons around specified objects in your video, such as shown here with the cars example.
+- Polyline, where you draw polylines around specified objects in your video, as shown here in the running track video. Or key point, where you draw key points around specified objects in your video, as shown here in the volleyball game example. Instead of just detecting objects, you can also track objects in video data using the same data labeling techniques shown here.
+- The difference is that instead of looking at the video on an individual video frame by frame basis, you track the movement of objects in a sequence of video frames.
+- In natural language processing, you identify important sections of text or text the text with specify labels to generate your training data set. For example, you may want to identify the sentiment or intent of a text. In a single label classification task, this might be assigning the label positive or negative to a text. Or you might want to assign multiple labels such as positive and inspiring to the text. This would be an example of multi-label classification.
+- With named entity recognition, you apply labels two words within a larger text, for example, to identify places and people.
+- Natural language processing models are used to a text classification, sentiment analysis, named entity recognition, and optical character recognition. The biggest challenge in data labeling is the massive scale.
+- Machine learning models need large labeled data sets. This could be tens of thousands of images to train a computer vision model of thousands of documents to fine tune a natural language model.
+- Another challenge is the need for high accuracy. Machine learning models depend on accurately labeled data.
+- If there are incorrect labels. Again, the system will learn from the bad information and make an accurate prediction. A third challenge is time. Data labeling is time consuming. As discussed, building a training data set can take up to 80% of the data scientists time.
+- To address the previously mentioned challenges, you can combine human labelers with managed data labeling services. These data labeling services provide additional tools to scale the labelling efforts for access to additional human workforces.
+- Train a model based on human feedback, so it can perform automated data labeling. And increase the labeling quality by offering additional features to assist the human labelers.
+
+![image](https://github.com/user-attachments/assets/df2e0042-400a-4163-b24d-bd09e8f6db60)
+
+![image](https://github.com/user-attachments/assets/b5c6fd96-ee6f-49e3-9826-7171698b3cba)
+
+![image](https://github.com/user-attachments/assets/503579c4-5336-4680-a3d5-d1ee0d7bb484)
+
