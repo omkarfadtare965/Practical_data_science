@@ -1925,3 +1925,70 @@ predictor = model.deploy(
 
 ![image](https://github.com/user-attachments/assets/503579c4-5336-4680-a3d5-d1ee0d7bb484)
 
+### how you can perform data labeling with Amazon SageMaker Ground Truth.
+- Ground Truth provides a managed experience where you can set up an entire data labeling job with only a few steps. it helps you efficiently perform highly accurate data labeling using data stored in Amazon Simple Storage Service or Amazon S3, using a combination of automated data labeling and human performed labeling.
+- You can choose to use a crowdsourced Amazon Mechanical Turk workforce of over 500,000 labelers, a private team of your co-workers, or one of the third-party data labeling service providers listed on the AWS marketplace, which are pre-screened by Amazon.
+- It is very easy to create a data labeling job and it takes only minutes via the AWS management console or call to an application programming interface or API.
+- First, as part of the data labeling job creation, you provide a pointer to the S3 bucket that contains the input dataset to be labeled, then, you define the labeling task and provide relevant labeling instructions.
+- Ground Truth offers templates for common labeling tasks, where you need to click only a few choices and provide minimal instructions on how to get your data labeled.
+- Alternatively, you can create your own custom template. As the last step of creating a labeling job, you select a human workforce.
+- You can choose between a public crowdsourced workforce, a curated set off third-party data labeling service providers, or your own workers through a private workforce team.
+- Once the labeling job is completed, you can find the labeled data set in Amazon S3.
+  
+![image](https://github.com/user-attachments/assets/856273f5-808d-4350-9368-0ff51ceef60d)
+
+### individual steps
+- first step in creating the data labeling job is to set up the input data that you want to label. You store your input dataset in Amazon S3 buckets. In the automated data setup, you only need to provide the S3 location of the dataset you want to label and Ground Truth will identify the dataset and connect the data to your labeling job. 
+- As part of this automated setup, Ground Truth creates an input manifest file which identifies the objects you want to label. If you choose manual data setup, you have to provide your own manifest file.
+- An input manifest file contains the list of objects to label. Each line in the manifest file is a complete and valid JSON object and contains either a source-ref or a source JSON key. The source-ref value points to the S3 object to label.
+- This approach is commonly used for binary objects, such as images in your S3 bucket.  The source key is used if the object to label is text. In this case, you can start the text directly as the value in the manifest file.
+- Once the labeling job is complete, Ground Truth will create an output manifest file in the S3 bucket as well. The output file will contain the results of the labeling job.
+- Next, you need to select the labeling task. This defines the type of data that needs to be labeled. Ground Truth has several built-in task types which also come with a corresponding pre-built worker tasked templates.
+- If you need to label image data, you can choose between single-label or a multi-label image classification tasks, bounding boxes, semantic segmentation, or label verification, where workers verify existing labels in your dataset. If you need to label video data, you can choose between video clip classification, video object detection, and video object tracking tasks.
+- In video object detection and tracking tasks, you can choose between bounding box, polygon, polyline, or key point. If you need to label text data, you can choose between single label or multi-label text classification or a named entity recognition.
+- You can also define a custom labeling task when the pre-defined tasks don't meet your needs. Ground Truth provides templates that you can use as a starting point. You can also create custom HTML if necessary.
+
+![image](https://github.com/user-attachments/assets/1f15191e-8518-43fa-8c1a-238deb7718cf)
+
+![image](https://github.com/user-attachments/assets/9f588d3f-7872-4f0b-9d54-b32eda60b2a7)
+
+![image](https://github.com/user-attachments/assets/234f173c-086c-47f2-a95f-98beffde5d2b)
+
+![image](https://github.com/user-attachments/assets/418be028-9913-4070-874a-3c1d86ce2629)
+
+- how you can build a custom labeling task. As part of the custom labeling task, you create custom AWS Lambda functions.
+- The run before and after each data object is sent to the worker. The pre-annotation Lambda function is initiated for and pre-processes each data object sent to your labeling job, before sending it to the workers.
+- The post annotation Lambda function processes the results once worker submit a task. If you specify multiple workers per data object, this function may include a logic to consolidate the annotations.
+
+![image](https://github.com/user-attachments/assets/25cffa86-417e-4d69-b338-d6f2790083d8)
+
+- The next step in defining the data labeling job, is to select the human workforce. Use the workforce of your choice, to label your dataset.
+- You can choose your workforce from the following options. You can use the Amazon Mechanical Turk workforce of over 500,000 independent contractors worldwide. If your data requires domain knowledge, or has sensitive data, you can use a private workforce based on your employees or coworkers.
+- You can also choose a vendor company in the AWS marketplace, that specializes in data labeling services. These vendor companies are pre-screened by AWS, and have gone for a SOC 2 compliance, and an AWS security review.
+- By default, a workforce isn't restricted to specific IP addresses. You can use the update workforce operation, to require that workers use a specific range of IP addresses to access tasks. Workers who attempt to access tasks using any IP address outside the specified ranges, are denied and they get a not found error message on the worker portal.
+
+> how you can set up a private workforce using the AWS management console
+- First, navigate to the Amazon SageMaker UI, and select "Labeling workforces" on the Ground Truth menu. Then select "Private" and click "Create private team." The next dialog box will present you with the available options for creating a private team by Amazon Cognito, or OpenID Connect. Amazon Cognito provides authentication, authorization, and user management for apps. This enables your workers to sign indirectly to you the labeling UI with a username and a password. You can use Amazon Cognito to connect to your enterprise identity provider as well. The second option for worker authentication is OpenID Connect, or OIDC, which is an identity layer built on top of the OAuth 2.0 Framework. You can use this option to set up a private work team, with your own identity provider. To finish the workforce setup, you'll provide a team name, and invite new workers by email, or you can import workers from an existing Amazon Cognito user group. You can also enable notifications to notify your workers about available work. The last step in defining the data labeling job, is to create the labeling task UI, which presents the human labeler with a data to label and the labeling instructions.
+- You can think of it as the instructions page. The human task UI is defined as an HTML template. If you have chosen one of the built-in labeling tasks, you can use a predefined tasks template and customize it to your needs. You can also write a custom task template. You can create the task template using HTML, CSS, JavaScript, the Liquid template language, and Crowd HTML Elements. Liquid is used to automate the template.
+- Crowd HTML Elements can be used to include common annotation tools, and to provide the logic you will submit to Ground Truth. The easiest way to get started is to use one of the available samples or built-in templates and customize it to your needs.
+
+### techniques to improve the efficiency and accuracy of data labeling.
+- Communicate with the labelers through labeling instructions and make them clear to help ensure high-accuracy.
+- Consolidate annotations to improve label quality. Labeler consensus helps to counteract the error of individual annotators. Labeler consensus involves sending each data set object to multiple annotators and then consolidating the annotations into a single label.
+- Audit labels to verify the accuracy of labels and adjust them as necessary. Use automated data labeling on large data sets. Active learning is the machine learning technique that identifies data that should be labeled by a workers. In ground truth, this functionality is called automated data labeling.
+- Automated data labeling helps to reduce the cost and time that it takes to label your data set compared to using only humans.
+- Automated data labeling is most appropriate when you have thousands of data objects. The minimum number of objects allowed for automated data labeling is 1,250, but it's better to start with 5,000 objects.
+- Another technique to improve the efficiency of data labeling is to reuse prior labeling jobs to create hierarchical labels. This chaining of labeling jobs allows you to use the prior jobs output manifest file as the new jobs input manifest. For example, a first data labeling job could classify objects in an image into cats and dogs. In a second labeling job, you filter their images that contain a dog and add additional labels for the specific dog breed.
+
+### communicate with the labelers through labeling instructions and make them clear to help ensure high accuracy.
+- For example, provide samples of good and bad annotations. Also, minimize the choice of labels and show only the relevant labels when you assign them to workers. When you define the labeling job, you can also specify how many workers receive the same object to label, this will help to counteract the error in individual annotations. If you send the same task to more than one worker, you need to implement a method for consolidating the annotations.
+- Ground truth provides built-in annotation consolidation logic using consensus-based algorithms. Ground truth provides an annotation consolidation function for each of its predefined labeling tasks, bounding box, image classification named entity recognition, semantic segmentation, and text classification. You can also create custom annotation consolidation functions. In general, these functions first assess the similarity between annotations and then assess the most likely label. In the example shown here, the same text classification task can result in different labels from labeler A, B, and C. In the case of discreet mutually exclusive categories, such as the example shown here, this can be straightforward. One of the most common ways to do this is to take the results of a majority vote between the annotations this weighs the annotations equally.
+
+### Audit labels to verify accuracy and adjust the labels as necessary:
+- Assembled data labeling pipeline for achieving this could look like this. In step 1, unlabeled data is labeled via your choice of work team to create the initial labels. In step 2, an audit and adjustment workflow for improving quality can be set up to review and adjust labels. Note that by default, ground truths processes all objects in your input manifest file again in this setup. You can also filter out objects you don't want to verify to reduce time and costs. New adjusted labels are appended to the initial labels from step 1.
+- This makes it easier to calculate the Delta and measure key performance indicators, KPIs. In step 3, you can then use the random selection capability in ground truth to perform an audit that will calculate an error RAID based on the sample data. Automated data labeling is optional, when you choose automated data labeling, part of your data set is labeled using active learning. Again, active learning is a technique that identifies data objects that need to be labeled by humans and data objects that can be labeled by a machine learning model. In this process, a machine learning model for labeling data is first trained on a subset of your raw data that humans have labeled. Where the labeling model has high confidence in its results based on what he has to learn so far, it will automatically apply labels to the raw data. Where the labeling model has lower confidence in its results, it will pass the data to humans to do the labeling. The human generated labels are then provided back to the labeling model for it to learn and improve its ability to automatically label the next set of raw data. Over time, the model can label more and more data automatically and substantially speed up the creation of training datasets. Note that the minimum number of objects allowed for automated data labeling is 1,250, but it is better to have 5,000 objects. The machine learning model for performing the automated data labeling is trained using a SageMaker built-in algorithm that depends on the use case. For example, the model uses the BlazingText algorithm for text classification tasks or the built-in object detection algorithm for bounding box tasks. Another technique for improving the efficiency of data labeling is to reuse prior labeling jobs to create hierarchical labels. This chaining of labeling jobs allows you to use the prior jobs output manifest file as the new jobs input manifest. For example, as shown here, a first data labeling job could classify objects in an image into cats and dogs, and in a second labeling jobs, you could filter the images that contain a dog and that an additional label for the specific dog breed. The result of the second labeling job is an augmented manifest file. Augmented refers to the fact that the manifest file contains the labels from both labeling jobs.
+
+
+
+
+
